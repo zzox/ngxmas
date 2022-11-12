@@ -18,6 +18,7 @@ class Ws {
     ) {
         ws = new WebSocket(url);
         ws.onmessage = (message) -> {
+            trace(message);
             final parsed = Json.parse(message.data);
             trace('websocket message', parsed);
             onMessage(parsed);
@@ -47,9 +48,9 @@ class Ws {
 
     public function send (message:Dynamic) {
         if (isOpen) {
-            ws.send(Json.parse(message));
+            ws.send(Json.stringify(message));
         } else {
-            trace('Failed to send message, closed websocket.');
+            trace('Failed to send message, websocket is closed.');
         }
     }
 
@@ -57,5 +58,10 @@ class Ws {
         onOpenHandler = null;
         onCloseHandler = null;
         onMessageHandler = null;
+        ws.onmessage = null;
+        ws.onopen = null;
+        ws.onclose = null;
+        ws.onerror = null;
+        ws.close();
     }
 }

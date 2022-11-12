@@ -1,11 +1,12 @@
 package squidzz.states;
 
-import squidzz.conn.Connection;
-import flixel.FlxG;
-import flixel.text.FlxText;
 import flixel.FlxState;
+import flixel.text.FlxText;
+import squidzz.conn.Connection;
 
 class LobbyState extends FlxState {
+    var roomId:FlxText;
+
 	override function create () {
 		super.create();
 
@@ -15,20 +16,45 @@ class LobbyState extends FlxState {
 		Global.screenCenter(info);
 		add(info);
 
+        roomId = new FlxText(16, 16);
+        add(roomId);
+
         if (!Connection.inst.isServerConnected) {
             Connection.inst.init(
-                () -> { trace('connected!'); },
+                () -> {
+                    info.text = 'Connected!';
+                },
                 () -> { trace('disconnected!'); },
                 (message) -> { trace('peer connected!', message); },
                 (message) -> { trace('peer disconnected :(', message); }
             );
+        } else {
+            trace('warning, server already connected');
+            // TODO: add new listeners?
         }
 	}
 
 	override function update (elapsed:Float) {
 		super.update(elapsed);
-		
-		if (Controls.justPressed.A)
-			Global.switchState(new GameOverState());
+
+        if (Connection.inst.isServerConnected) {
+            if (Controls.justPressed.A) {
+                createRoom();
+            } else if (Controls.justPressed.B) {
+                joinRoom();
+            }
+        }
+
+        if (Connection.inst.roomId != null) {
+            roomId.text = 'room: ' + Connection.inst.roomId;
+        }
 	}
+
+    function createRoom () {
+        Connection.inst.createRoom();
+    }
+
+    function joinRoom () {
+        Connection.inst.joinAnyRoom();
+    }
 }
