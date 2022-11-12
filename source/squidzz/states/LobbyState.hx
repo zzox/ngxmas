@@ -6,6 +6,7 @@ import squidzz.conn.Connection;
 
 class LobbyState extends FlxState {
     var roomId:FlxText;
+    var ping:FlxText;
 
 	override function create () {
 		super.create();
@@ -18,6 +19,9 @@ class LobbyState extends FlxState {
 
         roomId = new FlxText(16, 16);
         add(roomId);
+
+        ping = new FlxText(16, 32);
+        add(ping);
 
         if (!Connection.inst.isServerConnected) {
             Connection.inst.init(
@@ -47,6 +51,10 @@ class LobbyState extends FlxState {
 
         if (Connection.inst.roomId != null) {
             roomId.text = 'room: ' + Connection.inst.roomId;
+        }
+
+        if (Connection.inst.pingTime != null) {
+            ping.text = 'ping: ${Connection.inst.pingTime}ms';
         }
 	}
 

@@ -18,7 +18,6 @@ class Ws {
     ) {
         ws = new WebSocket(url);
         ws.onmessage = (message) -> {
-            trace(message);
             final parsed = Json.parse(message.data);
             trace('websocket message', parsed);
             onMessage(parsed);

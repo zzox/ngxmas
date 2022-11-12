@@ -1,5 +1,6 @@
 package squidzz.conn;
 
+import haxe.Json;
 import js.html.rtc.DataChannel;
 import js.html.rtc.IceCandidate;
 import js.html.rtc.PeerConnection;
@@ -11,7 +12,16 @@ class Rtc {
     var pc:PeerConnection;
     var datachannel:DataChannel;
 
-    public function new (onIceCandidate:IceCandidate -> Void) {
+    var onDatachannelMessage:Dynamic -> Void;
+    var onDatachannelOpened:Void -> Void;
+
+    var isOpen:Bool = false;
+
+    public function new (
+        onIceCandidate:IceCandidate -> Void,
+        onDatachannelMessage:String -> Void,
+        onDatachannelOpened:Void -> Void
+    ) {
         pc = new PeerConnection(
             // { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
         );
@@ -32,14 +42,31 @@ class Rtc {
         }
 
         pc.ondatachannel = handleDatachannelOpened;
+
+        this.onDatachannelMessage = onDatachannelMessage;
+        this.onDatachannelOpened = onDatachannelOpened;
     }
 
-    function handleDatachannelOpened () {
+    public function sendMessage (type:String, ?payload:Dynamic) {
+        if (isOpen) {
+            datachannel.send(Json.stringify({ type: type, payload: payload }));
+        } else {
+            trace('cannot send message, data channel closed');
+        }
+    }
+
+    function handleDatachannelOpened (?dc) {
+        // when called from ondatachannel, we get it from the event
+        if (datachannel == null) {
+            datachannel = dc.channel;
+        }
+
         trace('channel opened');
-    }
-
-    public function handleDatachannelEvents () {
-        // alert Connection class that we are live!
+        isOpen = true;
+        onDatachannelOpened();
+        datachannel.onmessage = (message) -> {
+            onDatachannelMessage(Json.parse(message.data));
+        }
     }
 
     public function createDataChannel () {

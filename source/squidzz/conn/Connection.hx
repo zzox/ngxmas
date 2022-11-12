@@ -1,6 +1,7 @@
 package squidzz.conn;
 
 import haxe.Json;
+import haxe.Timer;
 import js.html.rtc.IceCandidate;
 import js.html.rtc.SessionDescription;
 import js.html.rtc.SessionDescriptionInit;
@@ -31,6 +32,9 @@ class Conn {
     /** connection stuff **/
     public var roomId:Null<String> = null;
 
+    public var pingTime:Int;
+    var lastPingTime:Float;
+
     public function init (
         onServerConnect:Void -> Void,
         onServerDisconnect:Void -> Void,
@@ -60,16 +64,42 @@ class Conn {
             handleWebsocketMessage
         );
 
-        rtc = new Rtc(handleIceCandidate);
+        rtc = new Rtc(
+            handleIceCandidate,
+            handlePeerMessage,
+            () -> {
+                startPing();
+            }
+        );
 
         // create peer connection
+    }
+
+    function handlePeerMessage (message:Dynamic) {
+        final type:String = message.type;
+        final payload:Dynamic = message.payload;
+
+        switch (type) {
+            case 'ping':
+                rtc.sendMessage('pong');
+            case 'pong':
+                trace(Timer.stamp() - lastPingTime);
+                pingTime = Math.round((Timer.stamp() - lastPingTime) * 1000);
+        }
+    }
+
+    function startPing () {
+        new Timer(1000).run = () -> {
+            lastPingTime = Timer.stamp();
+            rtc.sendMessage('ping');
+        };
     }
 
     public function joinOrCreateRoom () {}
 
     public function createRoom () {
         if (roomId == null) {
-            // MAYBE: a joiningRoom var
+            // MAYBE: a joiningRoom var, OR a ConnectionStatus enum
             sendWsMessage('create-room');
         } else {
             trace('already in room');
@@ -78,7 +108,7 @@ class Conn {
 
     public function joinAnyRoom () {
         if (roomId == null) {
-            // MAYBE: a joiningRoom var
+            // MAYBE: a joiningRoom var, OR a ConnectionStatus enum
             sendWsMessage('join-any-room');
         } else {
             trace('already in room');
@@ -108,33 +138,17 @@ class Conn {
                 isHost = true;
                 roomId = payload;
                 rtc.createDataChannel();
-
-                // old
-                // datachannel = pc.createDataChannel('main', { ordered: true })
-                // datachannel.onopen = () => {
-                //     handleDatachannelEvents()
-                //     startPingInterval()
-                // }
+            // we created a room and a peer joined.
             case 'peer-joined':
                 trace('sending offer');
                 rtc.createOffer(onOfferGenerated);
-
-                // old
-                // const offer = await pc.createOffer()
-                // await pc.setLocalDescription(offer)
+            // we joined as a peer
             case 'joined-room':
                 isHost = false;
                 roomId = payload;
             case 'sdp-offer':
                 trace('got offer', payload);
-
                 rtc.setRemoteDescription(payload, onAnswerGenerated);
-
-                // old
-                // sendWsMessage('sdp-answer', { roomId: roomId, answer:answer })
-                // await pc.setRemoteDescription(payload)
-                // const answer = await pc.createAnswer()
-                // await pc.setLocalDescription(answer)
             case 'sdp-answer':
                 trace('got answer', payload);
                 rtc.setAnswer(payload);
@@ -157,6 +171,4 @@ class Conn {
     function handleIceCandidate (candidate:IceCandidate) {
         sendWsMessage('ice-candidate', { roomId: roomId, candidate: candidate });
     }
-
-    function handlePeerMessage (message:Dynamic) {}
 }
