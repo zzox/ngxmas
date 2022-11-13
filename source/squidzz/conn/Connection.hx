@@ -1,9 +1,7 @@
 package squidzz.conn;
 
-import haxe.Json;
 import haxe.Timer;
 import js.html.rtc.IceCandidate;
-import js.html.rtc.SessionDescription;
 import js.html.rtc.SessionDescriptionInit;
 import squidzz.conn.Rtc;
 import squidzz.conn.Ws;
@@ -13,6 +11,16 @@ class Connection {
 }
 
 class Conn {
+    // connect to local version
+    static inline final WS_URL:String = 'ws://localhost:6969';
+
+    // connect to ngrok from from localhost (ws:// only)
+    // static inline final WS_URL:String = 'ws://cf2c-2605-a601-ab03-5e00-c97-839c-cc39-31f6.ngrok.io';
+
+    // connect to heroku
+    // static inline final WS_URL:String = 'wss://squidzz.herokuapp.com';
+
+    static inline final PING_INTERVAL:Int = 250;
     public function new () {}
 
     var ws:Ws;
@@ -26,7 +34,7 @@ class Conn {
     /** p2p stuff **/
     public var isHost:Bool;
     public var isPeerConnected:Bool = false;
-    public var onPeerConnect:String -> Void;
+    public var onPeerConnect:Void -> Void;
     public var onPeerDisconnect:String -> Void;
 
     /** connection stuff **/
@@ -38,7 +46,7 @@ class Conn {
     public function init (
         onServerConnect:Void -> Void,
         onServerDisconnect:Void -> Void,
-        onPeerConnect:String -> Void,
+        onPeerConnect:Void -> Void,
         onPeerDisconnect:String -> Void
     ) {
         if (isServerConnected || isPeerConnected) {
@@ -52,7 +60,7 @@ class Conn {
         this.onPeerDisconnect = onPeerDisconnect;
 
         ws = new Ws(
-            'ws://localhost:6969',
+            WS_URL,
             () -> {
                 isServerConnected = true;
                 this.onServerConnect();
@@ -85,11 +93,26 @@ class Conn {
             case 'pong':
                 trace(Timer.stamp() - lastPingTime);
                 pingTime = Math.round((Timer.stamp() - lastPingTime) * 1000);
+            case 'confirm':
+                if (!isPeerConnected) {
+                    rtc.sendMessage('confirm-ack');
+                    onPeerConnect();
+                }
+                isPeerConnected = true;
+            case 'confirm-ack':
+                if (!isPeerConnected) {
+                    onPeerConnect();
+                }
+            default:
+                trace('unhandled peer message', type, payload);
         }
     }
 
     function startPing () {
-        new Timer(1000).run = () -> {
+        new Timer(PING_INTERVAL).run = () -> {
+            if (isHost && !isPeerConnected) {
+                rtc.sendMessage('confirm');
+            }
             lastPingTime = Timer.stamp();
             rtc.sendMessage('ping');
         };

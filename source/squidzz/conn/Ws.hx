@@ -1,6 +1,7 @@
 package squidzz.conn;
 
 import haxe.Json;
+import js.html.Console;
 import js.html.WebSocket;
 
 class Ws {
@@ -16,33 +17,33 @@ class Ws {
         onClose:Void -> Void,
         onMessage:Dynamic -> Void
     ) {
+        onOpenHandler = onOpen;
+        onCloseHandler = onClose;
+        onMessageHandler = onMessage;
+
         ws = new WebSocket(url);
         ws.onmessage = (message) -> {
             final parsed = Json.parse(message.data);
             trace('websocket message', parsed);
-            onMessage(parsed);
+            onMessageHandler(parsed);
         }
 
         ws.onopen = () -> {
             isOpen = true;
-            onOpen();
+            onOpenHandler();
             trace('websocket opened');
         }
 
         ws.onclose = () -> {
             isOpen = false;
-            onClose();
+            onCloseHandler();
             destroy();
             trace('websocket closed');
         }
 
         ws.onerror = (e) -> {
-            trace('websocket error', e);
+            Console.error(e);
         }
-
-        onOpenHandler = onOpen;
-        onCloseHandler = onClose;
-        onMessageHandler = onMessage;
     }
 
     public function send (message:Dynamic) {
