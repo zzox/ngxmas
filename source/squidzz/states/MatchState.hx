@@ -4,23 +4,20 @@ import flixel.FlxState;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.math.FlxPoint;
-import flixel.text.FlxText;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Player;
 import squidzz.conn.Connection;
+import squidzz.display.DebugUi;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.Rollback;
 
 class MatchState extends FlxState {
-    var roomId:FlxText;
-    var ping:FlxText;
-    var frameNum:FlxText;
-    var numFrames:FlxText;
-
     var collisionLayer:FlxTilemap;
     var stateGroup:FlxRollbackGroup;
-    var rollback:Rollback<RollbackState>;
+    public var rollback:Rollback<RollbackState>;
+
+    var debugUi:DebugUi;
 
 	override function create () {
 		super.create();
@@ -30,18 +27,6 @@ class MatchState extends FlxState {
         final map = new TiledMap(Global.asset('assets/data/map1.tmx'));
         collisionLayer = createTileLayer(map, 'collision', new FlxPoint(0, -2));
         add(collisionLayer);
-
-        roomId = new FlxText(16, 16);
-        add(roomId);
-
-        ping = new FlxText(16, 32);
-        add(ping);
-
-        frameNum = new FlxText(16, 48);
-        add(frameNum);
-
-        numFrames = new FlxText(16, 64);
-        add(numFrames);
 
         final player1 = new Player(7 * 16, 8 * 16, 'assets/images/player-pink.png');
         final player2 = new Player(22 * 16, 8 * 16, 'assets/images/player-blue.png');
@@ -65,6 +50,8 @@ class MatchState extends FlxState {
             (message) -> { trace('peer disconnected :(', message); },
             rollback.handleRemoteInput
         );
+
+        add(debugUi = new DebugUi(this));
 	}
 
 	override function update (elapsed:Float) {
@@ -79,11 +66,9 @@ class MatchState extends FlxState {
             elapsed
         );
 
-        // move to debug ui class
-        roomId.text = 'room: ' + Connection.inst.roomId;
-        ping.text = 'ping: ${Connection.inst.pingTime}ms';
-        frameNum.text = 'frames: ' + rollback.currentFrame;
-        numFrames.text = 'unconfirmed frames: ' + rollback.frames.length;
+        if (Controls.justPressed.PAUSE) {
+            debugUi.visible = !debugUi.visible;
+        }
 	}
 
     function createTileLayer (map:TiledMap, layerName:String, offset:FlxPoint):Null<FlxTilemap> {

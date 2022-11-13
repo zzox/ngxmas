@@ -15,11 +15,7 @@ class MenuState extends flixel.FlxState {
 
 		final info = new FlxText();
 		info.alignment = CENTER;
-		info.text
-			= "This is the menu state.\n"
-			+ "This will only show in stand-alone mode.\n"
-			+ "In tankmas it will just start the game.\n"
-			+ "Press Z to play.";
+		info.text = "Menu";
 		Global.screenCenter(info);
 		add(info);
 	}

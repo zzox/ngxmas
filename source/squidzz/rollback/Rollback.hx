@@ -1,7 +1,5 @@
 package squidzz.rollback;
 
-import haxe.Serializer;
-import haxe.Unserializer;
 import squidzz.conn.Connection;
 import squidzz.rollback.FrameInput;
 
@@ -24,7 +22,8 @@ class Rollback<T> {
     var playerIndex:Int;
     public var currentFrame:Int = 0;
     public var frames:Array<Frame>;
-    public var futureRemote:Array<RemoteInput> = [];
+    public var futureRemotes:Array<RemoteInput> = [];
+    public var isHalted:Bool = false;
 
     var onSimulateInput:Array<FrameInput> -> Float -> AbsSerialize<T>;
     var onRollbackState:T -> Void;
@@ -51,6 +50,10 @@ class Rollback<T> {
     public function tick (localInput:FrameInput, delta:Float) {
         if (frames.length > 10) {
             trace('should halt!!');
+            isHalted = true;
+            return;
+        } else {
+            isHalted = false;
         }
 
         currentFrame++;
@@ -59,13 +62,13 @@ class Rollback<T> {
 
         var remoteInput:FrameInput;
         var behind:Bool = false;
-        final futureFrame = futureRemote[0];
+        final futureFrame = futureRemotes[0];
         if (futureFrame != null) {
             // we are behind, add the local input to the frame
             // NOTE: this assumes ordered messages
             trace('behind!!!');
             behind = true;
-            final fut = futureRemote.shift();
+            final fut = futureRemotes.shift();
             remoteInput = fut.input;
             if (currentFrame != fut.index) {
                 trace(currentFrame, fut.index);
@@ -102,7 +105,7 @@ class Rollback<T> {
         // find input frame.
         final frame = getFrame(remote.index);
         if (frame == null) {
-            futureRemote.push(remote);
+            futureRemotes.push(remote);
         } else {
             final wasPredictionCorrect = compareInput(remote.input, frame.input[oppIndex()]);
 
