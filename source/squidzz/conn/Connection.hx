@@ -5,6 +5,7 @@ import js.html.rtc.IceCandidate;
 import js.html.rtc.SessionDescriptionInit;
 import squidzz.conn.Rtc;
 import squidzz.conn.Ws;
+import squidzz.rollback.FrameInput;
 
 class Connection {
     public static var inst:Conn = new Conn();
@@ -39,6 +40,7 @@ class Conn {
 
     /** connection stuff **/
     public var roomId:Null<String> = null;
+    public var onRemoteInput:RemoteInput -> Void;
 
     public var pingTime:Int;
     var lastPingTime:Float;
@@ -83,6 +85,24 @@ class Conn {
         // create peer connection
     }
 
+    public function addListeners (
+        ?onServerConnect:Void -> Void,
+        ?onServerDisconnect:Void -> Void,
+        ?onPeerConnect:Void -> Void,
+        ?onPeerDisconnect:String -> Void,
+        ?onRemoteInput:RemoteInput -> Void
+    ) {
+        if (onServerConnect != null) this.onServerConnect = onServerConnect;
+        if (onServerDisconnect != null) this.onServerDisconnect = onServerDisconnect;
+        if (onPeerConnect != null) this.onPeerConnect = onPeerConnect;
+        if (onPeerDisconnect != null) this.onPeerDisconnect = onPeerDisconnect;
+        if (onRemoteInput != null) this.onRemoteInput = onRemoteInput;
+    }
+
+    public function sendInput (index:Int, input:String) {
+        rtc.sendMessage('remote-input', { index: index, input: input });
+    }
+
     function handlePeerMessage (message:Dynamic) {
         final type:String = message.type;
         final payload:Dynamic = message.payload;
@@ -91,7 +111,6 @@ class Conn {
             case 'ping':
                 rtc.sendMessage('pong');
             case 'pong':
-                trace(Timer.stamp() - lastPingTime);
                 pingTime = Math.round((Timer.stamp() - lastPingTime) * 1000);
             case 'confirm':
                 if (!isPeerConnected) {
@@ -103,6 +122,8 @@ class Conn {
                 if (!isPeerConnected) {
                     onPeerConnect();
                 }
+            case 'remote-input':
+                onRemoteInput({ index: payload.index, input: deserializeInput(payload.input) });
             default:
                 trace('unhandled peer message', type, payload);
         }
