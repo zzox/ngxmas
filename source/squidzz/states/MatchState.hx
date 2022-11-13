@@ -54,7 +54,8 @@ class MatchState extends FlxState {
             playerIndex,
             stateGroup,
             [ 'up' => false, 'left' => false, 'right' => false ],
-            stateGroup.step
+            stateGroup.step,
+            stateGroup.unserialize
         );
 
         Connection.inst.addListeners(
