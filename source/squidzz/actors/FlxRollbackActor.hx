@@ -8,9 +8,10 @@ class FlxRollbackActor extends FlxSprite {
         super(x, y);
     }
 
+    // remove the update method called by the scene.
+    // weird that the input isn't being used here, but the child classes will.
     override function update (delta:Float) {}
-
-    function updateWithInputs (delta:Float, input:FrameInput) {
+    public function updateWithInputs (delta:Float, input:FrameInput) {
         super.update(delta);
     }
 }

@@ -8,7 +8,12 @@ import squidzz.rollback.FrameInput;
 typedef Frame = {
     var frameNumber:Int;
     var input:Array<FrameInput>;
-    var state:String;
+    var state:Dynamic;
+}
+
+interface AbsSerialize<T> {
+    public function serialize():T;
+    public function unserialize():Void;
 }
 
 // NOTE: will need to be reworked when more than two people are in a match
@@ -18,23 +23,21 @@ class Rollback<T> {
     public var frames:Array<Frame>;
     var frameHeadIndex:Int = 0;
 
-    var onSimulateInput:Array<FrameInput> -> Float -> T;
+    var onSimulateInput:Array<FrameInput> -> Float -> AbsSerialize<T>;
 
     public function new (
         playerIndex:Int,
-        initialState:T,
+        initialState:AbsSerialize<T>,
         blankFrame:FrameInput,
-        onSimulateInput:Array<FrameInput> -> Float -> T
+        onSimulateInput:Array<FrameInput> -> Float -> AbsSerialize<T>
     ) {
         this.playerIndex = playerIndex;
         this.onSimulateInput = onSimulateInput;
 
-        final ser = new Serializer();
-        ser.serialize(initialState);
         frames = [{
             frameNumber: 0,
             input: [blankFrame, blankFrame],
-            state: ser.toString()
+            state: initialState.serialize()
         }];
     }
 
@@ -59,16 +62,14 @@ class Rollback<T> {
         }
 
         // for now since we have only 2 players this kinda stuff is ok
-        final frameInput = playerIndex == 0 ? [localInput, remoteInput] : [localInput, remoteInput];
+        final frameInput = playerIndex == 0 ? [localInput, remoteInput] : [remoteInput, localInput];
 
         final state = onSimulateInput(frameInput, delta);
 
-        final ser = new Serializer();
-        ser.serialize(state);
         final frame:Frame = {
             frameNumber: curIndex,
             input: frameInput,
-            state: ser.toString()
+            state: state.serialize()
         }
 
         // if we are behind, replace the frame with the updated
@@ -81,9 +82,14 @@ class Rollback<T> {
         }
     }
 
+    // if > 2 players, this should come with an index from the connection
     public function handleRemoteInput (input:RemoteInput) {
         // 
-        trace('remote input', input);
+        // trace('remote input', input);
+
+        // find input frame.
+            // if it's right, unshift() anything before it off. (not it though, that's our confirm frame)
+        // if it's wrong, do the rollback
     }
 
     // get frame from framequeue

@@ -7,6 +7,7 @@ import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
+import squidzz.actors.Player;
 import squidzz.conn.Connection;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.Rollback;
@@ -19,10 +20,12 @@ class MatchState extends FlxState {
 
     var collisionLayer:FlxTilemap;
     var stateGroup:FlxRollbackGroup;
-    var rollback:Rollback<FlxRollbackGroup>;
+    var rollback:Rollback<RollbackState>;
 
 	override function create () {
 		super.create();
+
+        camera.bgColor = 0xff415d66;
 
         final map = new TiledMap(Global.asset('assets/data/map1.tmx'));
         collisionLayer = createTileLayer(map, 'collision', new FlxPoint(0, -2));
@@ -40,10 +43,14 @@ class MatchState extends FlxState {
         numFrames = new FlxText(16, 64);
         add(numFrames);
 
-        final playerIndex = Connection.inst.isHost ? 0 : 1;
-        stateGroup = new FlxRollbackGroup();
+        final player1 = new Player(7 * 16, 8 * 16, 'assets/images/player-pink.png');
+        final player2 = new Player(22 * 16, 8 * 16, 'assets/images/player-blue.png');
 
-        rollback = new Rollback<FlxRollbackGroup>(
+        final playerIndex = Connection.inst.isHost ? 0 : 1;
+        stateGroup = new FlxRollbackGroup(player1, player2, collisionLayer);
+        add(stateGroup);
+
+        rollback = new Rollback(
             playerIndex,
             stateGroup,
             [ 'up' => false, 'left' => false, 'right' => false ],
