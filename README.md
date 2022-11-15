@@ -69,7 +69,7 @@ Animations need to be completely deterministic. When an opponent cues an attack,
 
 ### Quick start
 
-1. Open the app in two browsers.
+1. Open the app in two browser windows.
 2. If not running the signaling locally, use the herokuapp url.
 3. Connect. (Z in menu)
 4. In one browser, create a room (Z). In the other, join the room (X).
