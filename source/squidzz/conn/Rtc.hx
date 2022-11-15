@@ -6,7 +6,6 @@ import js.html.rtc.IceCandidate;
 import js.html.rtc.PeerConnection;
 import js.html.rtc.SessionDescription;
 import js.html.rtc.SessionDescriptionInit;
-import js.lib.Promise;
 
 class Rtc {
     var pc:PeerConnection;
@@ -23,7 +22,7 @@ class Rtc {
         onDatachannelOpened:Void -> Void
     ) {
         pc = new PeerConnection(
-            // { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
+            { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
         );
 
         // Not in haxe?
