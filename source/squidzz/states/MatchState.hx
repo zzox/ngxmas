@@ -10,6 +10,7 @@ import squidzz.actors.Player;
 import squidzz.conn.Connection;
 import squidzz.display.DebugUi;
 import squidzz.rollback.FlxRollbackGroup;
+import squidzz.rollback.FrameInput.getLocalInput;
 import squidzz.rollback.Rollback;
 
 class MatchState extends FlxState {
@@ -44,10 +45,10 @@ class MatchState extends FlxState {
         );
 
         Connection.inst.addListeners(
-            () -> { trace('connected here???'); },
-            () -> { trace('disconnected!'); },
-            () -> { trace('peer connected here???'); },
-            (message) -> { trace('peer disconnected :(', message); },
+            () -> { trace('Connected in MatchState'); },
+            () -> { trace('Disconnected in MatchState'); },
+            () -> { trace('Peer Connected in MatchState'); },
+            (message) -> { trace('Peer disconnected in MatchState', message); },
             rollback.handleRemoteInput
         );
 
@@ -58,11 +59,7 @@ class MatchState extends FlxState {
 		super.update(elapsed);
 
         rollback.tick(
-            [
-                'up' => Controls.pressed.UP,
-                'left' => Controls.pressed.LEFT,
-                'right' => Controls.pressed.RIGHT,
-            ],
+            getLocalInput(),
             elapsed
         );
 

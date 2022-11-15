@@ -120,6 +120,7 @@ class Rollback<T> {
         }
     }
 
+    // Remove all the frames we have certified remote input from.
     function removeCorrectFrames (frameIndex:Int) {
         for (frame in frames) {
             if (frame.frameNumber < frameIndex) {
@@ -128,13 +129,14 @@ class Rollback<T> {
         }
     }
 
+    // Rollback, this is it!
     function doRollback (toIndex:Int, remoteInput:FrameInput) {
         trace('rolling back!');
         var goodState = frames[0].state;
         onRollbackState(goodState);
 
         // Resimulate the state by restoring the true state, replacing the input,
-        // and simulating the inputs further to the present.
+        // and simulating the inputs up to the present.
         for (frameNum in 1...frames.length) {
             final frame = frames[frameNum];
             final frameInput = playerIndex == 0 ? [frame.input[0], remoteInput] : [remoteInput, frame.input[1]];

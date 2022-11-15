@@ -2,7 +2,20 @@ package squidzz.actors;
 
 import squidzz.rollback.FrameInput;
 
+// This means we're translation enums to strings to enums,
+// but it makes us feel safer.
+enum abstract FInput(String) to String {
+    var Left = 'LEFT';
+    var Right = 'RIGHT';
+    var Up = 'UP';
+    var Down = 'DOWN';
+    var A = 'A';
+    var B = 'B';
+}
+
 class Player extends FlxRollbackActor {
+    var prevInput:FrameInput;
+
     public function new (x:Float, y:Float, spritePath:String) {
         super(x, y);
 
@@ -17,19 +30,21 @@ class Player extends FlxRollbackActor {
 
         maxVelocity.set(120, 240);
         drag.set(1000, 0);
+
+        prevInput = blankInput();
     }
 
-    override function updateWithInputs (delta:Float, inputs:FrameInput) {
-        if (inputs['up']) {
+    override function updateWithInputs (delta:Float, input:FrameInput) {
+        if (justPressed(input, Up)) {
             velocity.y = -120;
         }
 
         var acc = 0.0;
-        if (inputs['left']) {
+        if (pressed(input, Left)) {
             acc -= 1000;
         }
 
-        if (inputs['right']) {
+        if (pressed(input, Right)) {
             acc += 1000;
         }
 
@@ -53,6 +68,28 @@ class Player extends FlxRollbackActor {
             flipX = false;
         }
 
-        super.updateWithInputs(delta, inputs);
+        super.updateWithInputs(delta, input);
+
+        prevInput = input;
+    }
+
+    function pressed (input:FrameInput, dir:FInput) {
+        // NOTE: just for development, remove in prod.
+        // bad inputs from the peer would trigger this.
+#if dev
+        if (!['LEFT','RIGHT','UP','DOWN','A','B'].contains(dir)) {
+            throw 'bad input';
+        }
+#end
+        return input[dir];
+    }
+
+    function justPressed (input:FrameInput, dir:FInput) {
+#if dev
+        if (!['LEFT','RIGHT','UP','DOWN','A','B'].contains(dir)) {
+            throw 'bad input';
+        }
+#end
+        return input[dir] && !prevInput[dir];
     }
 }

@@ -28,7 +28,7 @@ class LobbyState extends FlxState {
                 () -> {
                     info.text = 'Connected!';
                 },
-                () -> { trace('disconnected!'); },
+                () -> { trace('Disconnected!'); },
                 () -> { 
                     Global.switchState(new MatchState());
                  },

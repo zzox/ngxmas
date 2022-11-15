@@ -25,3 +25,25 @@ function compareInput (input1:FrameInput, input2:FrameInput):Bool {
 
     return true;
 }
+
+function getLocalInput ():FrameInput {
+    return [
+        'LEFT' => Controls.pressed.LEFT,
+        'RIGHT' => Controls.pressed.RIGHT,
+        'UP' => Controls.pressed.UP,
+        'DOWN' => Controls.pressed.DOWN,
+        'A' => Controls.pressed.A,
+        'B' => Controls.pressed.B
+    ];
+}
+
+function blankInput ():FrameInput {
+    return [
+        'LEFT' => false,
+        'RIGHT' => false,
+        'UP' => false,
+        'DOWN' => false,
+        'A' => false,
+        'B' => false
+    ];
+}

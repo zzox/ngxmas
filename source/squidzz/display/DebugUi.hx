@@ -33,6 +33,6 @@ class DebugUi extends FlxGroup {
         frameNum.text = 'frame: ' + scene.rollback.currentFrame;
         numFrames.text = 'unconfirmed frames: ' + scene.rollback.frames.length;
         numFramesBehind.text = 'frames behind: ' + scene.rollback.futureRemotes.length;
-        isHalted.text = 'frames behind: ' + scene.rollback.isHalted;
+        isHalted.text = 'halted: ' + scene.rollback.isHalted;
     }
 }
