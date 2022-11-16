@@ -14,6 +14,8 @@ interface AbsSerialize<T> {
     public function unserialize(state:T):Void;
 }
 
+final frameModulos = [1, 144, 89, 55, 34, 21, 13, 8, 5, 3];
+
 // NOTE: will need to be reworked when more than two people are in a match
 class Rollback<T> {
     public static inline final INPUT_DELAY_FRAMES:Int = 3;
@@ -23,9 +25,9 @@ class Rollback<T> {
 
     var playerIndex:Int;
     public var currentFrame:Int = 0;
-    public var frames:Array<Frame>;
+    public var frames:Array<Frame> = [];
     public var futureRemotes:Array<RemoteInput> = [];
-    public var localInputs:Array<FrameInput> = [];
+    // public var localInputs:Array<FrameInput> = [];
     public var isHalted:Bool = false;
 
     var onSimulateInput:Array<FrameInput> -> Float -> AbsSerialize<T>;
@@ -42,15 +44,20 @@ class Rollback<T> {
         this.onSimulateInput = onSimulateInput;
         this.onRollbackState = onRollbackState;
 
-        frames = [{
+        frames.push({
             frameNumber: 0,
-            input: [blankFrame, blankFrame],
+            input: [blankFrame.copy(), blankFrame.copy()],
             state: initialState.serialize()
-        }];
+        });
 
-        for (_ in 0...INPUT_DELAY_FRAMES) {
-            localInputs.push(blankFrame.copy());
-        }
+        // for (_ in 0...INPUT_DELAY_FRAMES) {
+        //     localInputs.push(blankFrame.copy());
+        //     frames.push({
+        //         frameNumber: ++currentFrame,
+        //         input: [blankFrame.copy(), blankFrame.copy()],
+        //         state: initialState.serialize()
+        //     });
+        // }
     }
 
     // update the frame, add the frame
@@ -65,11 +72,14 @@ class Rollback<T> {
 
         currentFrame++;
 
+        // Connection.inst.sendInput(currentFrame + INPUT_DELAY_FRAMES, serializeInput(localInput));
         Connection.inst.sendInput(currentFrame, serializeInput(localInput));
 
         // HACK: input delay
-        localInputs.push(localInput);
-        final currentLocalInput = localInputs.shift();
+        // localInputs.push(localInput);
+        // final currentLocalInput = localInputs.shift();
+
+        final currentLocalInput = localInput;
 
         var remoteInput:FrameInput;
         var behind:Bool = false;
@@ -106,6 +116,13 @@ class Rollback<T> {
         // if we are behind, we can remove all frames since we know we are accurate.
         if (behind) {
             removeCorrectFrames(currentFrame);
+
+            // Re-run based on frames behind.
+            // The further behind, the more likely we re-run.
+            final framesBehind = futureRemotes.length;
+            if (framesBehind > 0 && currentFrame % frameModulos[framesBehind] == 0) {
+                tick(localInput, delta);
+            }
         }
     }
 

@@ -3,7 +3,6 @@ package squidzz.rollback;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
-import flixel.tile.FlxTilemap;
 import squidzz.actors.FlxRollbackActor;
 import squidzz.actors.Player;
 import squidzz.rollback.Rollback;
@@ -13,9 +12,11 @@ typedef RollbackState = {
     var p1Pos:FlxPoint;
     var p1Acc:FlxPoint;
     var p1Vel:FlxPoint;
+    var p1TouchingFloor:Bool;
     var p2Pos:FlxPoint;
     var p2Acc:FlxPoint;
     var p2Vel:FlxPoint;
+    var p2TouchingFloor:Bool;
 }
 
 class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSerialize<RollbackState> {
@@ -78,9 +79,11 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
             p1Pos: new FlxPoint(player1.x, player1.y),
             p1Acc: player1.acceleration.clone(),
             p1Vel: player1.velocity.clone(),
+            p1TouchingFloor: player1.touchingFloor,
             p2Pos: new FlxPoint(player2.x, player2.y),
             p2Acc: player2.acceleration.clone(),
-            p2Vel: player2.velocity.clone()
+            p2Vel: player2.velocity.clone(),
+            p2TouchingFloor: player2.touchingFloor,
         };
     }
 
@@ -90,8 +93,10 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
         player1.setPosition(state.p1Pos.x, state.p1Pos.y);
         player1.acceleration.copyFrom(state.p1Acc);
         player1.velocity.copyFrom(state.p1Vel);
+        player1.touchingFloor = state.p1TouchingFloor;
         player2.setPosition(state.p2Pos.x, state.p2Pos.y);
         player2.acceleration.copyFrom(state.p2Acc);
         player2.velocity.copyFrom(state.p2Vel);
+        player2.touchingFloor = state.p2TouchingFloor;
     }
 }
