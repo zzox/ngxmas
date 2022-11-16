@@ -13,7 +13,7 @@ class MenuState extends flixel.FlxState {
 		Controls.init();
         FlxG.autoPause = false;
 
-		final info = new FlxText();
+		final info = new FlxText(0, 0, 0, '', 32);
 		info.alignment = CENTER;
 		info.text = "Menu";
 		Global.screenCenter(info);

@@ -18,6 +18,8 @@ class MatchState extends FlxState {
     var collisionLayer:FlxTilemap;
     var stateGroup:FlxRollbackGroup;
     public var rollback:Rollback<RollbackState>;
+    public var player1:Player;
+    public var player2:Player;
 
     var debugUi:DebugUi;
 
@@ -28,8 +30,8 @@ class MatchState extends FlxState {
 
         add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
-        final player1 = new Player(64, 328, 'assets/images/player-pink.png');
-        final player2 = new Player(768, 328, 'assets/images/player-blue.png');
+        player1 = new Player(64, 328, 'assets/images/player-pink.png');
+        player2 = new Player(768, 328, 'assets/images/player-blue.png');
 
         player1.opponent = player2;
         player2.opponent = player1;

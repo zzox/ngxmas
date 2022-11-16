@@ -11,16 +11,16 @@ class LobbyState extends FlxState {
 	override function create () {
 		super.create();
 
-		final info = new FlxText();
+		final info = new FlxText(0, 0, 0, '', 32);
 		info.alignment = CENTER;
 		info.text = "Connecting...";
 		Global.screenCenter(info);
 		add(info);
 
-        roomId = new FlxText(16, 16);
+        roomId = new FlxText(16, 16, 0, '', 32);
         add(roomId);
 
-        ping = new FlxText(16, 32);
+        ping = new FlxText(16, 32, 0, '', 32);
         add(ping);
 
         if (!Connection.inst.isServerConnected) {
