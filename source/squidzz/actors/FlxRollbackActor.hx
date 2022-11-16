@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import squidzz.rollback.FrameInput;
 
 class FlxRollbackActor extends FlxSprite {
+    public var touchingFloor:Bool = false;
     public function new (x:Float, y:Float) {
         super(x, y);
     }

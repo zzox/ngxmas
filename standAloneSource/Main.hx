@@ -5,7 +5,7 @@ import flixel.FlxGame;
 class Main extends openfl.display.Sprite {
 	public function new() {
 		super();
-		addChild(new FlxGame(480, 270, BootState, 60, 60, true));
+		addChild(new FlxGame(960, 540, BootState, 60, 60, true));
 	}
 }
 

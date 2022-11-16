@@ -1,5 +1,6 @@
 package squidzz.states;
 
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
@@ -25,15 +26,16 @@ class MatchState extends FlxState {
 
         camera.bgColor = 0xff415d66;
 
-        final map = new TiledMap(Global.asset('assets/data/map1.tmx'));
-        collisionLayer = createTileLayer(map, 'collision', new FlxPoint(0, -2));
-        add(collisionLayer);
+        add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
-        final player1 = new Player(7 * 16, 8 * 16, 'assets/images/player-pink.png');
-        final player2 = new Player(22 * 16, 8 * 16, 'assets/images/player-blue.png');
+        final player1 = new Player(64, 328, 'assets/images/player-pink.png');
+        final player2 = new Player(768, 328, 'assets/images/player-blue.png');
+
+        player1.opponent = player2;
+        player2.opponent = player1;
 
         final playerIndex = Connection.inst.isHost ? 0 : 1;
-        stateGroup = new FlxRollbackGroup(player1, player2, collisionLayer);
+        stateGroup = new FlxRollbackGroup(player1, player2);
         add(stateGroup);
 
         rollback = new Rollback(

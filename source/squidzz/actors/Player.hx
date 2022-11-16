@@ -15,42 +15,43 @@ enum abstract FInput(String) to String {
 
 class Player extends FlxRollbackActor {
     var prevInput:FrameInput;
+    public var opponent:Player;
 
     public function new (x:Float, y:Float, spritePath:String) {
         super(x, y);
 
-        loadGraphic(spritePath, true, 16, 16);
-        offset.set(5, 3);
-        setSize(6, 12);
+        loadGraphic(spritePath, true, 128, 128);
+        offset.set(40, 24);
+        setSize(48, 96);
 
         animation.add('stand', [0]);
         animation.add('run', [0, 1, 1, 2, 2], 24);
         animation.add('in-air', [1, 1, 2, 2, 2], 12);
         animation.add('teetering', [3, 4], 4);
 
-        maxVelocity.set(120, 240);
-        drag.set(1000, 0);
+        maxVelocity.set(480, 960);
+        drag.set(2000, 0);
 
         prevInput = blankInput();
     }
 
     override function updateWithInputs (delta:Float, input:FrameInput) {
-        if (justPressed(input, Up)) {
-            velocity.y = -120;
+        if (justPressed(input, Up) && touchingFloor) {
+            velocity.y = -960;
         }
 
         var acc = 0.0;
         if (pressed(input, Left)) {
-            acc -= 1000;
+            acc -= 4000;
         }
 
         if (pressed(input, Right)) {
-            acc += 1000;
+            acc += 4000;
         }
 
-        acceleration.set(acc, 800);
+        acceleration.set(acc, 2000);
 
-        if (isTouching(FLOOR)) {
+        if (touchingFloor) {
             if (acceleration.x != 0) {
                 animation.play('run');
             } else {
@@ -60,13 +61,7 @@ class Player extends FlxRollbackActor {
             animation.play('in-air');
         }
 
-        if (acceleration.x > 0 && !flipX) {
-            flipX = true;
-        }
-
-        if (acceleration.x < 0 && flipX) {
-            flipX = false;
-        }
+        flipX = opponent.getMidpoint().x > getMidpoint().x;
 
         super.updateWithInputs(delta, input);
 

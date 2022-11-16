@@ -19,14 +19,13 @@ typedef RollbackState = {
 }
 
 class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSerialize<RollbackState> {
-    var collision:FlxTilemap;
+    static inline final FLOOR_Y:Int = 456;
+
     var player1:Player;
     var player2:Player;
 
-    public function new (player1:Player, player2:Player, collision:FlxTilemap) {
+    public function new (player1:Player, player2:Player) {
         super();
-        // path to collision
-        this.collision = collision;
         this.player1 = player1;
         this.player2 = player2;
 
@@ -50,7 +49,22 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
             throw 'bad delta: $delta';
         }
 
-        forEach(actor -> FlxG.collide(actor, collision));
+        forEach(actor -> {
+            if (actor.x < 0) {
+                actor.x = 0;
+            }
+
+            if (actor.x + actor.width > Global.width) {
+                actor.x = Global.width - actor.width;
+            }
+
+            if (actor.y + actor.height > FLOOR_Y) {
+                actor.y = FLOOR_Y - actor.height;
+                actor.touchingFloor = true;
+            } else {
+                actor.touchingFloor = false;
+            }
+        });
 
         FlxG.collide(player1, player2);
 
