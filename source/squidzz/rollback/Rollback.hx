@@ -75,7 +75,7 @@ class Rollback<T> {
                 throw 'bad future';
             }
         } else {
-            remoteInput = getFrame(currentFrame - 1).input[playerIndex == 0 ? 1 : 0];
+            remoteInput = getFrame(currentFrame - 1).input[oppIndex()];
         }
 
         // for now since we have only 2 players this kinda stuff is ok

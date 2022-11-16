@@ -13,7 +13,8 @@ import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
 import squidzz.rollback.Rollback;
 
-class MatchState extends FlxState {
+// TODO: add updates alongside MatchState.
+class TestMatchState extends FlxState {
     var collisionLayer:FlxTilemap;
     var stateGroup:FlxRollbackGroup;
     public var rollback:Rollback<RollbackState>;
@@ -30,38 +31,18 @@ class MatchState extends FlxState {
         add(collisionLayer);
 
         final player1 = new Player(7 * 16, 8 * 16, 'assets/images/player-pink.png');
+        // TODO: punching bag opponent
         final player2 = new Player(22 * 16, 8 * 16, 'assets/images/player-blue.png');
 
-        final playerIndex = Connection.inst.isHost ? 0 : 1;
         stateGroup = new FlxRollbackGroup(player1, player2, collisionLayer);
         add(stateGroup);
-
-        rollback = new Rollback(
-            playerIndex,
-            stateGroup,
-            [ 'up' => false, 'left' => false, 'right' => false ],
-            stateGroup.step,
-            stateGroup.unserialize
-        );
-
-        Connection.inst.addListeners(
-            () -> { trace('Connected in MatchState'); },
-            () -> { trace('Disconnected in MatchState'); },
-            () -> { trace('Peer Connected in MatchState'); },
-            (message) -> { trace('Peer disconnected in MatchState', message); },
-            rollback.handleRemoteInput
-        );
-
-        add(debugUi = new DebugUi(this));
 	}
 
 	override function update (elapsed:Float) {
 		super.update(elapsed);
 
-        rollback.tick(
-            getLocalInput(),
-            elapsed
-        );
+        // TODO: simulate input delay
+        stateGroup.step([getLocalInput(), blankInput()], elapsed);
 
         if (Controls.justPressed.PAUSE) {
             debugUi.visible = !debugUi.visible;

@@ -26,5 +26,9 @@ class MenuState extends flixel.FlxState {
 		if (Controls.justPressed.A) {
 			Global.switchState(new squidzz.states.LobbyState());
         }
+
+        if (Controls.justPressed.PAUSE) {
+            Global.switchState(new TestMatchState());
+        }
 	}
 }

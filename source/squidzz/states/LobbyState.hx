@@ -31,7 +31,7 @@ class LobbyState extends FlxState {
                 () -> { trace('Disconnected!'); },
                 () -> { 
                     Global.switchState(new MatchState());
-                 },
+                },
                 (message) -> { trace('peer disconnected :(', message); }
             );
         } else {
