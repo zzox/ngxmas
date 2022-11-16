@@ -19,6 +19,9 @@ class TestMatchState extends FlxState {
     var stateGroup:FlxRollbackGroup;
     public var rollback:Rollback<RollbackState>;
 
+    // hack to simulate input delay
+    var localInputs:Array<FrameInput> = [];
+
     var debugUi:DebugUi;
 
 	override function create () {
@@ -37,13 +40,18 @@ class TestMatchState extends FlxState {
 
         stateGroup = new FlxRollbackGroup(player1, player2);
         add(stateGroup);
+
+        for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {
+            localInputs.push(blankInput());
+        }
 	}
 
 	override function update (elapsed:Float) {
 		super.update(elapsed);
 
-        // TODO: simulate input delay
-        stateGroup.step([getLocalInput(), blankInput()], elapsed);
+        // simulate input delay
+        localInputs.push(getLocalInput());
+        stateGroup.step([localInputs.shift(), blankInput()], elapsed);
 
         if (Controls.justPressed.PAUSE) {
             debugUi.visible = !debugUi.visible;

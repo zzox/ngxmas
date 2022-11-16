@@ -16,6 +16,8 @@ interface AbsSerialize<T> {
 
 // NOTE: will need to be reworked when more than two people are in a match
 class Rollback<T> {
+    public static inline final INPUT_DELAY_FRAMES:Int = 3;
+
     // ATTN: need something better.
     public static inline final GLOBAL_DELTA:Float = 0.016666666666666666;
 
@@ -23,6 +25,7 @@ class Rollback<T> {
     public var currentFrame:Int = 0;
     public var frames:Array<Frame>;
     public var futureRemotes:Array<RemoteInput> = [];
+    public var localInputs:Array<FrameInput> = [];
     public var isHalted:Bool = false;
 
     var onSimulateInput:Array<FrameInput> -> Float -> AbsSerialize<T>;
@@ -44,6 +47,10 @@ class Rollback<T> {
             input: [blankFrame, blankFrame],
             state: initialState.serialize()
         }];
+
+        for (_ in 0...INPUT_DELAY_FRAMES) {
+            localInputs.push(blankFrame.copy());
+        }
     }
 
     // update the frame, add the frame
@@ -59,6 +66,10 @@ class Rollback<T> {
         currentFrame++;
 
         Connection.inst.sendInput(currentFrame, serializeInput(localInput));
+
+        // HACK: input delay
+        localInputs.push(localInput);
+        final currentLocalInput = localInputs.shift();
 
         var remoteInput:FrameInput;
         var behind:Bool = false;
@@ -79,7 +90,7 @@ class Rollback<T> {
         }
 
         // for now since we have only 2 players this kinda stuff is ok
-        final frameInput = playerIndex == 0 ? [localInput, remoteInput] : [remoteInput, localInput];
+        final frameInput = playerIndex == 0 ? [currentLocalInput, remoteInput] : [remoteInput, currentLocalInput];
 
         final state = onSimulateInput(frameInput, delta);
 
