@@ -24,10 +24,10 @@ class Player extends FlxRollbackActor {
         offset.set(40, 24);
         setSize(48, 96);
 
-        animation.add('stand', [0]);
-        animation.add('run', [0, 1, 1, 2, 2], 24);
-        animation.add('in-air', [1, 1, 2, 2, 2], 12);
-        animation.add('teetering', [3, 4], 4);
+        addAnimation('stand', [0]);
+        addAnimation('run', [0, 1, 1, 2, 2], 2);
+        addAnimation('in-air', [1, 1, 2, 2, 2], 5);
+        addAnimation('teetering', [3, 4], 4);
 
         maxVelocity.set(480, 960);
         drag.set(2000, 0);
@@ -53,12 +53,12 @@ class Player extends FlxRollbackActor {
 
         if (touchingFloor) {
             if (acceleration.x != 0) {
-                animation.play('run');
+                playAnimation('run');
             } else {
-                animation.play('stand');
+                playAnimation('stand');
             }
         } else {
-            animation.play('in-air');
+            playAnimation('in-air');
         }
 
         flipX = opponent.getMidpoint().x > getMidpoint().x;

@@ -22,8 +22,6 @@ class TestMatchState extends FlxState {
     // hack to simulate input delay
     var localInputs:Array<FrameInput> = [];
 
-    var debugUi:DebugUi;
-
 	override function create () {
 		super.create();
 
@@ -52,10 +50,6 @@ class TestMatchState extends FlxState {
         // simulate input delay
         localInputs.push(getLocalInput());
         stateGroup.step([localInputs.shift(), blankInput()], elapsed);
-
-        if (Controls.justPressed.PAUSE) {
-            debugUi.visible = !debugUi.visible;
-        }
 	}
 
     function createTileLayer (map:TiledMap, layerName:String, offset:FlxPoint):Null<FlxTilemap> {
