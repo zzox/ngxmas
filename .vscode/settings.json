@@ -8,7 +8,10 @@
         }
     },
     "haxe.enableExtendedIndentation": true,
-    "editor.rulers": [80, 120],
+    "editor.rulers": [
+        80,
+        120
+    ],
     "emeraldwalk.runonsave": {
         "commands": [
             {
@@ -16,5 +19,6 @@
                 "cmd": "lime build html5"
             }
         ]
-    }
+    },
+    "workbench.colorTheme": "Default Dark+"
 }

@@ -16,7 +16,7 @@ import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
 import squidzz.rollback.Rollback;
 
-class MatchState extends FlxState {
+class MatchState extends BaseState {
 	public static var self:MatchState;
 
 	var collisionLayer:FlxTilemap;

@@ -41,7 +41,7 @@ class Player extends FlxRollbackActor {
 		animation.add('stand', [0]);
 		animation.add('run', [0, 1, 1, 2, 2], 24);
 		animation.add('in-air', [1, 1, 2, 2, 2], 12);
-		animation.add('teetering', [3, s4], 4);
+		animation.add('teetering', [3, 4], 4);
 
 		maxVelocity.set(480, 960);
 		drag.set(2000, 0);

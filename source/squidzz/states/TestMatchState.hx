@@ -14,7 +14,7 @@ import squidzz.rollback.FrameInput;
 import squidzz.rollback.Rollback;
 
 // TODO: add updates alongside MatchState.
-class TestMatchState extends FlxState {
+class TestMatchState extends BaseState {
     var collisionLayer:FlxTilemap;
     var stateGroup:FlxRollbackGroup;
     public var rollback:Rollback<RollbackState>;

@@ -1,6 +1,7 @@
 package squidzz.actors;
 
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
 import haxe.Json;
 import squidzz.actors.ActorTypes.DamageSourceAttributes;
 import squidzz.states.MatchState;
@@ -8,15 +9,17 @@ import squidzz.states.MatchState;
 class DamageSource extends FlxRollbackActor {
 	public var attributes:DamageSourceAttributes;
 
-	public function new(X:Float, Y:Float, ?stamp:FlxSpriteExt, ?attributes:DamageSourceAttributes) {
+	public function new(?X:Float = 0, ?Y:Float = 0, ?stamp:FlxSpriteExt, ?attributes:DamageSourceAttributes) {
 		super(X, Y);
 		MatchState.self.damage.add(this);
 
-		stamp = null ? load_from_attributes(attributes) : stamp;
+		if (stamp != null || attributes == null) {
+			stamp = null ? load_from_attributes(attributes) : stamp;
 
-		makeGraphic(Math.floor(stamp.width), Math.floor(stamp.height), FlxColor.TRANSPARENT, true);
-		setSize(stamp.width, stamp.height);
-		this.stamp(stamp);
+			makeGraphic(Math.floor(stamp.width), Math.floor(stamp.height), FlxColor.TRANSPARENT, true);
+			setSize(stamp.width, stamp.height);
+			this.stamp(stamp);
+		}
 
 		// TODO: Finish this to work with offsets and such
 	}
@@ -47,8 +50,8 @@ class DamageSource extends FlxRollbackActor {
 	 * @return DamageSource
 	**/
 	public static inline function deserialize(source:DamageSourceAttributes):DamageSource {
-		var new_damage_source:DamageSource = new DamageSource(X, Y, "");
-		new_damage_source.load_attributes();
+		var new_damage_source:DamageSource = new DamageSource();
+		new_damage_source.load_from_attributes(source);
 		return new_damage_source;
 	}
 
