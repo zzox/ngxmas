@@ -6,12 +6,12 @@ import ui.Controls;
 import utils.Global;
 
 class MenuState extends flixel.FlxState {
-	override function create () {
+	override function create() {
 		super.create();
-		
+
 		// Only needs to be called once
 		Controls.init();
-        FlxG.autoPause = false;
+		FlxG.autoPause = false;
 
 		final info = new FlxText(0, 0, 0, '', 32);
 		info.alignment = CENTER;
@@ -19,16 +19,18 @@ class MenuState extends flixel.FlxState {
 		Global.screenCenter(info);
 		add(info);
 	}
-	
+
 	override function update(elapsed:Float) {
 		super.update(elapsed);
-		
+
+		#if js
 		if (Controls.justPressed.A) {
 			Global.switchState(new squidzz.states.LobbyState());
-        }
+		}
+		#end
 
-        if (Controls.justPressed.PAUSE) {
-            Global.switchState(new TestMatchState());
-        }
+		if (Controls.justPressed.PAUSE) {
+			Global.switchState(new TestMatchState());
+		}
 	}
 }

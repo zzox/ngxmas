@@ -1,7 +1,12 @@
+#if js
+import squidzz.conn.Connection;
+#end
+import Main;
 import flixel.*;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import squidzz.actors.DamageSource;
+import squidzz.actors.fighters.*;
 import squidzz.ext.FlxSpriteExt;
 import squidzz.ext.ListTypes.AnimSetData;
 import squidzz.ext.Utils;

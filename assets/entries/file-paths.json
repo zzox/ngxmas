@@ -1,3 +1,40 @@
 {
-    "paths": []
+    "paths": [
+        {
+            "file": "file-paths.json",
+            "path": "assets/entries/file-paths.json"
+        },
+        {
+            "file": "penguin_anims.xml",
+            "path": "assets/entries/penguin_anims.xml"
+        },
+        {
+            "file": "player-blue.png",
+            "path": "assets/images/player-blue.png"
+        },
+        {
+            "file": "player-pink.png",
+            "path": "assets/images/player-pink.png"
+        },
+        {
+            "file": "penguin-hitbox.png",
+            "path": "assets/images/fighters/penguin/penguin-hitbox.png"
+        },
+        {
+            "file": "penguin-hurtbox.png",
+            "path": "assets/images/fighters/penguin/penguin-hurtbox.png"
+        },
+        {
+            "file": "penguin.png",
+            "path": "assets/images/fighters/penguin/penguin.png"
+        },
+        {
+            "file": "music-goes-here.txt",
+            "path": "assets/music/music-goes-here.txt"
+        },
+        {
+            "file": "sounds-go-here.txt",
+            "path": "assets/sounds/sounds-go-here.txt"
+        }
+    ]
 }

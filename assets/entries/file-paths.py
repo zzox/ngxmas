@@ -2,9 +2,9 @@ import glob
 import pathlib
 import json
 
-path = "C:/Users/squid/Dropbox/Haxe/SECRETPROJECT/assets/"
+path = "C:/Users/squid/Dropbox/Haxe/SECRET_PROJECT/assets/"
 raw_files = glob.glob(path + "/**/*.*", recursive=True)
-split_on = "Swords/"
+split_on = "SECRET_PROJECT/"
 
 files = []
 for file in raw_files:

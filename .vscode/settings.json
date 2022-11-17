@@ -8,10 +8,6 @@
         }
     },
     "haxe.enableExtendedIndentation": true,
-    "editor.rulers": [
-        80,
-        120
-    ],
     "emeraldwalk.runonsave": {
         "commands": [
             {

@@ -10,6 +10,9 @@ import haxe.ds.IntMap;
 import haxe.ds.ObjectMap;
 import haxe.ds.StringMap;
 import lime.utils.Assets;
+import squidzz.ext.ListTypes.PathCacheType;
+
+using flixel.util.FlxArrayUtil;
 
 class Utils {
 	public static var path_cache:Map<String, String> = new Map<String, String>();
@@ -140,7 +143,7 @@ class Utils {
 	 * @param preset 
 	 */
 	public static function shake(preset:String = "damage") {
-		if (BaseState.DISABLE_SCREENSHAKE)
+		if (Main.DISABLE_SCREENSHAKE)
 			return;
 
 		var intensity:Float = 0;
@@ -248,6 +251,33 @@ class Utils {
 		if (old_position.x != object.x || old_position.y != object.y)
 			trace('New \'{$name}\' position: (${pos.x} , ${pos.y})');
 	}
+
+	public static function fill_path_cache() {
+		var path_cache_json:PathCacheType = haxe.Json.parse(loadAssistString("assets/entries/file-paths.json"));
+		for (key in path_cache_json.paths)
+			path_cache.set(key.file, key.path);
+		trace(path_cache);
+	}
+
+	public static function get_file_path(name:String, path:String = "assets", safe:Bool = false):String {
+		if (path_cache.get("penguin.png") == null)
+			fill_path_cache();
+
+		var clean_name:String = name.split("/")[name.split("/").length - 1];
+		if (path_cache.exists(clean_name))
+			return path_cache.get(name);
+
+		if (!safe)
+			throw 'could not find ${name} from starting path ${path}';
+
+		return null;
+	}
+
+	public static function loadAssistString(path:String):String
+		return Assets.getText(path);
+
+	public static function file_exists(name:String):Bool
+		return path_cache.get(name.split("/").last()) != null;
 }
 
 /**

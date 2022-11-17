@@ -11,6 +11,9 @@ class FlxSpriteExt extends FlxSprite {
 	/**Defined types of this, can be attributes and special effects and such*/
 	var types:Array<String> = [];
 
+	/**Replaced with spritesheet name*/
+	var type:String = "";
+
 	/**Animations that auto link when an animation is over*/
 	var animationLinks:Array<Array<String>> = [];
 
@@ -34,6 +37,9 @@ class FlxSpriteExt extends FlxSprite {
 	/**Image or animation set name that was loaded, no file name or path specified, just as it is in animData*/
 	public var loaded_image:String = "";
 
+	var offset_left:FlxPoint;
+	var offset_right:FlxPoint;
+
 	public function new(?X:Float, ?Y:Float, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);
 	}
@@ -46,19 +52,33 @@ class FlxSpriteExt extends FlxSprite {
 	}
 
 	/***Loads the Image AND Animations from an AnimationSet***/
-	public function loadAllFromAnimationSet(image:String, unique:Bool = false, autoIdle:Bool = true):Bool {
+	public function loadAllFromAnimationSet(image:String, ?image_as:String, unique:Bool = false, autoIdle:Bool = true, unsafe:Bool = false):Bool {
 		var animSet:AnimSetData = Lists.getAnimationSet(image);
 		loaded_image = image;
 
-		if (animSet == null)
+		if (type == "sprite" || type == "")
+			type = image;
+
+		if (animSet == null) {
+			loadGraphic(Utils.get_file_path(image + ".png"));
+			animAdd("idle", "1");
 			return false;
+		}
 
 		var animWidth:Float = animSet.dimensions.x;
 		var animHeight:Float = animSet.dimensions.y;
 
 		var fullPath:String = animSet.path + "/" + animSet.image + ".png";
 
-		loadGraphic(fullPath);
+		if (image_as != null)
+			fullPath = StringTools.replace(fullPath, '${image}.png', '${image_as}.png');
+
+		var file_path:String = Utils.file_exists(fullPath) ? fullPath : Utils.get_file_path(image + ".png", "assets");
+
+		loadGraphic(file_path, true, Math.floor(animWidth), Math.floor(animHeight));
+
+		if (graphic == null && !unsafe)
+			throw '${file_path} is null!';
 
 		if (animWidth == 0)
 			animWidth = graphic.width / (animSet.maxFrame + 1);
@@ -72,12 +92,16 @@ class FlxSpriteExt extends FlxSprite {
 		if (animSet.offset.y != -999)
 			offset.y = animSet.offset.y;
 
+		if (animSet.offset_left != null)
+			offset_left = animSet.offset_left;
+
+		if (animSet.offset_right != null)
+			offset_right = animSet.offset_right;
+
 		frames = FlxTileFrames.fromGraphic(graphic, FlxPoint.get(animWidth, animHeight));
 
-		if (animSet.hitbox.x != 0) {
+		if (animSet.hitbox.x != 0)
 			setSize(animSet.hitbox.x, animSet.hitbox.y);
-			hitboxOverritten = true;
-		}
 
 		return loadAnimsFromAnimationSet(image, autoIdle);
 	}

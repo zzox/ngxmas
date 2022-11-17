@@ -1,3 +1,4 @@
+#if js
 package squidzz.conn;
 
 import haxe.Timer;
@@ -8,211 +9,201 @@ import squidzz.conn.Ws;
 import squidzz.rollback.FrameInput;
 
 class Connection {
-    public static var inst:Conn = new Conn();
+	public static var inst:Conn = new Conn();
 }
 
 class Conn {
-    // connect to local version
-    static inline final WS_URL:String = 'ws://localhost:6969';
+	// connect to local version
+	static inline final WS_URL:String = 'ws://localhost:6969';
 
-    // connect to ngrok from from localhost (ws:// only)
-    // static inline final WS_URL:String = 'ws://cf2c-2605-a601-ab03-5e00-c97-839c-cc39-31f6.ngrok.io';
+	// connect to ngrok from from localhost (ws:// only)
+	// static inline final WS_URL:String = 'ws://cf2c-2605-a601-ab03-5e00-c97-839c-cc39-31f6.ngrok.io';
+	// connect to heroku
+	// static inline final WS_URL:String = 'wss://squidzz.herokuapp.com';
+	static inline final PING_INTERVAL:Int = 250;
 
-    // connect to heroku
-    // static inline final WS_URL:String = 'wss://squidzz.herokuapp.com';
+	public function new() {}
 
-    static inline final PING_INTERVAL:Int = 250;
-    public function new () {}
+	var ws:Ws;
+	var rtc:Rtc;
 
-    var ws:Ws;
-    var rtc:Rtc;
+	/** server stuff **/
+	public var isServerConnected:Bool = false;
 
-    /** server stuff **/
-    public var isServerConnected:Bool = false;
-    public var onServerConnect:Void -> Void;
-    public var onServerDisconnect:Void -> Void;
+	public var onServerConnect:Void->Void;
+	public var onServerDisconnect:Void->Void;
 
-    /** p2p stuff **/
-    public var isHost:Bool;
-    public var isPeerConnected:Bool = false;
-    public var onPeerConnect:Void -> Void;
-    public var onPeerDisconnect:String -> Void;
+	/** p2p stuff **/
+	public var isHost:Bool;
 
-    /** connection stuff **/
-    public var roomId:Null<String> = null;
-    public var onRemoteInput:RemoteInput -> Void;
+	public var isPeerConnected:Bool = false;
+	public var onPeerConnect:Void->Void;
+	public var onPeerDisconnect:String->Void;
 
-    public var pingTime:Int;
-    var lastPingTime:Float;
+	/** connection stuff **/
+	public var roomId:Null<String> = null;
 
-    public function init (
-        onServerConnect:Void -> Void,
-        onServerDisconnect:Void -> Void,
-        onPeerConnect:Void -> Void,
-        onPeerDisconnect:String -> Void
-    ) {
-        if (isServerConnected || isPeerConnected) {
-            trace('connection already exists!');
-            return;
-        }
+	public var onRemoteInput:RemoteInput->Void;
 
-        this.onServerConnect = onServerConnect;
-        this.onServerDisconnect = onServerDisconnect;
-        this.onPeerConnect = onPeerConnect;
-        this.onPeerDisconnect = onPeerDisconnect;
+	public var pingTime:Int;
 
-        ws = new Ws(
-            WS_URL,
-            () -> {
-                isServerConnected = true;
-                this.onServerConnect();
-            },
-            () -> {
-                isServerConnected = false;
-                this.onServerDisconnect();
-            },
-            handleWebsocketMessage
-        );
+	var lastPingTime:Float;
 
-        rtc = new Rtc(
-            handleIceCandidate,
-            handlePeerMessage,
-            () -> {
-                startPing();
-            }
-        );
+	public function init(onServerConnect:Void->Void, onServerDisconnect:Void->Void, onPeerConnect:Void->Void, onPeerDisconnect:String->Void) {
+		if (isServerConnected || isPeerConnected) {
+			trace('connection already exists!');
+			return;
+		}
 
-        // create peer connection
-    }
+		this.onServerConnect = onServerConnect;
+		this.onServerDisconnect = onServerDisconnect;
+		this.onPeerConnect = onPeerConnect;
+		this.onPeerDisconnect = onPeerDisconnect;
 
-    public function addListeners (
-        ?onServerConnect:Void -> Void,
-        ?onServerDisconnect:Void -> Void,
-        ?onPeerConnect:Void -> Void,
-        ?onPeerDisconnect:String -> Void,
-        ?onRemoteInput:RemoteInput -> Void
-    ) {
-        if (onServerConnect != null) this.onServerConnect = onServerConnect;
-        if (onServerDisconnect != null) this.onServerDisconnect = onServerDisconnect;
-        if (onPeerConnect != null) this.onPeerConnect = onPeerConnect;
-        if (onPeerDisconnect != null) this.onPeerDisconnect = onPeerDisconnect;
-        if (onRemoteInput != null) this.onRemoteInput = onRemoteInput;
-    }
+		ws = new Ws(WS_URL, () -> {
+			isServerConnected = true;
+			this.onServerConnect();
+		}, () -> {
+			isServerConnected = false;
+			this.onServerDisconnect();
+		}, handleWebsocketMessage);
 
-    public function sendInput (index:Int, input:String) {
-        rtc.sendMessage('remote-input', { index: index, input: input });
-    }
+		rtc = new Rtc(handleIceCandidate, handlePeerMessage, () -> {
+			startPing();
+		});
 
-    function handlePeerMessage (message:Dynamic) {
-        final type:String = message.type;
-        final payload:Dynamic = message.payload;
+		// create peer connection
+	}
 
-        switch (type) {
-            case 'ping':
-                rtc.sendMessage('pong');
-            case 'pong':
-                pingTime = Math.round((Timer.stamp() - lastPingTime) * 1000);
-            case 'confirm':
-                if (!isPeerConnected) {
-                    rtc.sendMessage('confirm-ack');
-                    onPeerConnect();
-                }
-                isPeerConnected = true;
-            case 'confirm-ack':
-                if (!isPeerConnected) {
-                    onPeerConnect();
-                }
-            case 'remote-input':
-                onRemoteInput({ index: payload.index, input: deserializeInput(payload.input) });
-            default:
-                trace('unhandled peer message', type, payload);
-        }
-    }
+	public function addListeners(?onServerConnect:Void->Void, ?onServerDisconnect:Void->Void, ?onPeerConnect:Void->Void, ?onPeerDisconnect:String->Void,
+			?onRemoteInput:RemoteInput->Void) {
+		if (onServerConnect != null)
+			this.onServerConnect = onServerConnect;
+		if (onServerDisconnect != null)
+			this.onServerDisconnect = onServerDisconnect;
+		if (onPeerConnect != null)
+			this.onPeerConnect = onPeerConnect;
+		if (onPeerDisconnect != null)
+			this.onPeerDisconnect = onPeerDisconnect;
+		if (onRemoteInput != null)
+			this.onRemoteInput = onRemoteInput;
+	}
 
-    function startPing () {
-        new Timer(PING_INTERVAL).run = () -> {
-            if (isHost && !isPeerConnected) {
-                rtc.sendMessage('confirm');
-            }
-            lastPingTime = Timer.stamp();
-            rtc.sendMessage('ping');
-        };
-    }
+	public function sendInput(index:Int, input:String) {
+		rtc.sendMessage('remote-input', {index: index, input: input});
+	}
 
-    public function joinOrCreateRoom () {}
+	function handlePeerMessage(message:Dynamic) {
+		final type:String = message.type;
+		final payload:Dynamic = message.payload;
 
-    public function createRoom () {
-        if (roomId == null) {
-            // MAYBE: a joiningRoom var, OR a ConnectionStatus enum
-            sendWsMessage('create-room');
-        } else {
-            trace('already in room');
-        }
-    }
+		switch (type) {
+			case 'ping':
+				rtc.sendMessage('pong');
+			case 'pong':
+				pingTime = Math.round((Timer.stamp() - lastPingTime) * 1000);
+			case 'confirm':
+				if (!isPeerConnected) {
+					rtc.sendMessage('confirm-ack');
+					onPeerConnect();
+				}
+				isPeerConnected = true;
+			case 'confirm-ack':
+				if (!isPeerConnected) {
+					onPeerConnect();
+				}
+			case 'remote-input':
+				onRemoteInput({index: payload.index, input: deserializeInput(payload.input)});
+			default:
+				trace('unhandled peer message', type, payload);
+		}
+	}
 
-    public function joinAnyRoom () {
-        if (roomId == null) {
-            // MAYBE: a joiningRoom var, OR a ConnectionStatus enum
-            sendWsMessage('join-any-room');
-        } else {
-            trace('already in room');
-        }
-    }
+	function startPing() {
+		new Timer(PING_INTERVAL).run = () -> {
+			if (isHost && !isPeerConnected) {
+				rtc.sendMessage('confirm');
+			}
+			lastPingTime = Timer.stamp();
+			rtc.sendMessage('ping');
+		};
+	}
 
-    function sendWsMessage (type:String, ?payload:Dynamic) {
-        if (!isServerConnected) {
-            trace('not connected');
-            return;
-        }
+	public function joinOrCreateRoom() {}
 
-        if (ws == null) {
-            trace('Websocket not initialized');
-            return;
-        }
+	public function createRoom() {
+		if (roomId == null) {
+			// MAYBE: a joiningRoom var, OR a ConnectionStatus enum
+			sendWsMessage('create-room');
+		} else {
+			trace('already in room');
+		}
+	}
 
-        ws.send({ type: type, payload: payload });
-    }
+	public function joinAnyRoom() {
+		if (roomId == null) {
+			// MAYBE: a joiningRoom var, OR a ConnectionStatus enum
+			sendWsMessage('join-any-room');
+		} else {
+			trace('already in room');
+		}
+	}
 
-    function handleWebsocketMessage (message:Dynamic) {
-        final payload = message.payload;
-        final type:String = message.type;
-        switch (type) {
-            // We created a room and are the host of it.
-            case 'room-created':
-                isHost = true;
-                roomId = payload;
-                rtc.createDataChannel();
-            // we created a room and a peer joined.
-            case 'peer-joined':
-                trace('sending offer');
-                rtc.createOffer(onOfferGenerated);
-            // we joined as a peer
-            case 'joined-room':
-                isHost = false;
-                roomId = payload;
-            case 'sdp-offer':
-                trace('got offer', payload);
-                rtc.setRemoteDescription(payload, onAnswerGenerated);
-            case 'sdp-answer':
-                trace('got answer', payload);
-                rtc.setAnswer(payload);
-            case 'ice-candidate':
-                trace('got candidate', payload);
-                rtc.addIceCandidate(payload);
-            default:
-                trace('unhandled message', type, payload);
-        }
-    }
+	function sendWsMessage(type:String, ?payload:Dynamic) {
+		if (!isServerConnected) {
+			trace('not connected');
+			return;
+		}
 
-    function onOfferGenerated (offer:SessionDescriptionInit) {
-        sendWsMessage('sdp-offer', { roomId: roomId, offer: offer });
-    }
+		if (ws == null) {
+			trace('Websocket not initialized');
+			return;
+		}
 
-    function onAnswerGenerated (answer:SessionDescriptionInit) {
-        sendWsMessage('sdp-answer', { roomId: roomId, answer:answer });
-    }
+		ws.send({type: type, payload: payload});
+	}
 
-    function handleIceCandidate (candidate:IceCandidate) {
-        sendWsMessage('ice-candidate', { roomId: roomId, candidate: candidate });
-    }
+	function handleWebsocketMessage(message:Dynamic) {
+		final payload = message.payload;
+		final type:String = message.type;
+		switch (type) {
+			// We created a room and are the host of it.
+			case 'room-created':
+				isHost = true;
+				roomId = payload;
+				rtc.createDataChannel();
+			// we created a room and a peer joined.
+			case 'peer-joined':
+				trace('sending offer');
+				rtc.createOffer(onOfferGenerated);
+			// we joined as a peer
+			case 'joined-room':
+				isHost = false;
+				roomId = payload;
+			case 'sdp-offer':
+				trace('got offer', payload);
+				rtc.setRemoteDescription(payload, onAnswerGenerated);
+			case 'sdp-answer':
+				trace('got answer', payload);
+				rtc.setAnswer(payload);
+			case 'ice-candidate':
+				trace('got candidate', payload);
+				rtc.addIceCandidate(payload);
+			default:
+				trace('unhandled message', type, payload);
+		}
+	}
+
+	function onOfferGenerated(offer:SessionDescriptionInit) {
+		sendWsMessage('sdp-offer', {roomId: roomId, offer: offer});
+	}
+
+	function onAnswerGenerated(answer:SessionDescriptionInit) {
+		sendWsMessage('sdp-answer', {roomId: roomId, answer: answer});
+	}
+
+	function handleIceCandidate(candidate:IceCandidate) {
+		sendWsMessage('ice-candidate', {roomId: roomId, candidate: candidate});
+	}
 }
+#end

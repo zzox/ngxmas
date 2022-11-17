@@ -63,3 +63,18 @@ enum abstract DamageDefines(Int) from Int to Int {
 	/** Breaks through crouching/standing guards and causes increased stun when it does*/
 	var EARTHQUAKE:Int = 404;
 }
+
+enum abstract JumpDirection(Int) from Int to Int {
+	var NONE:Int = 0;
+	var FORWARDS:Int = 1;
+	var BACKWARDS:Int = 2;
+	var NEUTRAL:Int = 3;
+}
+
+enum abstract JumpingStyle(Int) from Int to Int {
+	/** Can't reposition midjump*/
+	var TRADITIONAL:Int = 0;
+
+	/**Smash style jumping*/
+	var FREESTYLE:Int = 1;
+}

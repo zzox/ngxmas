@@ -1,5 +1,8 @@
 package squidzz.actors;
 
+import flixel.util.FlxDirection;
+import squidzz.actors.ActorTypes.JumpDirection;
+import squidzz.actors.ActorTypes.JumpingStyle;
 import squidzz.rollback.FrameInput;
 
 // This means we're translation enums to strings to enums,
@@ -13,10 +16,10 @@ enum abstract FInput(String) to String {
 	var B = 'B';
 }
 
-class Player extends FlxRollbackActor {
+class Fighter extends FlxRollbackActor {
 	var prevInput:FrameInput;
 
-	public var opponent:Player;
+	public var opponent:Fighter;
 
 	/**A seperated hitbox anim that track this sprite and  is only used for hitbox spawning*/
 	public var hitbox:FlxSpriteExt;
@@ -24,8 +27,14 @@ class Player extends FlxRollbackActor {
 	/**A seperated hurtbox anim that track this sprite and  is only used for hitbox spawning*/
 	public var hurtbox:FlxSpriteExt;
 
-	public function new(x:Float, y:Float, spritePath:String) {
-		super(x, y);
+	var JUMPING_STYLE:JumpingStyle = JumpingStyle.TRADITIONAL;
+	var JUMP_DIRECTION:JumpDirection = JumpDirection.NONE;
+
+	var air_speed:Int = 500;
+	var ground_speed:Int = 1000;
+
+	public function new(?Y:Float = 0, ?X:Float = 0, spritePath:String) {
+		super(X, Y);
 
 		loadAllFromAnimationSet(spritePath);
 
@@ -34,52 +43,77 @@ class Player extends FlxRollbackActor {
 		hurtbox = new FlxSpriteExt();
 		hurtbox.loadAllFromAnimationSet('${spritePath}-hitbox');
 
-		loadGraphic(spritePath, true, 128, 128);
-		offset.set(40, 24);
-		setSize(48, 96);
-
-		animation.add('stand', [0]);
-		animation.add('run', [0, 1, 1, 2, 2], 24);
-		animation.add('in-air', [1, 1, 2, 2, 2], 12);
-		animation.add('teetering', [3, 4], 4);
-
-		maxVelocity.set(480, 960);
-		drag.set(2000, 0);
-
 		prevInput = blankInput();
+
+		update_offsets();
 	}
 
 	override function updateWithInputs(delta:Float, input:FrameInput) {
 		if (justPressed(input, Up) && touchingFloor) {
+			start_jump(delta, input);
 			velocity.y = -960;
 		}
 
-		var acc = 0.0;
-		if (pressed(input, Left)) {
-			acc -= 4000;
+		if (touchingFloor && cast(JUMP_DIRECTION, Int) > JumpDirection.NONE) {
+			JUMP_DIRECTION = JumpDirection.NONE;
+			velocity.x = 0;
 		}
 
-		if (pressed(input, Right)) {
-			acc += 4000;
+		var acc:Float = 0.0;
+
+		if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE) {
+			if (pressed(input, Left)) {
+				acc -= ground_speed;
+			}
+
+			if (pressed(input, Right)) {
+				acc += ground_speed;
+			}
 		}
 
 		acceleration.set(acc, 2000);
 
+		do_jump(delta, input);
+
 		if (touchingFloor) {
 			if (acceleration.x != 0) {
-				animation.play('run');
+				animation.play('walk');
 			} else {
-				animation.play('stand');
+				animation.play('idle');
 			}
 		} else {
-			animation.play('in-air');
+			animation.play('jump');
+		}
+		flipX = opponent.getMidpoint().x > getMidpoint().x;
+		super.updateWithInputs(delta, input);
+		prevInput = input;
+	}
+
+	function start_jump(delta:Float, input:FrameInput) {
+		if (JUMPING_STYLE == JumpingStyle.TRADITIONAL) {
+			JUMP_DIRECTION = JumpDirection.NEUTRAL;
+			if (pressed(input, Left))
+				JUMP_DIRECTION = !flipX ? JumpDirection.FORWARDS : JumpDirection.BACKWARDS;
+			else if (pressed(input, Right))
+				JUMP_DIRECTION = !flipX ? JumpDirection.BACKWARDS : JumpDirection.FORWARDS;
+		}
+		touchingFloor = false;
+	}
+
+	function do_jump(delta:Float, input:FrameInput) {
+		if (JUMP_DIRECTION == JumpDirection.NONE)
+			return;
+
+		var acc:Float = 0.0;
+
+		if (JUMP_DIRECTION == JumpDirection.FORWARDS) {
+			acc += !flipX ? -air_speed : air_speed;
+		}
+		if (JUMP_DIRECTION == JumpDirection.BACKWARDS) {
+			acc += !flipX ? air_speed : -air_speed;
 		}
 
-		flipX = opponent.getMidpoint().x > getMidpoint().x;
-
-		super.updateWithInputs(delta, input);
-
-		prevInput = input;
+		acceleration.set(acc, 2000);
 	}
 
 	/**Receive a hit**/
@@ -108,5 +142,9 @@ class Player extends FlxRollbackActor {
 		}
 		#end
 		return input[dir] && !prevInput[dir];
+	}
+
+	function update_offsets() {
+		offset.set(flipX ? offset_left.x : offset_right.x, flipX ? offset_left.y : offset_right.y);
 	}
 }

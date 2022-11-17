@@ -1,8 +1,8 @@
+#if js
 package squidzz.states;
 
 import flixel.FlxState;
 import flixel.text.FlxText;
-import squidzz.conn.Connection;
 
 class LobbyState extends BaseState {
 	var roomId:FlxText;
@@ -67,3 +67,4 @@ class LobbyState extends BaseState {
 		Connection.inst.joinAnyRoom();
 	}
 }
+#end

@@ -1,11 +1,13 @@
-<animSet image = "penguin" path = "assets\images\fighters\penguin" hitbox = "71,1" offset_left = "68,51" offset_right = "84,51" fps = "100ms">
-    <anim name = "idle">0t1</anim>
-    <anim name = "walk">2t3</anim>
-    <anim name = "jump">14t15</anim>
-    <anim name = "jab-ground-neutral" looping = "false">4t6</anim>
-    <anim name = "jab-ground-back" looping = "false">7t8,9h3</anim>
-    <anim name = "jab-ground-forward" looping = "false">7t8,9h3</anim>
-    <anim name = "jab-ground-up" looping = "false">10t13</anim>
-    <anim name = "jab-air-neutral" looping = "false">16t20</anim>
-    <anim name = "special-all-slide" looping = "false">20t21</anim>
-</animSet>
+<root>
+    <animSet image = "penguin" path = "assets\images\fighters\penguin" hitbox = "71,1" offset_left = "68,146" offset_right = "84,146" fps = "100ms">
+        <anim name = "idle" fps = "150ms">0t1</anim>
+        <anim name = "walk">2t3</anim>
+        <anim name = "jump">14t15</anim>
+        <anim name = "jab-ground-neutral" looping = "false">4t6</anim>
+        <anim name = "jab-ground-back" looping = "false">7t8,9h3</anim>
+        <anim name = "jab-ground-forward" looping = "false">7t8,9h3</anim>
+        <anim name = "jab-ground-up" looping = "false">10t13</anim>
+        <anim name = "jab-air-neutral" looping = "false">16t20</anim>
+        <anim name = "special-all-slide" looping = "false">20t21</anim>
+    </animSet>
+</root>

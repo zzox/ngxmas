@@ -8,6 +8,36 @@
             "name": "Lime",
             "type": "lime",
             "request": "launch"
+        },
+        {
+            "name": "Electron: Main",
+            "request": "launch",
+            "type": "node",
+            "cwd": "${workspaceFolder}/export/electron/bin",
+            "runtimeExecutable": "electron",
+            "runtimeArgs": [
+                "--remote-debugging-port=9223",
+                "."
+            ],
+            "preLaunchTask": "lime: build electron -debug",
+            "outputCapture": "std"
+        },
+        {
+            "name": "Electron: Renderer",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9223,
+            "webRoot": "${workspaceFolder}/export/electron/bin",
+            "timeout": 30000
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Electron: All",
+            "configurations": [
+                "Electron: Main",
+                "Electron: Renderer"
+            ]
         }
     ]
 }

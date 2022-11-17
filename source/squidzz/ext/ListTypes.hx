@@ -27,3 +27,10 @@ typedef AnimDef = {
 	var looping:Bool;
 	var linked:String;
 }
+
+/**
+ * For loading from file-paths.json
+ */
+typedef PathCacheType = {
+	var paths:Array<{file:String, path:String}>;
+}

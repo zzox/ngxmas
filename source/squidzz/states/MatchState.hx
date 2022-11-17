@@ -9,8 +9,7 @@ import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.DamageSource;
-import squidzz.actors.Player;
-import squidzz.conn.Connection;
+import squidzz.actors.Fighter;
 import squidzz.display.DebugUi;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
@@ -23,8 +22,8 @@ class MatchState extends BaseState {
 	var stateGroup:FlxRollbackGroup;
 
 	public var rollback:Rollback<RollbackState>;
-	public var player1:Player;
-	public var player2:Player;
+	public var player1:Fighter;
+	public var player2:Fighter;
 
 	var debugUi:DebugUi;
 
@@ -38,18 +37,24 @@ class MatchState extends BaseState {
 
 		add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
-		player1 = new Player(64, 328, 'assets/images/player-pink.png');
-		player2 = new Player(768, 328, 'assets/images/player-blue.png');
+		player1 = new Fighter(64, 328, 'assets/images/player-pink.png');
+		player2 = new Fighter(768, 328, 'assets/images/player-blue.png');
 
 		player1.opponent = player2;
 		player2.opponent = player1;
 
+		#if js
 		final playerIndex = Connection.inst.isHost ? 0 : 1;
+		#else
+		final playerIndex = 0;
+		#end
+
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
 
 		rollback = new Rollback(playerIndex, stateGroup, ['up' => false, 'left' => false, 'right' => false], stateGroup.step, stateGroup.unserialize);
 
+		#if js
 		Connection.inst.addListeners(() -> {
 			trace('Connected in MatchState');
 		}, () -> {
@@ -59,6 +64,7 @@ class MatchState extends BaseState {
 		}, (message) -> {
 			trace('Peer disconnected in MatchState', message);
 		}, rollback.handleRemoteInput);
+		#end
 
 		add(debugUi = new DebugUi(this));
 	}

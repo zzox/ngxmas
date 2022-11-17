@@ -14,45 +14,26 @@ class Lists {
 	function new() {}
 
 	public static function init() {
+		Utils.fill_path_cache();
 		loadAnimationSets();
 	}
 
-	public static function recursive_file_operation(path:String, ext:String, file_operation) {
-		#if sys
-		for (file in FileSystem.readDirectory(path)) {
-			var file_path:String = '${path}/${file}';
-			if (file_path.indexOf(ext) > -1)
-				file_operation(file_path);
-			else
-				FileSystem.isDirectory(file_path) ? recursive_file_operation(file_path, ext, file_operation) : false;
-		}
-		#elseif js
-		for (file in Utils.path_cache.keys()) {
-			trace(file, file.indexOf(ext), ext);
-			if (file.indexOf(ext) > -1) {
-				trace(Utils.path_cache.get(file));
-				trace(Utils.path_cache.get(file).indexOf(path));
+	public static function recursive_file_operation(path:String, ext:String, file_operation)
+		for (file in Utils.path_cache.keys())
+			if (file.indexOf(ext) > -1)
 				if (Utils.path_cache.get(file).indexOf(path) > -1)
 					file_operation(Utils.path_cache.get(file));
-			}
-		}
-		#end
-	}
 
 	/***
 	 * Animation Set Loading and Usage
 	***/
 	/**Loads all the animations from several xml files**/
-	public static function loadAnimationSets() {
-		recursive_file_operation("assets/data", "anims.xml", loadAnimationSet);
-		#if sys
-		var content:String = haxe.Json.stringify(animSets);
-		sys.io.File.saveContent('animSets.json', content);
-		#end
-	}
+	public static function loadAnimationSets()
+		recursive_file_operation("assets/entries", "anims.xml", loadAnimationSet);
 
 	public static function loadAnimationSet(path:String) {
 		var xml:Xml = Utils.XMLloadAssist(path);
+
 		for (sset in xml.elementsNamed("root").next().elementsNamed("animSet")) {
 			function create_set_with_image(image:String) {
 				var allFrames:String = "";
