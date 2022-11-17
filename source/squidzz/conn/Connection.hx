@@ -43,6 +43,7 @@ class Conn {
     public var onRemoteInput:RemoteInput -> Void;
 
     public var pingTime:Int;
+    public var pingTimes:Array<Int> = [];
     var lastPingTime:Float;
 
     public function init (
@@ -111,7 +112,11 @@ class Conn {
             case 'ping':
                 rtc.sendMessage('pong');
             case 'pong':
-                pingTime = Math.round((Timer.stamp() - lastPingTime) * 1000);
+                pingTimes.push(Math.round((Timer.stamp() - lastPingTime) * 1000));
+                if (pingTimes.length > 40) {
+                    pingTimes.shift();
+                }
+                pingTime = Math.round(Lambda.fold(pingTimes, (item, result) -> result + item, 0) / pingTimes.length);
             case 'confirm':
                 if (!isPeerConnected) {
                     rtc.sendMessage('confirm-ack');
