@@ -45,7 +45,7 @@ class LobbyState extends FlxState {
 
         if (Connection.inst.isServerConnected) {
             if (Controls.justPressed.A) {
-                createRoom();
+                joinOrCreate();
             } else if (Controls.justPressed.B) {
                 joinRoom();
             }
@@ -60,8 +60,8 @@ class LobbyState extends FlxState {
         }
 	}
 
-    function createRoom () {
-        Connection.inst.createRoom();
+    function joinOrCreate () {
+        Connection.inst.joinOrCreateRoom();
     }
 
     function joinRoom () {

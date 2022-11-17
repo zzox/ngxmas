@@ -139,7 +139,13 @@ class Conn {
         };
     }
 
-    public function joinOrCreateRoom () {}
+    public function joinOrCreateRoom () {
+        if (roomId == null) {
+            sendWsMessage('join-or-create');
+        } else {
+            trace('already in room');
+        }
+    }
 
     public function createRoom () {
         if (roomId == null) {

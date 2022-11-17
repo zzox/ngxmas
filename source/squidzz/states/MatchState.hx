@@ -43,7 +43,7 @@ class MatchState extends FlxState {
         rollback = new Rollback(
             playerIndex,
             stateGroup,
-            [ 'up' => false, 'left' => false, 'right' => false ],
+            blankInput(),
             stateGroup.step,
             stateGroup.unserialize
         );
