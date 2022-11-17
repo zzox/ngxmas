@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
@@ -21,6 +22,8 @@ class MatchState extends FlxState {
     public var player1:Player;
     public var player2:Player;
 
+    var collisionGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
+
     var debugUi:DebugUi;
 
 	override function create () {
@@ -28,7 +31,11 @@ class MatchState extends FlxState {
 
         camera.bgColor = 0xff415d66;
 
-        add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
+        collisionGroup.add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
+        collisionGroup.add(new FlxSprite(-64, -100).makeGraphic(64, 640, 0xffa8a8a8));
+        collisionGroup.add(new FlxSprite(960, -100).makeGraphic(64, 640, 0xffa8a8a8));
+        collisionGroup.forEach((spr) -> spr.immovable = true);
+        add(collisionGroup);
 
         player1 = new Player(64, 328, 'assets/images/player-pink.png');
         player2 = new Player(768, 328, 'assets/images/player-blue.png');
@@ -37,7 +44,7 @@ class MatchState extends FlxState {
         player2.opponent = player1;
 
         final playerIndex = Connection.inst.isHost ? 0 : 1;
-        stateGroup = new FlxRollbackGroup(player1, player2);
+        stateGroup = new FlxRollbackGroup(player1, player2, collisionGroup);
         add(stateGroup);
 
         rollback = new Rollback(

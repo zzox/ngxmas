@@ -11,7 +11,6 @@ typedef AnimItem = {
 }
 
 class FlxRollbackActor extends FlxSprite {
-    public var touchingFloor:Bool = false;
     var _animations:Map<String, AnimItem> = [];
     public var currentAnim:String; // our current animation
     public var animFrame:Int = -1; // number of frames we've been on this animation

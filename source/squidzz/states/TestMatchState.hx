@@ -4,11 +4,11 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Player;
-import squidzz.display.DebugUi;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
 import squidzz.rollback.Rollback;
@@ -22,12 +22,18 @@ class TestMatchState extends FlxState {
     // hack to simulate input delay
     var localInputs:Array<FrameInput> = [];
 
+    var collisionGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
+
 	override function create () {
 		super.create();
 
         camera.bgColor = 0xff415d66;
 
-        add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
+        collisionGroup.add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
+        collisionGroup.add(new FlxSprite(-64, -100).makeGraphic(64, 640, 0xffa8a8a8));
+        collisionGroup.add(new FlxSprite(960, -100).makeGraphic(64, 640, 0xffa8a8a8));
+        collisionGroup.forEach((spr) -> spr.immovable = true);
+        add(collisionGroup);
 
         final player1 = new Player(7 * 16, 328, 'assets/images/player-pink.png');
         // TODO: punching bag opponent
@@ -36,7 +42,7 @@ class TestMatchState extends FlxState {
         player1.opponent = player2;
         player2.opponent = player1;
 
-        stateGroup = new FlxRollbackGroup(player1, player2);
+        stateGroup = new FlxRollbackGroup(player1, player2, collisionGroup);
         add(stateGroup);
 
         for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {

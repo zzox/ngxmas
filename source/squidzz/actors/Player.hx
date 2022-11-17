@@ -36,7 +36,7 @@ class Player extends FlxRollbackActor {
     }
 
     override function updateWithInputs (delta:Float, input:FrameInput) {
-        if (justPressed(input, Up) && touchingFloor) {
+        if (justPressed(input, Up) && isTouching(DOWN)) {
             velocity.y = -960;
         }
 
@@ -51,7 +51,7 @@ class Player extends FlxRollbackActor {
 
         acceleration.set(acc, 2000);
 
-        if (touchingFloor) {
+        if (isTouching(DOWN)) {
             if (acceleration.x != 0) {
                 playAnimation('run');
             } else {
