@@ -42,13 +42,13 @@ class LobbyState extends BaseState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (Connection.inst.isServerConnected) {
-			if (Controls.justPressed.A) {
-				createRoom();
-			} else if (Controls.justPressed.B) {
-				joinRoom();
-			}
-		}
+        if (Connection.inst.isServerConnected) {
+            if (Controls.justPressed.A) {
+                joinOrCreate();
+            } else if (Controls.justPressed.B) {
+                joinRoom();
+            }
+        }
 
 		if (Connection.inst.roomId != null) {
 			roomId.text = 'room: ' + Connection.inst.roomId;
@@ -59,9 +59,9 @@ class LobbyState extends BaseState {
 		}
 	}
 
-	function createRoom() {
-		Connection.inst.createRoom();
-	}
+    function joinOrCreate () {
+        Connection.inst.joinOrCreateRoom();
+    }
 
 	function joinRoom() {
 		Connection.inst.joinAnyRoom();

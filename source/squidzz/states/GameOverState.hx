@@ -3,8 +3,9 @@ package squidzz.states;
 import flixel.FlxState;
 import flixel.text.FlxText;
 
-class GameOverState extends BaseState {
-	override function create() {
+// TODO: change to post-match scene
+class GameOverState extends FlxState {
+	override function create () {
 		super.create();
 
 		final info = new FlxText();

@@ -1,6 +1,7 @@
 package squidzz.rollback;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
 import squidzz.actors.Fighter;
@@ -12,11 +13,13 @@ typedef RollbackState = {
 	var p1Pos:FlxPoint;
 	var p1Acc:FlxPoint;
 	var p1Vel:FlxPoint;
-	var p1TouchingFloor:Bool;
+	var p1Anim:String;
+	var p1AnimFrame:Int;
 	var p2Pos:FlxPoint;
 	var p2Acc:FlxPoint;
 	var p2Vel:FlxPoint;
-	var p2TouchingFloor:Bool;
+	var p2Anim:String;
+	var p2AnimFrame:Int;
 }
 
 class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSerialize<RollbackState> {
@@ -24,11 +27,13 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 
 	var player1:Fighter;
 	var player2:Fighter;
+	var collision:FlxTypedGroup<FlxSprite>;
 
-	public function new(player1:Fighter, player2:Fighter) {
+	public function new(player1:Fighter, player2:Fighter, collision:FlxTypedGroup<FlxSprite>) {
 		super();
 		this.player1 = player1;
 		this.player2 = player2;
+		this.collision = collision;
 
 		add(player1);
 		add(player2);
@@ -50,22 +55,7 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 			throw 'bad delta: $delta';
 		}
 
-		forEach(actor -> {
-			if (actor.x < 0) {
-				actor.x = 0;
-			}
-
-			if (actor.x + actor.width > Global.width) {
-				actor.x = Global.width - actor.width;
-			}
-
-			if (actor.y + actor.height > FLOOR_Y) {
-				actor.y = FLOOR_Y - actor.height;
-				actor.touchingFloor = true;
-			} else {
-				actor.touchingFloor = false;
-			}
-		});
+		forEach((actor) -> FlxG.collide(collision, actor));
 
 		FlxG.collide(player1, player2);
 
@@ -79,11 +69,13 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 			p1Pos: new FlxPoint(player1.x, player1.y),
 			p1Acc: player1.acceleration.clone(),
 			p1Vel: player1.velocity.clone(),
-			p1TouchingFloor: player1.touchingFloor,
+			p1Anim: player1.currentAnim,
+			p1AnimFrame: player1.animFrame,
 			p2Pos: new FlxPoint(player2.x, player2.y),
 			p2Acc: player2.acceleration.clone(),
 			p2Vel: player2.velocity.clone(),
-			p2TouchingFloor: player2.touchingFloor,
+			p2Anim: player2.currentAnim,
+			p2AnimFrame: player2.animFrame
 		};
 	}
 
@@ -93,10 +85,12 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 		player1.setPosition(state.p1Pos.x, state.p1Pos.y);
 		player1.acceleration.copyFrom(state.p1Acc);
 		player1.velocity.copyFrom(state.p1Vel);
-		player1.touchingFloor = state.p1TouchingFloor;
+		player1.currentAnim = state.p1Anim;
+		player1.animFrame = state.p1AnimFrame;
 		player2.setPosition(state.p2Pos.x, state.p2Pos.y);
 		player2.acceleration.copyFrom(state.p2Acc);
 		player2.velocity.copyFrom(state.p2Vel);
-		player2.touchingFloor = state.p2TouchingFloor;
+		player2.currentAnim = state.p2Anim;
+		player2.animFrame = state.p2AnimFrame;
 	}
 }
