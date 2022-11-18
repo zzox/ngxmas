@@ -71,6 +71,32 @@ enum abstract JumpDirection(Int) from Int to Int {
 	var NEUTRAL:Int = 3;
 }
 
+enum abstract WalkDirection(Int) from Int to Int {
+	var NONE:Int = 0;
+	var FORWARDS:Int = 1;
+	var BACKWARDS:Int = 2;
+	var NEUTRAL:Int = 3;
+}
+
+enum abstract BlockingState(Int) from Int to Int {
+	var NONE:Int = 0;
+	var STANDING:Int = 1;
+	var CROUCHING:Int = 2;
+	var INVINCIBLE:Int = 3;
+}
+
+enum abstract ControlLock(Int) from Int to Int {
+	/**You can do anything */
+	var FULL_CONTROL:Int = 0;
+
+	var JUMP_OK:Int = 1;
+	var MOVE_OK:Int = 2;
+	var ATTACK_OK:Int = 3;
+
+	/**Most attacks fall into this category*/
+	var ALL_LOCKED:Int = 4;
+}
+
 enum abstract JumpingStyle(Int) from Int to Int {
 	/** Can't reposition midjump*/
 	var TRADITIONAL:Int = 0;
