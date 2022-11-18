@@ -1,6 +1,8 @@
 package;
 
+import squidzz.ext.AttackData;
 import flixel.FlxGame;
+import squidzz.ext.Lists;
 import squidzz.states.MatchState;
 import squidzz.states.MenuState;
 import squidzz.states.TestMatchState;
@@ -11,7 +13,8 @@ class Main extends openfl.display.Sprite {
 
 	public function new() {
 		super();
-		squidzz.ext.Lists.init();
+		Lists.init();
+		AttackData.init();
 		addChild(new FlxGame(960, 540, BootState, 60, 60, true));
 	}
 }

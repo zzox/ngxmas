@@ -256,7 +256,6 @@ class Utils {
 		var path_cache_json:PathCacheType = haxe.Json.parse(loadAssistString("assets/entries/file-paths.json"));
 		for (key in path_cache_json.paths)
 			path_cache.set(key.file, key.path);
-		trace(path_cache);
 	}
 
 	public static function get_file_path(name:String, path:String = "assets", safe:Bool = false):String {
@@ -276,8 +275,12 @@ class Utils {
 	public static function loadAssistString(path:String):String
 		return Assets.getText(path);
 
-	public static function file_exists(name:String):Bool
-		return path_cache.get(name.split("/").last()) != null;
+	public static function file_exists(file_path:String):Bool {
+		for (file in path_cache.keys())
+			if (file_path == path_cache.get(file))
+				return true;
+		return false;
+	}
 }
 
 /**

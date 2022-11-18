@@ -1,5 +1,5 @@
 <root>
-    <animSet image = "penguin" path = "assets\images\fighters\penguin" hitbox = "71,1" offset_left = "68,146" offset_right = "84,146" fps = "100ms">
+    <animSet image = "penguin" path = "assets" hitbox = "71,1" offset_left = "68,146" offset_right = "84,146" fps = "100ms">
         <anim name = "idle" fps = "150ms">0t1</anim>
         <anim name = "walk-forwards" fps = "150ms">2t3</anim>
         <anim name = "walk-backwards" fps = "75ms">3,2</anim>

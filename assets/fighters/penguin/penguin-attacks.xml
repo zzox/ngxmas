@@ -1,0 +1,37 @@
+<root>
+    <attack name="ground">
+        <!--Attack Links-->
+        <link attack="jab-ground-neutral" />
+    </attack>
+
+    <attack name="air">
+        <!--Controls-->
+        <input controls="jump" />
+        <!--Attack Links-->
+        <link attack="jab-air-neutral" />
+    </attack>
+
+    <attack name="jab-ground-neutral">
+        <ground/>
+        <properties str="50" stun="30" kb="10,-15" defines="" />
+        <!--Special Attributes-->
+        <hitbox frames="5" />
+        <thrust frames="5" velocity="25,0" />
+        <cancellable frames="6" />
+        <!--Controls-->
+        <input controls="attack" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="jab-air-neutral">
+        <air/>
+        <properties str="50" stun="30" kb="10,-15" defines="" />
+        <!--Special Attributes-->
+        <hitbox frames="17" />
+        <!--Controls-->
+        <input controls="attack" />
+        <!--Attack Links-->
+        <inherits from="air" />
+    </attack>
+</root>

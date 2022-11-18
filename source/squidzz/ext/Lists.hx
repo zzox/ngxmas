@@ -29,7 +29,7 @@ class Lists {
 	***/
 	/**Loads all the animations from several xml files**/
 	public static function loadAnimationSets()
-		recursive_file_operation("assets/entries", "anims.xml", loadAnimationSet);
+		recursive_file_operation("assets", "anims.xml", loadAnimationSet);
 
 	public static function loadAnimationSet(path:String) {
 		var xml:Xml = Utils.XMLloadAssist(path);

@@ -5,8 +5,20 @@
             "path": "assets/entries/file-paths.json"
         },
         {
-            "file": "penguin_anims.xml",
-            "path": "assets/entries/penguin_anims.xml"
+            "file": "penguin-anims.xml",
+            "path": "assets/fighters/penguin/penguin-anims.xml"
+        },
+        {
+            "file": "penguin-hitbox.png",
+            "path": "assets/fighters/penguin/penguin-hitbox.png"
+        },
+        {
+            "file": "penguin-hurtbox.png",
+            "path": "assets/fighters/penguin/penguin-hurtbox.png"
+        },
+        {
+            "file": "penguin.png",
+            "path": "assets/fighters/penguin/penguin.png"
         },
         {
             "file": "player-blue.png",
@@ -15,18 +27,6 @@
         {
             "file": "player-pink.png",
             "path": "assets/images/player-pink.png"
-        },
-        {
-            "file": "penguin-hitbox.png",
-            "path": "assets/images/fighters/penguin/penguin-hitbox.png"
-        },
-        {
-            "file": "penguin-hurtbox.png",
-            "path": "assets/images/fighters/penguin/penguin-hurtbox.png"
-        },
-        {
-            "file": "penguin.png",
-            "path": "assets/images/fighters/penguin/penguin.png"
         },
         {
             "file": "music-goes-here.txt",

@@ -34,3 +34,84 @@ typedef AnimDef = {
 typedef PathCacheType = {
 	var paths:Array<{file:String, path:String}>;
 }
+
+/**
+ * Attack Data
+ */
+typedef AttackDataType = {
+	var name:String;
+	var animation:String;
+	var kb:FlxPoint;
+	var str_type:String;
+	var str_mult:Float;
+	var stun:Int;
+	var defines:Array<String>;
+	var inputs:Array<Array<AttackInput>>;
+	var attack_links:Array<String>;
+	var attack_inherited_links:Array<{inherits_from:String, except:Array<String>}>;
+	var cancellableFrames:Array<Int>;
+	var shortcut:Bool;
+	var thrust:Array<{
+		frames:Array<Int>,
+		x:Float,
+		y:Float,
+		once:Bool
+	}>;
+	var drag:Array<{frames:Array<Int>, x:Float, y:Float}>;
+	var air:Bool;
+	var ground:Bool;
+	var flipOnFinish:Bool;
+	var hitboxes:Array<{
+		frames:Array<Int>,
+		melee_id:Int,
+		str_mult:Float,
+		kb_x:Float,
+		kb_y:Float,
+		stun:Int,
+		bonus_defines:Array<String>,
+	}>;
+	var offset_left:FlxPoint;
+	var offset_right:FlxPoint;
+	var flippableFrames:Array<Int>;
+	var fx:Array<{
+		frame:Int,
+		name:String,
+		offset_x:Int,
+		offset_y:Int,
+		layer:String
+	}>;
+	var ground_cancel_attack:String;
+	var super_armor:Array<Int>;
+	var invincible:Array<Int>;
+	var auto_continue:Array<{on_complete:String, time:Int, lock:Bool}>;
+	var homing_lock:Array<{frame:Int}>;
+	var homing_velocity:Array<{
+		frames:Array<Int>,
+		speed:Int,
+		time:Int,
+		once:Bool,
+		flip_towards:Bool
+	}>;
+	var auto_cancel:Array<{
+		frames:Array<Int>,
+		attack:String,
+		radius:Int,
+	}>;
+	var gravity:Array<{
+		frames:Array<Int>,
+		amount:Int,
+		once:Bool
+	}>;
+	var learnable:Bool;
+	var max_uses:{count:Int, reset_on:String};
+	var attack_landed:Bool;
+}
+
+/**
+ * An input in an attack with whether it's charged/hold
+ */
+typedef AttackInput = {
+	var input:String;
+	var input_release:String;
+	var charge_time:Int;
+}
