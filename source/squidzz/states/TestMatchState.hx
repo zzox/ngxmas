@@ -4,7 +4,6 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
@@ -23,7 +22,6 @@ class TestMatchState extends BaseState {
 
 	// hack to simulate input delay
 	var localInputs:Array<FrameInput> = [];
-    var collisionGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 
 	var debugUi:DebugUi;
 
@@ -32,11 +30,7 @@ class TestMatchState extends BaseState {
 
 		camera.bgColor = 0xff415d66;
 
-        collisionGroup.add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
-        collisionGroup.add(new FlxSprite(-64, -100).makeGraphic(64, 640, 0xffa8a8a8));
-        collisionGroup.add(new FlxSprite(960, -100).makeGraphic(64, 640, 0xffa8a8a8));
-        collisionGroup.forEach((spr) -> spr.immovable = true);
-        add(collisionGroup);
+		add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
 		final player1 = new Penguin(7 * 16, 328);
 		// TODO: punching bag opponent
@@ -45,8 +39,8 @@ class TestMatchState extends BaseState {
 		player1.opponent = player2;
 		player2.opponent = player1;
 
-        stateGroup = new FlxRollbackGroup(player1, player2, collisionGroup);
-        add(stateGroup);
+		stateGroup = new FlxRollbackGroup(player1, player2);
+		add(stateGroup);
 
 		for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {
 			localInputs.push(blankInput());
@@ -56,9 +50,13 @@ class TestMatchState extends BaseState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-        // simulate input delay
-        localInputs.push(getLocalInput());
-        stateGroup.step([localInputs.shift(), blankInput()], elapsed);
+		// simulate input delay
+		localInputs.push(getLocalInput());
+		stateGroup.step([localInputs.shift(), blankInput()], elapsed);
+
+		if (Controls.justPressed.PAUSE) {
+			debugUi.visible = !debugUi.visible;
+		}
 	}
 
 	function createTileLayer(map:TiledMap, layerName:String, offset:FlxPoint):Null<FlxTilemap> {

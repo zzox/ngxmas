@@ -40,9 +40,8 @@ class Conn {
 	public var onPeerConnect:Void->Void;
 	public var onPeerDisconnect:String->Void;
 
-    public var pingTime:Int;
-    public var pingTimes:Array<Int> = [];
-    var lastPingTime:Float;
+	/** connection stuff **/
+	public var roomId:Null<String> = null;
 
 	public var onRemoteInput:RemoteInput->Void;
 
@@ -76,42 +75,27 @@ class Conn {
 		// create peer connection
 	}
 
-        switch (type) {
-            case 'ping':
-                rtc.sendMessage('pong');
-            case 'pong':
-                pingTimes.push(Math.round((Timer.stamp() - lastPingTime) * 1000));
-                if (pingTimes.length > 40) {
-                    pingTimes.shift();
-                }
-                pingTime = Math.round(Lambda.fold(pingTimes, (item, result) -> result + item, 0) / pingTimes.length);
-            case 'confirm':
-                if (!isPeerConnected) {
-                    rtc.sendMessage('confirm-ack');
-                    onPeerConnect();
-                }
-                isPeerConnected = true;
-            case 'confirm-ack':
-                if (!isPeerConnected) {
-                    onPeerConnect();
-                }
-            case 'remote-input':
-                onRemoteInput({ index: payload.index, input: deserializeInput(payload.input) });
-            default:
-                trace('unhandled peer message', type, payload);
-        }
-    }
+	public function addListeners(?onServerConnect:Void->Void, ?onServerDisconnect:Void->Void, ?onPeerConnect:Void->Void, ?onPeerDisconnect:String->Void,
+			?onRemoteInput:RemoteInput->Void) {
+		if (onServerConnect != null)
+			this.onServerConnect = onServerConnect;
+		if (onServerDisconnect != null)
+			this.onServerDisconnect = onServerDisconnect;
+		if (onPeerConnect != null)
+			this.onPeerConnect = onPeerConnect;
+		if (onPeerDisconnect != null)
+			this.onPeerDisconnect = onPeerDisconnect;
+		if (onRemoteInput != null)
+			this.onRemoteInput = onRemoteInput;
+	}
 
 	public function sendInput(index:Int, input:String) {
 		rtc.sendMessage('remote-input', {index: index, input: input});
 	}
 
-    public function joinOrCreateRoom () {
-        if (roomId == null) {
-            sendWsMessage('join-or-create');
-        } else {
-            trace('already in room');
-        }
+	function handlePeerMessage(message:Dynamic) {
+		final type:String = message.type;
+		final payload:Dynamic = message.payload;
 
 		switch (type) {
 			case 'ping':

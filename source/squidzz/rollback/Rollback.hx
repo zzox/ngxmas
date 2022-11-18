@@ -27,7 +27,7 @@ class Rollback<T> {
 	public var currentFrame:Int = 0;
 	public var frames:Array<Frame> = [];
 	public var futureRemotes:Array<RemoteInput> = [];
-	public var localInputs:Array<FrameInput> = [];
+	// public var localInputs:Array<FrameInput> = [];
 	public var isHalted:Bool = false;
 
 	var onSimulateInput:Array<FrameInput>->Float->AbsSerialize<T>;
@@ -39,20 +39,20 @@ class Rollback<T> {
 		this.onSimulateInput = onSimulateInput;
 		this.onRollbackState = onRollbackState;
 
-		// frame 0 always blank.
 		frames.push({
 			frameNumber: 0,
 			input: [blankFrame.copy(), blankFrame.copy()],
 			state: initialState.serialize()
 		});
 
-		// pad the local input with blank frames as well as the remotes
-		// as we know the first x frames will be blank.
-		// We won't be receiving those inputs because of the input delay.
-		for (i in 0...INPUT_DELAY_FRAMES) {
-			localInputs.push(blankFrame.copy());
-			futureRemotes.push({index: i + 1, input: blankFrame.copy()});
-		}
+		// for (_ in 0...INPUT_DELAY_FRAMES) {
+		//     localInputs.push(blankFrame.copy());
+		//     frames.push({
+		//         frameNumber: ++currentFrame,
+		//         input: [blankFrame.copy(), blankFrame.copy()],
+		//         state: initialState.serialize()
+		//     });
+		// }
 	}
 
 	// update the frame, add the frame
@@ -65,14 +65,16 @@ class Rollback<T> {
 			isHalted = false;
 		}
 
+		currentFrame++;
+
 		#if js
 		// Connection.inst.sendInput(currentFrame + INPUT_DELAY_FRAMES, serializeInput(localInput))
 		Connection.inst.sendInput(currentFrame, serializeInput(localInput));
 		#end
 
 		// HACK: input delay
-		localInputs.push(localInput);
-		final currentLocalInput = localInputs.shift();
+		// localInputs.push(localInput);
+		// final currentLocalInput = localInputs.shift();
 
 		final currentLocalInput = localInput;
 
@@ -111,25 +113,13 @@ class Rollback<T> {
 		// if we are behind, we can remove all frames since we know we are accurate.
 		if (behind) {
 			removeCorrectFrames(currentFrame);
+
 			// Re-run based on frames behind.
 			// The further behind, the more likely we re-run.
 			final framesBehind = futureRemotes.length;
-			var framesToSkip = frameModulos[framesBehind - INPUT_DELAY_FRAMES];
-			if (framesToSkip == null) {
-				framesToSkip = 2;
-			}
-			if (framesBehind > INPUT_DELAY_FRAMES && currentFrame % framesToSkip == 0) {
-				// consider a half-frame delay here.
-				// kinda dangerous as getting out of order would break everything.
+			if (framesBehind > 0 && currentFrame % frameModulos[framesBehind] == 0) {
 				tick(localInput, delta);
 			}
-		}
-
-		// Re-run based on frames behind.
-		// The further behind, the more likely we re-run.
-		final framesBehind = futureRemotes.length;
-		if (framesBehind > 0 && currentFrame % frameModulos[framesBehind] == 0) {
-			tick(localInput, delta);
 		}
 	}
 
@@ -155,8 +145,7 @@ class Rollback<T> {
 		}
 	}
 
-	// Remove all the frames we have certified remote input from,
-	// up to but not including the frame index.
+	// Remove all the frames we have certified remote input from.
 	function removeCorrectFrames(frameIndex:Int) {
 		for (frame in frames) {
 			if (frame.frameNumber < frameIndex) {
@@ -189,6 +178,17 @@ class Rollback<T> {
 		for (f in frames) {
 			if (f.frameNumber == index) {
 				return f;
+			}
+		}
+
+		return null;
+	}
+
+	// replace frame from framequeue
+	function replaceAtIndex(frame:Frame, index:Int) {
+		for (i in 0...frames.length) {
+			if (frames[i].frameNumber == index) {
+				frames[i] = frame;
 			}
 		}
 	}

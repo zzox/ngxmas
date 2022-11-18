@@ -18,9 +18,8 @@ import squidzz.rollback.Rollback;
 class MatchState extends BaseState {
 	public static var self:MatchState;
 
-    var collisionGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
-
-    var debugUi:DebugUi;
+	var collisionLayer:FlxTilemap;
+	var stateGroup:FlxRollbackGroup;
 
 	public var rollback:Rollback<RollbackState>;
 	public var player1:Fighter;
@@ -36,11 +35,7 @@ class MatchState extends BaseState {
 
 		camera.bgColor = 0xff415d66;
 
-        collisionGroup.add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
-        collisionGroup.add(new FlxSprite(-64, -100).makeGraphic(64, 640, 0xffa8a8a8));
-        collisionGroup.add(new FlxSprite(960, -100).makeGraphic(64, 640, 0xffa8a8a8));
-        collisionGroup.forEach((spr) -> spr.immovable = true);
-        add(collisionGroup);
+		add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
 		player1 = new Fighter(64, 328, 'assets/images/player-pink.png');
 		player2 = new Fighter(768, 328, 'assets/images/player-blue.png');
@@ -48,22 +43,14 @@ class MatchState extends BaseState {
 		player1.opponent = player2;
 		player2.opponent = player1;
 
-        #if js
+		#if js
 		final playerIndex = Connection.inst.isHost ? 0 : 1;
 		#else
 		final playerIndex = 0;
 		#end
-		
-        stateGroup = new FlxRollbackGroup(player1, player2, collisionGroup);
-        add(stateGroup);
 
-        rollback = new Rollback(
-            playerIndex,
-            stateGroup,
-            blankInput(),
-            stateGroup.step,
-            stateGroup.unserialize
-        );
+		stateGroup = new FlxRollbackGroup(player1, player2);
+		add(stateGroup);
 
 		rollback = new Rollback(playerIndex, stateGroup, ['up' => false, 'left' => false, 'right' => false], stateGroup.step, stateGroup.unserialize);
 
