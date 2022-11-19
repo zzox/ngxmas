@@ -190,6 +190,7 @@ class Conn {
         switch (type) {
             // We created a room and are the host of it.
             case 'room-created':
+                trace('room created');
                 isHost = true;
                 roomId = payload;
                 rtc.createDataChannel();

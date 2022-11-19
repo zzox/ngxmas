@@ -14,6 +14,8 @@ class FlxRollbackActor extends FlxSprite {
     var _animations:Map<String, AnimItem> = [];
     public var currentAnim:String; // our current animation
     public var animFrame:Int = -1; // number of frames we've been on this animation
+    public var touchingFloor:Bool = false;
+
     public function new (x:Float, y:Float) {
         super(x, y);
     }

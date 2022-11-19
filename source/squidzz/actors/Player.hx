@@ -16,6 +16,7 @@ enum abstract FInput(String) to String {
 class Player extends FlxRollbackActor {
     var prevInput:FrameInput;
     public var opponent:Player;
+    public var hitFrames:Int = 0;
 
     public function new (x:Float, y:Float, spritePath:String) {
         super(x, y);
@@ -36,22 +37,27 @@ class Player extends FlxRollbackActor {
     }
 
     override function updateWithInputs (delta:Float, input:FrameInput) {
-        if (justPressed(input, Up) && isTouching(DOWN)) {
-            velocity.y = -960;
+        drag.x = touchingFloor ? 2000 : 1000;
+        if (hitFrames-- > 0) {
+            acceleration.y = 2000;
+        } else {
+            if (justPressed(input, Up) && touchingFloor) {
+                velocity.y = -960;
+            }
+
+            var acc = 0.0;
+            if (pressed(input, Left)) {
+                acc -= 4000;
+            }
+
+            if (pressed(input, Right)) {
+                acc += 4000;
+            }
+
+            acceleration.set(acc, 2000);
         }
 
-        var acc = 0.0;
-        if (pressed(input, Left)) {
-            acc -= 4000;
-        }
-
-        if (pressed(input, Right)) {
-            acc += 4000;
-        }
-
-        acceleration.set(acc, 2000);
-
-        if (isTouching(DOWN)) {
+        if (touchingFloor) {
             if (acceleration.x != 0) {
                 playAnimation('run');
             } else {
@@ -66,6 +72,11 @@ class Player extends FlxRollbackActor {
         super.updateWithInputs(delta, input);
 
         prevInput = input;
+    }
+
+    public function hit (xVel:Float, yVel:Float, damage:Int) {
+        velocity.set(xVel, yVel);
+        hitFrames = 10;
     }
 
     function pressed (input:FrameInput, dir:FInput) {

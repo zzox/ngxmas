@@ -14,11 +14,12 @@ interface AbsSerialize<T> {
     public function unserialize(state:T):Void;
 }
 
-final frameModulos = [1, 144, 89, 55, 34, 21, 13, 8, 5, 3];
+// `frameModulos[0]` should never be reached.
+final frameModulos = [10000, 144, 89, 55, 34, 21, 13, 8, 5, 3];
 
 // NOTE: will need to be reworked when more than two people are in a match
 class Rollback<T> {
-    public static inline final INPUT_DELAY_FRAMES:Int = 3;
+    public static inline final INPUT_DELAY_FRAMES:Int = 0;
 
     // ATTN: need something better.
     public static inline final GLOBAL_DELTA:Float = 0.016666666666666666;
@@ -85,7 +86,6 @@ class Rollback<T> {
         if (futureFrame != null) {
             // we are behind, add the local input to the frame
             // NOTE: this assumes ordered messages
-            trace('behind!!!');
             behind = true;
             final fut = futureRemotes.shift();
             remoteInput = fut.input;
@@ -175,6 +175,7 @@ class Rollback<T> {
             final frameInput = playerIndex == 0 ? [frame.input[0], remoteInput] : [remoteInput, frame.input[1]];
             frame.input = frameInput;
             final state = onSimulateInput(frameInput, GLOBAL_DELTA);
+            // this doesn't _always_ need to be serizlized, just everything after toIndex
             frame.state = state.serialize();
         }
 
