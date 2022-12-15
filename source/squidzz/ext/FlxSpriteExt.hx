@@ -37,8 +37,8 @@ class FlxSpriteExt extends FlxSprite {
 	/**Image or animation set name that was loaded, no file name or path specified, just as it is in animData*/
 	public var loaded_image:String = "";
 
-	var offset_left:FlxPoint;
-	var offset_right:FlxPoint;
+	var offset_left:FlxPoint = new FlxPoint();
+	var offset_right:FlxPoint = new FlxPoint();
 
 	public function new(?X:Float, ?Y:Float, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);
@@ -52,7 +52,8 @@ class FlxSpriteExt extends FlxSprite {
 	}
 
 	/***Loads the Image AND Animations from an AnimationSet***/
-	public function loadAllFromAnimationSet(image:String, ?image_as:String, unique:Bool = false, autoIdle:Bool = true, unsafe:Bool = false):Bool {
+	public function loadAllFromAnimationSet(image:String, ?image_as:String, unique:Bool = false, autoIdle:Bool = true, unsafe:Bool = false,
+			force_kebab_case:Bool = false):Bool {
 		var animSet:AnimSetData = Lists.getAnimationSet(image);
 		loaded_image = image;
 
@@ -60,7 +61,7 @@ class FlxSpriteExt extends FlxSprite {
 			type = image;
 
 		if (animSet == null) {
-			loadGraphic(Utils.get_file_path(image + ".png"));
+			loadGraphic(Paths.get(image + ".png"));
 			animAdd("idle", "1");
 			return false;
 		}
@@ -73,7 +74,7 @@ class FlxSpriteExt extends FlxSprite {
 		if (image_as != null)
 			fullPath = StringTools.replace(fullPath, '${image}.png', '${image_as}.png');
 
-		var file_path:String = Utils.file_exists(fullPath) ? fullPath : Utils.get_file_path(image + ".png", "assets");
+		var file_path:String = Paths.file_exists(fullPath) ? fullPath : Paths.get(image + ".png", "assets");
 
 		loadGraphic(file_path, true, Math.floor(animWidth), Math.floor(animHeight));
 
@@ -100,8 +101,9 @@ class FlxSpriteExt extends FlxSprite {
 
 		frames = FlxTileFrames.fromGraphic(graphic, FlxPoint.get(animWidth, animHeight));
 
-		if (animSet.hitbox.x != 0)
+		if (animSet.hitbox.x != 0) {
 			setSize(animSet.hitbox.x, animSet.hitbox.y);
+		}
 
 		return loadAnimsFromAnimationSet(image, autoIdle);
 	}

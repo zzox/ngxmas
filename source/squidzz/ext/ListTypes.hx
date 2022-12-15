@@ -58,8 +58,8 @@ typedef AttackDataType = {
 		once:Bool
 	}>;
 	var drag:Array<{frames:Array<Int>, x:Float, y:Float}>;
-	var air:Bool;
-	var ground:Bool;
+	var airOnly:Bool;
+	var groundOnly:Bool;
 	var flipOnFinish:Bool;
 	var hitboxes:Array<{
 		frames:Array<Int>,
@@ -114,4 +114,15 @@ typedef AttackInput = {
 	var input:String;
 	var input_release:String;
 	var charge_time:Int;
+}
+
+typedef AsepriteJSON = {
+	var meta:{app:String, version:String, frameTags:Array<AsepriteFrameTag>};
+}
+
+typedef AsepriteFrameTag = {
+	name:String,
+	from:Int,
+	to:Int,
+	color:String
 }

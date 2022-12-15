@@ -2,39 +2,271 @@
     "paths": [
         {
             "file": "file-paths.json",
-            "path": "assets/entries/file-paths.json"
+            "path": "assets/entries"
+        },
+        {
+            "file": "donkey-base.png",
+            "path": "assets/fighters/donkey"
+        },
+        {
+            "file": "Dominique_Hit.png",
+            "path": "assets/fighters/donkey/raws"
+        },
+        {
+            "file": "Dominique_Forward_Ground0001.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
+        },
+        {
+            "file": "Dominique_Forward_Ground0002.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
+        },
+        {
+            "file": "Dominique_Forward_Ground0003.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
+        },
+        {
+            "file": "Dominique_Forward_Ground0004.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
+        },
+        {
+            "file": "Dominique_Forward_Ground0005.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
+        },
+        {
+            "file": "Dominique_Idle0000.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Idle"
+        },
+        {
+            "file": "Dominique_Idle0001.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Idle"
+        },
+        {
+            "file": "Dominique_Idle0002.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Idle"
+        },
+        {
+            "file": "Dominique_Idle0003.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Idle"
+        },
+        {
+            "file": "Dominique_Idle0004.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Idle"
+        },
+        {
+            "file": "Dominique_Jump0001.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Jump"
+        },
+        {
+            "file": "Dominique_Jump0002.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Jump"
+        },
+        {
+            "file": "Dominique_Jump0003.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Jump"
+        },
+        {
+            "file": "Dominique_Jump0004.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Jump"
+        },
+        {
+            "file": "Dominique_Walk0001.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
+        },
+        {
+            "file": "Dominique_Walk0002.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
+        },
+        {
+            "file": "Dominique_Walk0003.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
+        },
+        {
+            "file": "Dominique_Walk0004.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
+        },
+        {
+            "file": "Dominique_Walk0005.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
+        },
+        {
+            "file": "Dominique_Walk0006.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
+        },
+        {
+            "file": "Dominique_Walk0007.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
+        },
+        {
+            "file": "Dominique_Walk0008.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Walk"
         },
         {
             "file": "penguin-anims.xml",
-            "path": "assets/fighters/penguin/penguin-anims.xml"
+            "path": "assets/fighters/penguin"
+        },
+        {
+            "file": "penguin-attacks.xml",
+            "path": "assets/fighters/penguin"
         },
         {
             "file": "penguin-hitbox.png",
-            "path": "assets/fighters/penguin/penguin-hitbox.png"
+            "path": "assets/fighters/penguin"
         },
         {
             "file": "penguin-hurtbox.png",
-            "path": "assets/fighters/penguin/penguin-hurtbox.png"
+            "path": "assets/fighters/penguin"
         },
         {
             "file": "penguin.png",
-            "path": "assets/fighters/penguin/penguin.png"
+            "path": "assets/fighters/penguin"
+        },
+        {
+            "file": "snowman-air-back.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-back.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-down.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-down.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-forward.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-forward.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-neutral.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-neutral.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-up.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-up.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-anims.xml",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-block.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-block.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-back.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-back.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-down.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-down.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-forward.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-forward.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-neutral.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-neutral.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-up.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-up.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-hit.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-hit.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-idle.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-idle.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-jump.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-jump.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ko.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ko.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-walk.json",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-walk.png",
+            "path": "assets/fighters/snowman"
         },
         {
             "file": "player-blue.png",
-            "path": "assets/images/player-blue.png"
+            "path": "assets/images"
         },
         {
             "file": "player-pink.png",
-            "path": "assets/images/player-pink.png"
+            "path": "assets/images"
         },
         {
             "file": "music-goes-here.txt",
-            "path": "assets/music/music-goes-here.txt"
+            "path": "assets/music"
         },
         {
             "file": "sounds-go-here.txt",
-            "path": "assets/sounds/sounds-go-here.txt"
+            "path": "assets/sounds"
         }
     ]
 }

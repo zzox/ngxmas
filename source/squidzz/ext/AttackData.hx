@@ -1,10 +1,13 @@
 package squidzz.ext;
 
+using StringTools;
+using flixel.util.FlxArrayUtil;
+
 class AttackData {
 	static var data:Map<String, Map<String, AttackDataType>> = new Map<String, Map<String, AttackDataType>>();
 
 	public static function init() {
-		Lists.recursive_file_operation("assets", "attacks.xml", getAllAttackData);
+		Paths.recursive_file_operation("assets", "attacks.xml", get_all_attack_data);
 	}
 
 	public static function get_available_attacks(fighter_name:String, current_attack:String):Array<AttackDataType> {
@@ -18,10 +21,15 @@ class AttackData {
 		return available_attacks;
 	}
 
-	static function getAllAttackData(file:String):String {
-		var xml:Xml = Utils.XMLloadAssist(Utils.get_file_path(file));
+	public static function get_attack_by_name(fighter_name:String, attack_name:String):AttackDataType
+		return data.get(fighter_name).get(attack_name);
 
-		data.set(file, new Map<String, AttackDataType>());
+	static function get_all_attack_data(file:String):String {
+		var xml:Xml = Utils.XMLloadAssist(file);
+		var fighter_name:String = file.split("/").last().replace("-attacks.xml", "");
+		trace(fighter_name);
+
+		data.set(fighter_name, new Map<String, AttackDataType>());
 
 		for (attack in xml.elementsNamed("root").next().elementsNamed("attack")) {
 			var attackData:AttackDataType = {
@@ -39,8 +47,8 @@ class AttackData {
 				shortcut: false,
 				thrust: [],
 				drag: [],
-				air: false,
-				ground: false,
+				airOnly: false,
+				groundOnly: false,
 				flipOnFinish: false,
 				hitboxes: [],
 				offset_right: null,
@@ -65,8 +73,8 @@ class AttackData {
 
 			var properties:Xml = attack.elementsNamed("properties").next();
 
-			attackData.air = attack.elementsNamed("air").hasNext();
-			attackData.ground = attack.elementsNamed("ground").hasNext();
+			attackData.airOnly = attack.elementsNamed("air").hasNext();
+			attackData.groundOnly = attack.elementsNamed("ground").hasNext();
 			attackData.flipOnFinish = attack.elementsNamed("flipOnFinish").hasNext();
 
 			if (properties != null) {
@@ -227,12 +235,12 @@ class AttackData {
 				}
 			}
 
-			data.get(file).set(attackData.name, attackData);
+			data.get(fighter_name).set(attackData.name, attackData);
 		}
 
-		for (attackData in data.get(file))
+		for (attackData in data.get(fighter_name))
 			for (inherit in attackData.attack_inherited_links)
-				for (inherited_link in data.get(file).get(inherit.inherits_from).attack_links)
+				for (inherited_link in data.get(fighter_name).get(inherit.inherits_from).attack_links)
 					if (attackData.attack_links.indexOf(inherited_link) <= -1 && inherit.except.indexOf(inherited_link) <= -1)
 						attackData.attack_links.push(inherited_link);
 

@@ -4,11 +4,11 @@
         <anim name = "walk-forwards" fps = "150ms">2t3</anim>
         <anim name = "walk-backwards" fps = "75ms">3,2</anim>
         <anim name = "jump">14t15</anim>
-        <anim name = "jab-ground-neutral" looping = "false">4t6</anim>
-        <anim name = "jab-ground-back" looping = "false">7t8,9h3</anim>
-        <anim name = "jab-ground-forwards" looping = "false">7t8,9h3</anim>
-        <anim name = "jab-ground-up" looping = "false">10t13</anim>
-        <anim name = "jab-air-neutral" looping = "false">16t19</anim>
+        <anim name = "ground-neutral" looping = "false">4t6</anim>
+        <anim name = "ground-back" looping = "false">7t8,9h3</anim>
+        <anim name = "ground-forwards" looping = "false">7t8,9h3</anim>
+        <anim name = "ground-up" looping = "false">10t13</anim>
+        <anim name = "air-neutral" looping = "false">16t19</anim>
         <anim name = "special-all-slide" looping = "false">20t21</anim>
     </animSet>
 </root>

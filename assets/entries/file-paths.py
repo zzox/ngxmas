@@ -8,16 +8,34 @@ split_on = "SECRET_PROJECT/"
 
 files = []
 for file in raw_files:
-    if ".json" in file or ".png" in file or ".xml" in file or ".txt" in file:
-        files.append(file)
+    for extension in [
+        ".json",
+        ".png",
+        ".xml",
+        ".txt",
+        ".ogg",
+        ".ttf",
+        ".world",
+        ".tasc",
+    ]:
+        if extension in file:
+            files.append(file)
 
 cache = {"paths": []}
 
 for file in files:
     file_name = file.split("\\")[-1]
     cache["paths"].append(
-        {"file": file_name, "path": file.replace("\\", "/").split(split_on)[1]}
+        {
+            "file": file_name,
+            "path": file.replace("\\", "/")
+            .split(split_on)[1]
+            .replace("/%s" % file_name, ""),
+        }
     )
 
-with open("./file-paths.json", "w") as output:
-    output.writelines(json.dumps(cache, indent=4))
+
+with open("./assets/entries/file-paths.json", "w") as output:
+    out = json.dumps(cache, indent=4)
+    print(out)
+    output.writelines(out)

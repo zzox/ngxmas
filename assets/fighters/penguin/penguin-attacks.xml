@@ -1,17 +1,15 @@
 <root>
     <attack name="ground">
         <!--Attack Links-->
-        <link attack="jab-ground-neutral" />
+        <link attack="ground-neutral" />
     </attack>
 
     <attack name="air">
-        <!--Controls-->
-        <input controls="jump" />
         <!--Attack Links-->
-        <link attack="jab-air-neutral" />
+        <link attack="air-neutral" />
     </attack>
 
-    <attack name="jab-ground-neutral">
+    <attack name="ground-neutral">
         <ground/>
         <properties str="50" stun="30" kb="10,-15" defines="" />
         <!--Special Attributes-->
@@ -24,7 +22,7 @@
         <inherits from="ground" />
     </attack>
 
-    <attack name="jab-air-neutral">
+    <attack name="air-neutral">
         <air/>
         <properties str="50" stun="30" kb="10,-15" defines="" />
         <!--Special Attributes-->

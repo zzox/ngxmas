@@ -15,8 +15,6 @@ import squidzz.ext.ListTypes.PathCacheType;
 using flixel.util.FlxArrayUtil;
 
 class Utils {
-	public static var path_cache:Map<String, String> = new Map<String, String>();
-
 	public static function XMLloadAssist(path:String):Xml {
 		var text:String = Assets.getText(path);
 		text = StringTools.replace(text, "/n", "&#xA;");
@@ -252,35 +250,8 @@ class Utils {
 			trace('New \'{$name}\' position: (${pos.x} , ${pos.y})');
 	}
 
-	public static function fill_path_cache() {
-		var path_cache_json:PathCacheType = haxe.Json.parse(loadAssistString("assets/entries/file-paths.json"));
-		for (key in path_cache_json.paths)
-			path_cache.set(key.file, key.path);
-	}
-
-	public static function get_file_path(name:String, path:String = "assets", safe:Bool = false):String {
-		if (path_cache.get("penguin.png") == null)
-			fill_path_cache();
-
-		var clean_name:String = name.split("/")[name.split("/").length - 1];
-		if (path_cache.exists(clean_name))
-			return path_cache.get(name);
-
-		if (!safe)
-			throw 'could not find ${name} from starting path ${path}';
-
-		return null;
-	}
-
 	public static function loadAssistString(path:String):String
 		return Assets.getText(path);
-
-	public static function file_exists(file_path:String):Bool {
-		for (file in path_cache.keys())
-			if (file_path == path_cache.get(file))
-				return true;
-		return false;
-	}
 }
 
 /**

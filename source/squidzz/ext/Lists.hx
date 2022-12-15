@@ -1,6 +1,10 @@
 package squidzz.ext;
 
+import json2object.JsonParser;
 import squidzz.ext.ListTypes.AnimDef;
+import squidzz.ext.ListTypes.AsepriteFrameTag;
+import squidzz.ext.ListTypes.AsepriteJSON;
+import squidzz.ext.Paths;
 
 class Lists {
 	/**Every anim file*/
@@ -14,22 +18,55 @@ class Lists {
 	function new() {}
 
 	public static function init() {
-		Utils.fill_path_cache();
+		Paths.fill_path_cache();
 		loadAnimationSets();
 	}
 
-	public static function recursive_file_operation(path:String, ext:String, file_operation)
-		for (file in Utils.path_cache.keys())
-			if (file.indexOf(ext) > -1)
-				if (Utils.path_cache.get(file).indexOf(path) > -1)
-					file_operation(Utils.path_cache.get(file));
+	static function json_to_aseprite(image:String):String {
+		var file_name:String = image.indexOf("json") == -1 ? image + ".json" : image;
+		var file_path:String = Paths.get(file_name);
+
+		var parser:JsonParser<AsepriteJSON> = new JsonParser<AsepriteJSON>();
+		parser.fromJson(Utils.loadAssistString(file_path), "errors.txt");
+
+		var xml:String = '<animSet image = "${image}" path = "assets">';
+
+		var LOOPING_COLOR = "#57b9f2ff";
+		var NON_LOOPING_COLOR = "#6acd5bff";
+
+		for (frameTag in parser.value.meta.frameTags)
+			if (frameTag.color == LOOPING_COLOR || frameTag.color == NON_LOOPING_COLOR) {
+				xml = '${xml}\n	<anim';
+
+				var name_split:Array<String> = frameTag.name.split(" (");
+
+				var name:String = name_split[0];
+				var fps:String = name_split.length > 1 ? name_split[1].substring(0, name_split[1].length - 1) : "";
+
+				xml = '${xml} name = "${name}"';
+
+				if (fps != "")
+					xml = '${xml} fps = "${fps}"';
+
+				if (frameTag.color == NON_LOOPING_COLOR)
+					xml = '${xml} looping = "false"';
+
+				var frames:String = frameTag.from != frameTag.to ? '${frameTag.from}t${frameTag.to}' : '${frameTag.from}';
+
+				xml = '${xml}>${frames}</anim>';
+			}
+
+		var xml:String = '${xml}\n</animSet>';
+
+		return "\n" + xml + "\n";
+	}
 
 	/***
 	 * Animation Set Loading and Usage
 	***/
 	/**Loads all the animations from several xml files**/
 	public static function loadAnimationSets()
-		recursive_file_operation("assets", "anims.xml", loadAnimationSet);
+		Paths.recursive_file_operation("assets", "anims.xml", loadAnimationSet);
 
 	public static function loadAnimationSet(path:String) {
 		var xml:Xml = Utils.XMLloadAssist(path);
