@@ -2,7 +2,7 @@
     <animSet image = "penguin" path = "assets" hitbox = "71,1" offset_left = "68,146" offset_right = "84,146" fps = "100ms">
         <anim name = "idle" fps = "150ms">0t1</anim>
         <anim name = "walk-forwards" fps = "150ms">2t3</anim>
-        <anim name = "walk-backwards" fps = "75ms">3,2</anim>
+        <anim name = "walk-backwards" fps = "100ms">3,2</anim>
         <anim name = "jump">14t15</anim>
         <anim name = "ground-neutral" looping = "false">4t6</anim>
         <anim name = "ground-back" looping = "false">7t8,9h3</anim>

@@ -1,6 +1,7 @@
 package squidzz.actors;
 
 import flixel.animation.FlxAnimationController;
+import flixel.math.FlxMath;
 import flixel.util.FlxDirection;
 import flixel.util.FlxDirectionFlags;
 import squidzz.actors.ActorTypes.ControlLock;
@@ -38,8 +39,15 @@ class Fighter extends FlxRollbackActor {
 
 	var CONTROL_LOCK:ControlLock = ControlLock.FULL_CONTROL;
 
-	var air_speed:Int = 250;
-	var ground_speed:Int = 1000;
+	var air_speed:Int = 125;
+	var backwards_air_multiplier:Float = 1.25;
+
+	var ground_speed:Int = 350;
+	var backwards_ground_multiplier:Float = 1.25;
+
+	var ground_rate:Int = 15;
+	var gravity:Int = 2000;
+	var traction:Int = 750;
 
 	public var is_touching_floor(get, default):Bool;
 	public var is_touching_wall(get, default):Bool;
@@ -47,8 +55,12 @@ class Fighter extends FlxRollbackActor {
 	var current_attack_data:AttackDataType;
 
 	var cur_anim(get, default):FlxAnimationController;
+	var cur_sheet(get, default):FlxSpriteExt;
+
 	var attacking(get, default):Bool;
 	var can_attack(get, default):Bool;
+
+	var SUPER_ARMORED:Bool = false;
 
 	public function new(?Y:Float = 0, ?X:Float = 0, type:String) {
 		super(X, Y);
@@ -60,10 +72,14 @@ class Fighter extends FlxRollbackActor {
 		state = FighterState.IDLE;
 
 		CONTROL_LOCK = ControlLock.FULL_CONTROL;
+
+		reset_gravity();
 	}
 
 	override function updateWithInputs(delta:Float, input:FrameInput) {
 		update_offsets();
+
+		drag.set(touchingFloor ? traction : 0, 0);
 
 		if (justPressed(input, Up) && touchingFloor) {
 			start_jump(delta, input);
@@ -75,43 +91,48 @@ class Fighter extends FlxRollbackActor {
 			velocity.x = 0;
 		}
 
-		var acc:Float = 0.0;
-
 		WALKING_DIRECTION = WalkDirection.NONE;
 
-		if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE) {
-			if (pressed(input, Left)) {
-				acc -= ground_speed;
+		if (state == FighterState.IDLE || state == FighterState.JUMPING) {
+			var acl:Float = 0.0;
+
+			if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE) {
+				if (pressed(input, Left))
+					acl -= ground_speed / ground_rate;
+
+				if (pressed(input, Right))
+					acl += ground_speed / ground_rate;
+
+				if (acl != 0)
+					WALKING_DIRECTION = acl > 0 && !flipX ? WalkDirection.FORWARDS : WalkDirection.BACKWARDS;
+
+				var dir_multiplier:Float = WALKING_DIRECTION == WalkDirection.BACKWARDS ? backwards_ground_multiplier : 1;
+
+				velocity.x += acl * dir_multiplier;
+				velocity.x = FlxMath.bound(velocity.x, -ground_speed * dir_multiplier, ground_speed * dir_multiplier);
 			}
 
-			if (pressed(input, Right)) {
-				acc += ground_speed;
-			}
+			do_jump(delta, input);
 
-			WALKING_DIRECTION = acc > 0 && flipX ? WalkDirection.FORWARDS : WalkDirection.BACKWARDS;
-		}
-
-		acceleration.set(acc, 2000);
-
-		do_jump(delta, input);
-
-		if (state == FighterState.IDLE || state == FighterState.JUMPING)
 			if (CONTROL_LOCK == ControlLock.FULL_CONTROL)
 				if (touchingFloor) {
-					if (acceleration.x != 0)
+					if (cast(WALKING_DIRECTION, Int) > WalkDirection.NEUTRAL)
 						anim(WALKING_DIRECTION == WalkDirection.FORWARDS ? 'walk-forwards' : 'walk-backwards');
 					else
 						anim('idle');
 				} else
 					anim('jump');
+		}
 
-		flipX = opponent.getMidpoint().x > getMidpoint().x;
+		flipX = opponent.getMidpoint().x < getMidpoint().x;
 
 		if (state == FighterState.ATTACKING) {
 			if (current_attack_data != null) {
 				if (animation.finished && cur_anim.name == current_attack_data.name) {
 					current_attack_data = null;
 					state = FighterState.IDLE;
+				} else {
+					simulate_attack(current_attack_data, delta, input);
 				}
 			}
 		}
@@ -122,6 +143,9 @@ class Fighter extends FlxRollbackActor {
 		super.updateWithInputs(delta, input);
 		prevInput = input;
 	}
+
+	function reset_gravity()
+		acceleration.y = gravity;
 
 	function choose_attack(delta:Float, input:FrameInput) {
 		if (current_attack_data == null && can_attack)
@@ -135,6 +159,44 @@ class Fighter extends FlxRollbackActor {
 				state = FighterState.ATTACKING;
 			}
 		}
+	}
+
+	/**
+	 * Handles most attack attributes/thrust/hitbox stuff
+	 * @param attackData 
+	 * @param delta 
+	 * @param input 
+	 */
+	function simulate_attack(attackData:AttackDataType, delta:Float, input:FrameInput) {
+		// velocity adjustments for directional holding
+		var multi:Float = calculate_thrust_multiplier(input);
+
+		for (thrust in attackData.thrust)
+			if (thrust.frames.indexOf(cur_anim.frameIndex) > -1 && (thrust.once && cur_sheet.isOnNewFrame || !thrust.once)) {
+				var thrust_x:Float = thrust.x * multi;
+				velocity.set(velocity.x + thrust_x * Utils.flipMod(this), velocity.y + thrust.y);
+			}
+
+		for (attack_drag in attackData.drag)
+			if (attack_drag.frames.indexOf(cur_anim.frameIndex) > -1)
+				velocity.set(velocity.x * attack_drag.x, velocity.y * attack_drag.y);
+
+		SUPER_ARMORED = attackData.super_armor.indexOf(cur_anim.frameIndex) > -1;
+	}
+
+	/**
+	 * Optional - attack thrust multiplier depending on direction holding
+	 * @param input 
+	 * @return Float
+	 */
+	function calculate_thrust_multiplier(input:FrameInput):Float {
+		if (pressed(input, Right) && !flipX || pressed(input, Left) && flipX) // holding forward
+			return 1.25;
+
+		if (pressed(input, Right) && flipX || pressed(input, Left) && !flipX) // holding backward
+			return 0.75;
+
+		return 1;
 	}
 
 	function get_base_attack_data(change_animation:Bool = false) {
@@ -217,16 +279,19 @@ class Fighter extends FlxRollbackActor {
 		if (JUMP_DIRECTION == JumpDirection.NONE)
 			return;
 
-		var acc:Float = 0.0;
+		var acl:Float = 0.0;
 
 		if (JUMP_DIRECTION == JumpDirection.FORWARDS) {
-			acc += !flipX ? -air_speed : air_speed;
+			acl += !flipX ? -air_speed : air_speed;
 		}
 		if (JUMP_DIRECTION == JumpDirection.BACKWARDS) {
-			acc += !flipX ? air_speed : -air_speed;
+			acl += !flipX ? air_speed : -air_speed;
 		}
 
-		acceleration.set(acc, 2000);
+		var dir_multiplier:Float = JUMP_DIRECTION == JumpDirection.BACKWARDS ? backwards_air_multiplier : 1;
+
+		velocity.x += acl * dir_multiplier;
+		velocity.x = FlxMath.bound(velocity.x, -air_speed * dir_multiplier, air_speed * dir_multiplier);
 	}
 
 	/**Receive a hit**/
@@ -268,6 +333,9 @@ class Fighter extends FlxRollbackActor {
 
 	function get_cur_anim():FlxAnimationController
 		return animation;
+
+	function get_cur_sheet():FlxSpriteExt
+		return this;
 
 	function get_attacking():Bool
 		return state == FighterState.ATTACKING;

@@ -13,7 +13,7 @@ class Penguin extends Fighter {
 		hurtbox = new FlxSpriteExt();
 		hurtbox.loadAllFromAnimationSet('${type}-hitbox');
 
-		maxVelocity.set(480, 960);
-		drag.set(2000, 0);
+		// maxVelocity.set(480, 960);
+		maxVelocity.y = 960;
 	}
 }

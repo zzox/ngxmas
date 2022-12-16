@@ -252,6 +252,10 @@ class Utils {
 
 	public static function loadAssistString(path:String):String
 		return Assets.getText(path);
+
+	/*returns a multiplier based on whether v is flipped*/
+	public static function flipMod(v:FlxSprite):Int
+		return v.flipX ? -1 : 1;
 }
 
 /**

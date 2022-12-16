@@ -12,9 +12,11 @@
     <attack name="ground-neutral">
         <ground/>
         <properties str="50" stun="30" kb="10,-15" defines="" />
-        <!--Special Attributes-->
+        <!--Movement Attributes-->
+        <drag frames="4,6" rates=".6,1" />
+        <thrust frames="5" velocity="50,0" />
+        <!--Hitbox/Special Attributes-->
         <hitbox frames="5" />
-        <thrust frames="5" velocity="25,0" />
         <cancellable frames="6" />
         <!--Controls-->
         <input controls="attack" />

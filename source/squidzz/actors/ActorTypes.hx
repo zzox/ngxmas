@@ -73,9 +73,9 @@ enum abstract JumpDirection(Int) from Int to Int {
 
 enum abstract WalkDirection(Int) from Int to Int {
 	var NONE:Int = 0;
-	var FORWARDS:Int = 1;
-	var BACKWARDS:Int = 2;
-	var NEUTRAL:Int = 3;
+	var NEUTRAL:Int = 1;
+	var FORWARDS:Int = 2;
+	var BACKWARDS:Int = 3;
 }
 
 enum abstract BlockingState(Int) from Int to Int {
