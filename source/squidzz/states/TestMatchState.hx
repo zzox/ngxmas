@@ -12,6 +12,7 @@ import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import squidzz.actors.Player;
+import squidzz.display.MatchUi;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
 import squidzz.rollback.Rollback;
@@ -27,9 +28,9 @@ class TestMatchState extends FlxState {
 
     var collisionGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 
-    // TEMP:
-    var candyCaneHealth:FlxSprite;
-    var healthPercent:Int = 100;
+    // // TEMP:
+    // var candyCaneHealth:FlxSprite;
+    // var healthPercent:Int = 100;
 
 	override function create () {
 		super.create();
@@ -57,22 +58,23 @@ class TestMatchState extends FlxState {
         }
 
         // health input test
-        candyCaneHealth = new FlxSprite(0, 0, 'assets/images/candy-cane.png');
-        add(candyCaneHealth);
+        // candyCaneHealth = new FlxSprite(0, 0, 'assets/images/candy-cane.png');
+        // add(candyCaneHealth);
+        add(new MatchUi());
 	}
 
 	override function update (elapsed:Float) {
 		super.update(elapsed);
 
-        if (getLocalInput()['A']) {
-            healthPercent++;
-        }
+        // if (getLocalInput()['A']) {
+        //     healthPercent++;
+        // }
 
-        if (getLocalInput()['B']) {
-            healthPercent--;
-        }
+        // if (getLocalInput()['B']) {
+        //     healthPercent--;
+        // }
 
-        candyCaneHealth.clipRect = new FlxRect(0, 0, Math.round(candyCaneHealth.width * (healthPercent / 100)), candyCaneHealth.height);
+        // candyCaneHealth.clipRect = new FlxRect(0, 0, Math.round(candyCaneHealth.width * (healthPercent / 100)), candyCaneHealth.height);
 
         // simulate input delay
         localInputs.push(getLocalInput());
