@@ -1,17 +1,16 @@
 package squidzz.rollback;
 
-import squidzz.conn.Connection;
 import squidzz.rollback.FrameInput;
 
 typedef Frame = {
-    var frameNumber:Int;
-    var input:Array<FrameInput>;
-    var state:Dynamic;
+	var frameNumber:Int;
+	var input:Array<FrameInput>;
+	var state:Dynamic;
 }
 
 interface AbsSerialize<T> {
-    public function serialize():T;
-    public function unserialize(state:T):Void;
+	public function serialize():T;
+	public function unserialize(state:T):Void;
 }
 
 // `frameModulos[0]` should never be reached.
@@ -73,8 +72,10 @@ class Rollback<T> {
 
         currentFrame++;
 
+        #if js
         // send off the frame now that we will be simulating later.
         Connection.inst.sendInput(currentFrame + INPUT_DELAY_FRAMES, serializeInput(localInput));
+        #end
 
         // HACK: input delay
         localInputs.push(localInput);

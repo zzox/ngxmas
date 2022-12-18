@@ -1,0 +1,9 @@
+<root>
+    <animSet image = "BLOCK" fps = "30">
+        <anim name = "block" looping = "false">0t31</anim>
+    </animSet>
+
+    <animSet image = "BLOCK" fps = "30">
+        <anim name = "block">0t31</anim>
+    </animSet>
+</root>

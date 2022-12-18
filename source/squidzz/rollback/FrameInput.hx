@@ -6,7 +6,7 @@ typedef FrameInput = Map<String, Bool>;
 typedef RemoteInput = {
     var index:Int;
     var input:FrameInput;
-}
+};
 
 function serializeInput (input:FrameInput):String {
     return Json.stringify(input);

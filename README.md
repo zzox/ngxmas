@@ -6,11 +6,14 @@ and code your game as usual and I'll know how to include it.
 ## Setup
 
 Use flixel 5.0.0 via github:
+
 ```
 haxelib git flixel https://github.com/HaxeFlixel/flixel.git
 haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons.git
 ```
+
 Use the latest haxelib releases of everything else.
+
 ```
 haxelib install lime
 haxelib install openfl
@@ -18,11 +21,13 @@ haxelib install newgrounds
 ```
 
 ## Making your Own
+
 Copy this template and rename every namespace `templatemg` to whatever unique namespace you've
 given your game(Hint: Use Ctrl+Shift+F). This will prevent naming conflicts with the main Advent game, as well as other
 minigames.
 
 ## Controls
+
 Advent is set up with an advanced control system that takes Gamepads and keyboard buttons and
 combines them into one easy to use system. Instead of `FlxG.keys.justPressed.Z` or
 `FlxG.gamepads.firstActive.justPressed.A`, you can just use `Controls.justPressed.A`.
@@ -30,11 +35,13 @@ combines them into one easy to use system. Instead of `FlxG.keys.justPressed.Z` 
 Check out the full list of controls, [here](https://github.com/BrandyBuizel/Advent2022/blob/main/source/ui/Controls.hx#L53-L77).
 We also plan to add on-screen buttons for mobile.
 
-*But George i need more controller buttons!!*
+_But George i need more controller buttons!!_
 Anything extra you can add the normal way!
 
 ## Caveats
+
 To allow your game to work in both stand-alone as well as in Advent, use `Global` methods
+
 - Use `Global.width/height` instead of `FlxG.width/height`.
 - Use `Global.screenCenter(obj, XY)` instead of `obj.screenCenter(XY)`, since the latter uses `FlxG.width`.
 - Use `Global.state` instead of `FlxG.state`.
@@ -65,7 +72,7 @@ The game state needs to be serialized every frame, and everything needs to be co
 
 ### Animation
 
-Animations need to be completely deterministic. When an opponent cues an attack, due to the latency, we will get the input late. Attacks need to have longer wind ups because the remote player will only see the latter part of a Animation. Animations will need to be constructed in such a way that they can jump forward to a certain point so the remote player can at least see part of animations being played.
+Animations need to be completely deterministic. When an opponent cues an attack, due to the latency, we will get the input late. Attacks need to have longer wind ups because the remote player will only see the latter part of a Animation. Animations will need to be constructed in such a way that they can jump forwards to a certain point so the remote player can at least see part of animations being played.
 
 ### Quick start
 

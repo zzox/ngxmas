@@ -1,3 +1,4 @@
+#if js
 package squidzz.conn;
 
 import haxe.Timer;
@@ -8,7 +9,7 @@ import squidzz.conn.Ws;
 import squidzz.rollback.FrameInput;
 
 class Connection {
-    public static var inst:Conn = new Conn();
+	public static var inst:Conn = new Conn();
 }
 
 class Conn {
@@ -228,3 +229,4 @@ class Conn {
         sendWsMessage('ice-candidate', { roomId: roomId, candidate: candidate });
     }
 }
+#end
