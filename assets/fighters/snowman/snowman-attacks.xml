@@ -1,0 +1,58 @@
+<root>
+    <attack name="ground">
+        <!--Attack Links-->
+        <link attack="ground-neutral" />
+        <link attack="ground-forward" />
+        <link attack="ground-backward" />
+    </attack>
+
+    <attack name="air">
+        <!--Attack Links-->
+        <link attack="air-neutral" />
+    </attack>
+
+    <attack name="ground-neutral">
+        <ground/>
+         <!--Controls-->
+         <input controls="attack" />
+        <!--Hitboxes-->
+        <hitbox frames="5" kb = "50,-100" str = "100"/>
+        <!--Movement Attributes-->
+        <drag frames="4,6" rates=".6,1" />
+        <thrust frames="5" velocity="50,0" />
+        <!--Special Attributes-->
+        <cancellable frames="6" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-forward">
+        <ground/>
+         <!--Controls-->
+         <input controls="attack,forward" />
+        <!--Hitboxes-->
+        <hitbox frames="5" kb = "50,-100" str = "100"/>
+        <!--Movement Attributes-->
+        <drag frames="4,6" rates=".6,1" />
+        <thrust frames="5" velocity="50,0" />
+        <!--Special Attributes-->
+        <cancellable frames="6" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-backward">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,backward" />
+        <!--Hitboxes-->
+        <hitbox frames="5" kb = "50,-100" str = "100"/>
+        <!--Movement Attributes-->
+        <drag frames="4,6" rates=".6,1" />
+        <thrust frames="5" velocity="50,0" />
+        <!--Special Attributes-->
+        <cancellable frames="6" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+</root>

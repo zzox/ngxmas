@@ -165,11 +165,23 @@
             "path": "assets/fighters/snowman"
         },
         {
+            "file": "snowman-attacks.xml",
+            "path": "assets/fighters/snowman"
+        },
+        {
             "file": "snowman-block.json",
             "path": "assets/fighters/snowman"
         },
         {
             "file": "snowman-block.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-back-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-back-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -189,11 +201,27 @@
             "path": "assets/fighters/snowman"
         },
         {
+            "file": "snowman-ground-forward-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-forward-hurtbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
             "file": "snowman-ground-forward.json",
             "path": "assets/fighters/snowman"
         },
         {
             "file": "snowman-ground-forward.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-neutral-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-neutral-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -221,6 +249,14 @@
             "path": "assets/fighters/snowman"
         },
         {
+            "file": "snowman-idle-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-idle-hurtbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
             "file": "snowman-idle.json",
             "path": "assets/fighters/snowman"
         },
@@ -242,6 +278,14 @@
         },
         {
             "file": "snowman-ko.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-walk-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-walk-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {

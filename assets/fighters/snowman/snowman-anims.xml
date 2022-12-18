@@ -1,9 +1,23 @@
 <root>
-    <animSet image = "BLOCK" fps = "30">
-        <anim name = "block" looping = "false">0t31</anim>
+    <animSet image = "snowman-idle" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "idle">0t34</anim>
+        <anim name = "jump">0t34</anim>
     </animSet>
 
-    <animSet image = "BLOCK" fps = "30">
-        <anim name = "block">0t31</anim>
+    <animSet image = "snowman-walk" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "walk-forwards">27t0</anim>
+        <anim name = "walk-backwards">0t27</anim>
+    </animSet>
+
+    <animSet image = "snowman-ground-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "ground-neutral">0t7</anim>
+    </animSet>
+
+    <animSet image = "snowman-ground-forward" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "ground-forward">0t26</anim>
+    </animSet>
+
+    <animSet image = "snowman-ground-back" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "ground-backward">0t17</anim>
     </animSet>
 </root>

@@ -306,9 +306,9 @@ class Fighter extends FlxRollbackActor {
 					for (inputToCheck in inputArray) {
 						var DOWN_INPUT = inputToCheck.input == "down" && pressed(input, Down);
 						var UP_INPUT = inputToCheck.input == "up" && pressed(input, Up);
-						var FORWARD_INPUT = inputToCheck.input == "forward"
+						var FORWARD_INPUT = (inputToCheck.input == "forward" || inputToCheck.input == "forwards")
 							&& (pressed(input, Right) && !flipX || pressed(input, Left) && flipX);
-						var BACKWARD_INPUT = inputToCheck.input == "backward"
+						var BACKWARD_INPUT = (inputToCheck.input == "backward" || inputToCheck.input == "backwards")
 							&& (pressed(input, Right) && flipX || pressed(input, Left) && !flipX);
 						var SIDEWAYS_INPUT = inputToCheck.input == "sideways" && (pressed(input, Right) || pressed(input, Left));
 						var ATTACK_INPUT = inputToCheck.input == "attack" && (justPressed(input, Attack)); // this is a duplicate but here for futureproofing
