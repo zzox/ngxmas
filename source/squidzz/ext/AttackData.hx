@@ -6,6 +6,8 @@ using flixel.util.FlxArrayUtil;
 class AttackData {
 	static var data:Map<String, Map<String, AttackDataType>> = new Map<String, Map<String, AttackDataType>>();
 
+	static var DEFAULT_STUN:Int = 10;
+
 	public static function init() {
 		Paths.recursive_file_operation("assets", "attacks.xml", get_all_attack_data);
 	}
@@ -27,7 +29,6 @@ class AttackData {
 	static function get_all_attack_data(file:String):String {
 		var xml:Xml = Utils.XMLloadAssist(file);
 		var fighter_name:String = file.split("/").last().replace("-attacks.xml", "");
-		trace(fighter_name);
 
 		data.set(fighter_name, new Map<String, AttackDataType>());
 
@@ -35,10 +36,9 @@ class AttackData {
 			var attackData:AttackDataType = {
 				name: "",
 				animation: "",
-				kb: new FlxPoint(),
 				str_type: "",
 				str_mult: 0,
-				stun: 0,
+				stun: 10,
 				defines: [],
 				inputs: [],
 				attack_links: [],
@@ -78,11 +78,6 @@ class AttackData {
 			attackData.flipOnFinish = attack.elementsNamed("flipOnFinish").hasNext();
 
 			if (properties != null) {
-				if (properties.get("kb") != null) {
-					var kbSplit:Array<String> = properties.get("kb").split(",");
-					attackData.kb.set(Std.parseInt(kbSplit[0]), Std.parseInt(kbSplit[1]));
-				}
-
 				if (properties.get("str") != null) {
 					attackData.str_type = properties.get("str").indexOf("estr") > -1 ? "estr" : "mstr";
 					attackData.str_mult = Std.parseFloat(properties.get("str").split("*")[1]);
@@ -189,14 +184,13 @@ class AttackData {
 				attackData.cancellableFrames = Utils.animFromString(attack.elementsNamed("cancellable").next().get("frames"));
 
 			for (box in attack.elementsNamed("hitbox")) {
-				var split:Array<String> = box.get("kb") != null ? box.get("bonus_defines").split(",") : [];
+				var split:Array<String> = box.get("kb") != null ? box.get("kb").split(",") : [];
 				attackData.hitboxes.push({
 					frames: Utils.animFromString(box.get("frames")),
 					melee_id: box.get("melee_id") != null ? Std.parseInt(box.get("melee_id")) : -999,
-					str_mult: box.get("str_mult") != null ? Std.parseFloat(box.get("str_mult")) : -999,
-					kb_x: split.length > 0 ? Std.parseFloat(split[0]) : -999,
-					kb_y: split.length > 1 ? Std.parseFloat(split[1]) : -999,
-					stun: box.get("stun") != null ? Std.parseInt(box.get("stun")) : -999,
+					str: box.get("str") != null ? Std.parseFloat(box.get("str")) : 0,
+					kb: new FlxPoint(Std.parseInt(box.get("kb").split(",")[0]), Std.parseInt(box.get("kb").split(",")[1])),
+					stun: box.get("stun") != null ? Std.parseInt(box.get("stun")) : DEFAULT_STUN,
 					bonus_defines: box.get("bonus_defines") != null ? box.get("bonus_defines").split(",") : []
 				});
 			}

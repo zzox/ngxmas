@@ -11,24 +11,23 @@
 
     <attack name="ground-neutral">
         <ground/>
-        <properties str="50" stun="30" kb="10,-15" defines="" />
+         <!--Controls-->
+         <input controls="attack" />
+        <!--Hitboxes-->
+        <hitbox frames="5" kb = "50,-100" str = "100"/>
         <!--Movement Attributes-->
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
-        <!--Hitbox/Special Attributes-->
-        <hitbox frames="5" />
+        <!--Special Attributes-->
         <cancellable frames="6" />
-        <!--Controls-->
-        <input controls="attack" />
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>
 
     <attack name="air-neutral">
         <air/>
-        <properties str="50" stun="30" kb="10,-15" defines="" />
         <!--Special Attributes-->
-        <hitbox frames="17" />
+        <hitbox frames="17" kb = "50,100" str = "100"/>
         <!--Controls-->
         <input controls="attack" />
         <!--Attack Links-->

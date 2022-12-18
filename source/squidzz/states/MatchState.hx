@@ -52,6 +52,9 @@ class MatchState extends BaseState {
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
 
+		player1.set_group(stateGroup);
+		player2.set_group(stateGroup);
+
 		rollback = new Rollback(playerIndex, stateGroup, ['up' => false, 'left' => false, 'right' => false], stateGroup.step, stateGroup.unserialize);
 
 		#if js

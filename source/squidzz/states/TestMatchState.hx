@@ -25,6 +25,9 @@ class TestMatchState extends BaseState {
 
 	var debugUi:DebugUi;
 
+	var player1:Fighter;
+	var player2:Fighter;
+
 	override function create() {
 		super.create();
 
@@ -32,15 +35,19 @@ class TestMatchState extends BaseState {
 
 		add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
-		final player1 = new Penguin(7 * 16, 328);
-		// TODO: punching bag opponent
-		final player2 = new Penguin(768, 328);
+		player1 = new Penguin(7 * 16, 328);
+		player2 = new Penguin(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;
 
+		player1.x += 500;
+
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
+
+		player1.set_group(stateGroup);
+		player2.set_group(stateGroup);
 
 		for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {
 			localInputs.push(blankInput());
@@ -53,6 +60,9 @@ class TestMatchState extends BaseState {
 		// simulate input delay
 		localInputs.push(getLocalInput());
 		stateGroup.step([localInputs.shift(), blankInput()], elapsed);
+
+		player1.fighter_hit_check(player2);
+		player2.fighter_hit_check(player1);
 
 		if (Controls.justPressed.PAUSE) {
 			debugUi.visible = !debugUi.visible;

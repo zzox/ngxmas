@@ -41,7 +41,6 @@ typedef PathCacheType = {
 typedef AttackDataType = {
 	var name:String;
 	var animation:String;
-	var kb:FlxPoint;
 	var str_type:String;
 	var str_mult:Float;
 	var stun:Int;
@@ -61,15 +60,7 @@ typedef AttackDataType = {
 	var airOnly:Bool;
 	var groundOnly:Bool;
 	var flipOnFinish:Bool;
-	var hitboxes:Array<{
-		frames:Array<Int>,
-		melee_id:Int,
-		str_mult:Float,
-		kb_x:Float,
-		kb_y:Float,
-		stun:Int,
-		bonus_defines:Array<String>,
-	}>;
+	var hitboxes:Array<HitboxType>;
 	var offset_left:FlxPoint;
 	var offset_right:FlxPoint;
 	var flippableFrames:Array<Int>;
@@ -105,6 +96,15 @@ typedef AttackDataType = {
 	var learnable:Bool;
 	var max_uses:{count:Int, reset_on:String};
 	var attack_landed:Bool;
+}
+
+typedef HitboxType = {
+	frames:Array<Int>,
+	melee_id:Int,
+	str:Float,
+	kb:FlxPoint,
+	stun:Int,
+	bonus_defines:Array<String>,
 }
 
 /**

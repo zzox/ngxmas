@@ -109,15 +109,15 @@
             "path": "assets/fighters/penguin"
         },
         {
-            "file": "penguin-hitbox.png",
+            "file": "penguin-base-hitbox.png",
             "path": "assets/fighters/penguin"
         },
         {
-            "file": "penguin-hurtbox.png",
+            "file": "penguin-base-hurtbox.png",
             "path": "assets/fighters/penguin"
         },
         {
-            "file": "penguin.png",
+            "file": "penguin-base.png",
             "path": "assets/fighters/penguin"
         },
         {

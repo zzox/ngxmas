@@ -30,8 +30,11 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 		this.player1 = player1;
 		this.player2 = player2;
 
-		add(player1);
-		add(player2);
+		for (p in [player1, player2]) {
+			add(p);
+			add(p.hitbox);
+			add(p.hurtbox);
+		}
 	}
 
 	// don't update.
@@ -67,7 +70,7 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 			}
 		});
 
-		FlxG.collide(player1, player2);
+		FlxG.overlap(player1, player2);
 
 		return this;
 	}

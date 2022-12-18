@@ -1,5 +1,5 @@
 <root>
-    <animSet image = "penguin" path = "assets" hitbox = "71,1" offset_left = "68,146" offset_right = "84,146" fps = "100ms">
+    <animSet image = "penguin-base" path = "assets" hitbox = "71,1" offset_left = "68,146" offset_right = "84,146" fps = "100ms">
         <anim name = "idle" fps = "150ms">0t1</anim>
         <anim name = "walk-forwards" fps = "150ms">2t3</anim>
         <anim name = "walk-backwards" fps = "100ms">3,2</anim>
@@ -10,5 +10,6 @@
         <anim name = "ground-up" looping = "false">10t13</anim>
         <anim name = "air-neutral" looping = "false">16t19</anim>
         <anim name = "special-all-slide" looping = "false">20t21</anim>
+        <anim name = "hit">22t23</anim>
     </animSet>
 </root>

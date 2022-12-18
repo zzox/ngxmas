@@ -1,13 +1,16 @@
 package squidzz.actors;
 
 import flixel.FlxSprite;
+import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
 
 class FlxRollbackActor extends FlxSpriteExt {
 	public var touchingFloor:Bool = false;
 
-	public function new(x:Float, y:Float) {
-		super(x, y);
+	var group:FlxRollbackGroup;
+
+	public function new(?X:Float, ?Y:Float, ?group:FlxRollbackGroup) {
+		super(X, Y);
 	}
 
 	// remove the update method called by the scene.
@@ -17,4 +20,7 @@ class FlxRollbackActor extends FlxSpriteExt {
 	public function updateWithInputs(delta:Float, input:FrameInput) {
 		super.update(delta);
 	}
+
+	public function set_group(group:FlxRollbackGroup)
+		this.group = group;
 }

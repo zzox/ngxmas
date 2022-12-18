@@ -53,8 +53,8 @@ class FlxSpriteExt extends FlxSprite {
 
 	/***Loads the Image AND Animations from an AnimationSet***/
 	public function loadAllFromAnimationSet(image:String, ?image_as:String, unique:Bool = false, autoIdle:Bool = true, unsafe:Bool = false,
-			force_kebab_case:Bool = false):Bool {
-		var animSet:AnimSetData = Lists.getAnimationSet(image);
+			force_kebab_case:Bool = false):FlxSpriteExt {
+		var animSet:AnimSetData = Lists.getAnimationSet(image_as == null ? image : image_as);
 		loaded_image = image;
 
 		if (type == "sprite" || type == "")
@@ -63,7 +63,7 @@ class FlxSpriteExt extends FlxSprite {
 		if (animSet == null) {
 			loadGraphic(Paths.get(image + ".png"));
 			animAdd("idle", "1");
-			return false;
+			return this;
 		}
 
 		var animWidth:Float = animSet.dimensions.x;
@@ -108,11 +108,11 @@ class FlxSpriteExt extends FlxSprite {
 		return loadAnimsFromAnimationSet(image, autoIdle);
 	}
 
-	public function loadAnimsFromAnimationSet(image:String, autoIdle:Bool = true):Bool {
+	public function loadAnimsFromAnimationSet(image:String, autoIdle:Bool = true):FlxSpriteExt {
 		var animSet:AnimSetData = Lists.getAnimationSet(image);
 
 		if (animSet == null)
-			return false;
+			return null;
 
 		for (set in animSet.animations) {
 			animAdd(set.name, set.frames, set.fps, set.looping, false, false, set.linked);
@@ -122,7 +122,7 @@ class FlxSpriteExt extends FlxSprite {
 
 		// debug(getHitbox());
 
-		return true;
+		return this;
 	}
 
 	/*
