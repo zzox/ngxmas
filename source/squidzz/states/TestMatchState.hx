@@ -8,6 +8,7 @@ import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Fighter;
+import squidzz.actors.snowman.Snowman;
 import squidzz.display.DebugUi;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
@@ -36,12 +37,13 @@ class TestMatchState extends BaseState {
 		add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
 		player1 = new Penguin(7 * 16, 328);
-		player2 = new Penguin(768, 328);
+		player2 = new Snowman(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;
 
-		player1.x += 500;
+		player1.x += 300;
+		player2.x -= 200;
 
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
