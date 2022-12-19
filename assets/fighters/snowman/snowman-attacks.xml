@@ -8,15 +8,15 @@
 
     <attack name="air">
         <!--Attack Links-->
-        <link attack="air-neutral" />
+        <link attack="air-neutral-start" />
     </attack>
 
     <attack name="ground-neutral">
         <ground/>
-         <!--Controls-->
-         <input controls="attack" />
+        <!--Controls-->
+        <input controls="attack" />
         <!--Hitboxes-->
-        <hitbox frames="5" kb = "50,-100" str = "100"/>
+        <hitbox frames="0t99" kb = "200,-100" str = "100"/>
         <!--Movement Attributes-->
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
@@ -31,7 +31,7 @@
          <!--Controls-->
          <input controls="attack,forward" />
         <!--Hitboxes-->
-        <hitbox frames="5" kb = "50,-100" str = "100"/>
+        <hitbox frames="0t99" kb = "1000,-100" str = "100" stun = "30"/>
         <!--Movement Attributes-->
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
@@ -46,7 +46,7 @@
         <!--Controls-->
         <input controls="attack,backward" />
         <!--Hitboxes-->
-        <hitbox frames="5" kb = "50,-100" str = "100"/>
+        <hitbox frames="0t99" kb = "50,-700" str = "100" stun = "30"/>
         <!--Movement Attributes-->
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
@@ -54,5 +54,35 @@
         <cancellable frames="6" />
         <!--Attack Links-->
         <inherits from="ground" />
+    </attack>
+
+    <attack name="air-neutral-start">
+        <air/>
+        <!--Controls-->
+        <input controls="attack" />
+        <!--Hitboxes-->
+        <hitbox frames="3" kb = "200,-500" str = "100" stun = "10"/>
+        <hitbox frames="4t19" kb = "200,-200" str = "50" stun = "30"/>
+        <!--Movement Attributes-->
+        <thrust frames="5" velocity="50,150" />
+
+        <auto_continue on_complete="air-neutral-loop" />
+    </attack>
+
+    <attack name="air-neutral-loop">
+        <air/>
+        <!--Hitboxes-->
+        <hitbox frames="3" kb = "200,-500" str = "100" stun = "10"/>
+        <hitbox frames="4t19" kb = "200,-200" str = "50" stun = "30"/>
+        <!--Movement Attributes-->
+        <thrust frames="5" velocity="50,150" />
+        <!--Attack Links-->
+        <ground_cancel_attack name="air-neutral-land" />
+    </attack>
+
+    <attack name="air-neutral-land">
+        <air/>
+        <!--Attack Links-->
+        <inherits from="air" />
     </attack>
 </root>

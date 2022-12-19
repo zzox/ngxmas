@@ -4,7 +4,6 @@ class Penguin extends Fighter {
 	public function new(?Y:Float = 0, ?X:Float = 0) {
 		super(X, Y, "penguin");
 
-		fill_sprite_atlas(type);
 		update_cur_sheet("idle");
 
 		// maxVelocity.set(480, 960);

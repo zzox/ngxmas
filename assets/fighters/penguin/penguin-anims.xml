@@ -3,7 +3,10 @@
         <anim name = "idle" fps = "150ms">0t1</anim>
         <anim name = "walk-forwards" fps = "150ms">2t3</anim>
         <anim name = "walk-backwards" fps = "100ms">3,2</anim>
-        <anim name = "jump">14t15</anim>
+        <anim name = "jump-squat">14t15</anim>
+        <anim name = "jump-up">14t15</anim>
+        <anim name = "jump-mid">14t15</anim>
+        <anim name = "jump-down">14t15</anim>
         <anim name = "ground-neutral" looping = "false">4t6</anim>
         <anim name = "ground-back" looping = "false">7t8,9h3</anim>
         <anim name = "ground-forwards" looping = "false">7t8,9h3</anim>

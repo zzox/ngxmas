@@ -9,6 +9,14 @@
         <anim name = "walk-backwards">27t0</anim>
     </animSet>
 
+    <animSet image = "snowman-jump" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "jump-squat" looping = "false">0t9</anim>
+        <anim name = "jump-up">10t29</anim>
+        <anim name = "jump-mid" looping = "false">30t32</anim>
+        <anim name = "jump-down">33t50</anim>
+        <anim name = "jump-land" looping = "false">51t59</anim>
+    </animSet>
+
     <animSet image = "snowman-ground-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
         <anim name = "ground-neutral" looping = "false">0t7</anim>
     </animSet>
@@ -19,5 +27,12 @@
 
     <animSet image = "snowman-ground-back" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
         <anim name = "ground-backward" looping = "false">0t17</anim>
+    </animSet>
+
+    <animSet image = "snowman-air-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "air-neutral-start" looping = "false">0t2</anim>
+        <anim name = "air-neutral-loop">3t19</anim>
+        <anim name = "air-neutral-land" looping = "false">20t25</anim>
+        <anim name = "air-neutral-land" looping = "false">20t25</anim>
     </animSet>
 </root>

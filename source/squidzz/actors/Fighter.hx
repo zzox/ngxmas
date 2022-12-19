@@ -62,6 +62,8 @@ class Fighter extends FlxRollbackActor {
 	var gravity:Int = 2000;
 	var traction:Int = 750;
 
+	var jump_height:Int = 960;
+
 	/**Can't take damage inv > 0*/
 	var inv:Int = 0;
 
@@ -85,6 +87,8 @@ class Fighter extends FlxRollbackActor {
 		super(X, Y);
 
 		this.type = type;
+
+		fill_sprite_atlas(type);
 
 		prevInput = blankInput();
 
@@ -113,9 +117,10 @@ class Fighter extends FlxRollbackActor {
 		inv--;
 		stun--;
 
+		hitbox.visible = hurtbox.visible = Main.SHOW_HITBOX;
+
 		if (justPressed(input, Up) && touchingFloor) {
-			start_jump(delta, input);
-			velocity.y = -960;
+			sstate(FighterState.JUMP_SQUAT);
 		}
 
 		if (touchingFloor && cast(JUMP_DIRECTION, Int) > JumpDirection.NONE) {
@@ -155,15 +160,34 @@ class Fighter extends FlxRollbackActor {
 							anim(WALKING_DIRECTION == WalkDirection.FORWARDS ? 'walk-forwards' : 'walk-backwards');
 						else
 							anim('idle');
-					} else
-						anim('jump');
+					} else {
+						var mid_jump_limit:Int = 10;
+						if (velocity.y < -mid_jump_limit)
+							anim('jump-up');
+						else if (Math.abs(velocity.y) < mid_jump_limit)
+							anim("jump-mid");
+						else if (velocity.y > mid_jump_limit && cur_anim.finished)
+							anim("jump-down");
+					}
 
 				if (pressed(input, Attack))
 					choose_attack(delta, input);
 
+			case FighterState.JUMP_SQUAT:
+				animProtect("jump-squat");
+				if (cur_anim.finished) {
+					sstate(FighterState.JUMPING);
+					velocity.y = -jump_height;
+					start_jump(delta, input);
+				}
+			case FighterState.JUMP_LAND:
+				animProtect("jump-land");
+				if (cur_anim.finished)
+					sstate(FighterState.IDLE);
 			case FighterState.ATTACKING:
 				if (current_attack_data != null) {
-					if (cur_anim.finished && cur_anim.name == current_attack_data.name) {
+					var attack_finished:Bool = cur_anim.finished && cur_anim.name == current_attack_data.name;
+					if (attack_finished && !auto_continuing_attack_check(current_attack_data)) {
 						current_attack_data = null;
 						state = FighterState.IDLE;
 					} else {
@@ -189,7 +213,7 @@ class Fighter extends FlxRollbackActor {
 		if (fighter_hitbox_data == null)
 			return;
 
-		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 100) && inv <= 0) {
+		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) && inv <= 0) {
 			stun = fighter.current_attack_data.stun;
 			velocity.copyFrom(fighter_hitbox_data.kb);
 			velocity.x *= -Utils.flipMod(this);
@@ -245,13 +269,18 @@ class Fighter extends FlxRollbackActor {
 			current_attack_data = get_base_attack_data(current_attack_data != null && cur_anim.name == current_attack_data.name);
 		var input_result:AttackDataInputCheckResult = get_attack_from_input(current_attack_data, input);
 
-		if (input_result.inputMatched) {
-			current_attack_data = input_result.attackData;
-			if (current_attack_data.name != "ground" && current_attack_data.name != "air") {
-				animProtect(current_attack_data.name);
-				state = FighterState.ATTACKING;
-			}
+		if (input_result.inputMatched)
+			load_attack(input_result.attackData);
+	}
+
+	function load_attack(attack_data_to_load:AttackDataType):AttackDataType {
+		if (attack_data_to_load.name != "ground" && attack_data_to_load.name != "air") {
+			animProtect(attack_data_to_load.name);
+			state = FighterState.ATTACKING;
+			current_attack_data = attack_data_to_load;
+			return current_attack_data;
 		}
+		return null;
 	}
 
 	/**
@@ -276,6 +305,33 @@ class Fighter extends FlxRollbackActor {
 				velocity.set(velocity.x * attack_drag.x, velocity.y * attack_drag.y);
 
 		SUPER_ARMORED = attackData.super_armor.indexOf(cur_anim.frameIndex) > -1;
+
+		// ground interrupt attack
+		if (attackData.ground_cancel_attack != "" && touchingFloor) {
+			var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.ground_cancel_attack);
+			load_attack(new_attack);
+			simulate_attack(new_attack, delta, input);
+		}
+	}
+
+	function auto_continuing_attack_check(attackData:AttackDataType):Bool {
+		var attack_homing_target:Fighter = null; // not used
+		var auto_continue_tick:Int = 999; // also not used
+
+		if (attackData.auto_continue.length <= 0)
+			return false;
+
+		for (a_con in attackData.auto_continue) {
+			var lock_valid:Bool = (a_con.lock && attack_homing_target != null || !a_con.lock);
+			var auto_continue_time_valid:Bool = cur_sheet.animation.finished && a_con.time == 0 || a_con.time > 0 && auto_continue_tick > a_con.time;
+
+			if (lock_valid && auto_continue_time_valid) {
+				var new_attack:AttackDataType = AttackData.get_attack_by_name(type, a_con.on_complete);
+				load_attack(new_attack);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public function current_hitbox_data():HitboxType {
@@ -378,7 +434,7 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	function do_jump(delta:Float, input:FrameInput) {
-		if (JUMP_DIRECTION == JumpDirection.NONE)
+		if (JUMP_DIRECTION == JumpDirection.NONE && state != FighterState.JUMP_SQUAT)
 			return;
 
 		var acl:Float = 0.0;
@@ -492,6 +548,14 @@ class Fighter extends FlxRollbackActor {
 			h.set_group(group);
 		super.set_group(group);
 	}
+
+	override public function animProtect(animation_name:String = ""):Bool {
+		if (cur_anim.name != animation_name) {
+			anim(animation_name);
+			return true;
+		}
+		return false;
+	}
 }
 
 typedef AttackDataInputCheckResult = {
@@ -502,6 +566,8 @@ typedef AttackDataInputCheckResult = {
 enum abstract FighterState(String) to String {
 	var IDLE = "IDLE";
 	var JUMPING = "JUMPING";
+	var JUMP_SQUAT = "JUMP-SQUAT";
+	var JUMP_LAND = "JUMP-LAND";
 	var ATTACKING = "ATTACKING";
 	var HIT = "HIT";
 	var KNOCKDOWN = "KNOCKDOWN";

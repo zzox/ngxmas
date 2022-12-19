@@ -121,7 +121,15 @@
             "path": "assets/fighters/penguin"
         },
         {
-            "file": "snowman-air-back.json",
+            "file": "notes.txt",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-back-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-back-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -129,7 +137,11 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-air-down.json",
+            "file": "snowman-air-down-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-down-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -137,7 +149,11 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-air-forward.json",
+            "file": "snowman-air-forward-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-forward-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -145,7 +161,11 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-air-neutral.json",
+            "file": "snowman-air-neutral-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-neutral-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -153,7 +173,11 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-air-up.json",
+            "file": "snowman-air-up-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-air-up-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -169,7 +193,11 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-block.json",
+            "file": "snowman-block-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-block-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -185,15 +213,15 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-ground-back.json",
-            "path": "assets/fighters/snowman"
-        },
-        {
             "file": "snowman-ground-back.png",
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-ground-down.json",
+            "file": "snowman-ground-down-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-down-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -209,19 +237,7 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-ground-forward.json",
-            "path": "assets/fighters/snowman"
-        },
-        {
             "file": "snowman-ground-forward.png",
-            "path": "assets/fighters/snowman"
-        },
-        {
-            "file": "snowman-ground-hitbox.png",
-            "path": "assets/fighters/snowman"
-        },
-        {
-            "file": "snowman-ground-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -233,15 +249,15 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-ground-neutral.json",
-            "path": "assets/fighters/snowman"
-        },
-        {
             "file": "snowman-ground-neutral.png",
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-ground-up.json",
+            "file": "snowman-ground-up-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-up-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -249,7 +265,11 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-hit.json",
+            "file": "snowman-hit-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-hit-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -265,15 +285,15 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-idle.json",
-            "path": "assets/fighters/snowman"
-        },
-        {
             "file": "snowman-idle.png",
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-jump.json",
+            "file": "snowman-jump-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-jump-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -281,7 +301,11 @@
             "path": "assets/fighters/snowman"
         },
         {
-            "file": "snowman-ko.json",
+            "file": "snowman-ko-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ko-hurtbox.png",
             "path": "assets/fighters/snowman"
         },
         {
@@ -294,10 +318,6 @@
         },
         {
             "file": "snowman-walk-hurtbox.png",
-            "path": "assets/fighters/snowman"
-        },
-        {
-            "file": "snowman-walk.json",
             "path": "assets/fighters/snowman"
         },
         {

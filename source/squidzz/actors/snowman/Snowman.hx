@@ -4,7 +4,6 @@ class Snowman extends Fighter {
 	public function new(?Y:Float = 0, ?X:Float = 0) {
 		super(X, Y, "snowman");
 
-		fill_sprite_atlas(type);
 		update_cur_sheet("idle");
 
 		ground_speed = 250;

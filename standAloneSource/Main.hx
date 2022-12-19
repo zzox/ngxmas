@@ -11,6 +11,7 @@ import squidzz.states.TestMatchState;
 class Main extends openfl.display.Sprite {
 	public static var DISABLE_SCREENSHAKE:Bool = false;
 	public static var SKIP_MENU:Bool = true;
+	public static var SHOW_HITBOX:Bool = false;
 
 	public function new() {
 		super();

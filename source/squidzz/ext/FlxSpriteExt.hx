@@ -202,7 +202,7 @@ class FlxSpriteExt extends FlxSprite {
 		anim(s);
 	}
 
-	function ttick() {
-		tick++;
+	function ttick():Int {
+		return tick++;
 	}
 }

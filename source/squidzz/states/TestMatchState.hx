@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
+import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
@@ -44,7 +45,7 @@ class TestMatchState extends BaseState {
 
 		for (layer in stage.layers)
 			add(layer);
-		
+
 		player1 = new Snowman(7 * 16, 328);
 		player2 = new Penguin(768, 328);
 
@@ -80,6 +81,9 @@ class TestMatchState extends BaseState {
 		if (Controls.justPressed.PAUSE) {
 			debugUi.visible = !debugUi.visible;
 		}
+
+		if (FlxG.keys.anyJustPressed([FlxKey.R]))
+			Global.switchState(new TestMatchState());
 	}
 
 	function createTileLayer(map:TiledMap, layerName:String, offset:FlxPoint):Null<FlxTilemap> {
