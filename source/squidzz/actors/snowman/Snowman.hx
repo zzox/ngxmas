@@ -5,7 +5,12 @@ class Snowman extends Fighter {
 		super(X, Y, "snowman");
 
 		fill_sprite_atlas(type);
-		update_main_sheet("idle");
+		update_cur_sheet("idle");
+
+		ground_speed = 250;
+		air_speed = 175;
+
+		backwards_air_multiplier = backwards_ground_multiplier = 1;
 
 		maxVelocity.y = 960;
 	}

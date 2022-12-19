@@ -18,184 +18,185 @@ final frameModulos = [10000, 144, 89, 55, 34, 21, 13, 8, 5, 3];
 
 // NOTE: will need to be reworked when more than two people are in a match
 class Rollback<T> {
-    public static inline final INPUT_DELAY_FRAMES:Int = 0;
+	public static inline final INPUT_DELAY_FRAMES:Int = 0;
 
-    // ATTN: need something better.
-    public static inline final GLOBAL_DELTA:Float = 0.016666666666666666;
+	// ATTN: need something better.
+	public static inline final GLOBAL_DELTA:Float = 0.016666666666666666;
 
-    var playerIndex:Int;
-    public var currentFrame:Int = 0;
-    public var frames:Array<Frame> = [];
-    public var futureRemotes:Array<RemoteInput> = [];
-    public var localInputs:Array<FrameInput> = [];
-    public var isHalted:Bool = false;
+	var playerIndex:Int;
 
-    var onSimulateInput:Array<FrameInput> -> Float -> AbsSerialize<T>;
-    var onRollbackState:T -> Void;
+	public var currentFrame:Int = 0;
+	public var frames:Array<Frame> = [];
+	public var futureRemotes:Array<RemoteInput> = [];
+	public var localInputs:Array<FrameInput> = [];
+	public var isHalted:Bool = false;
 
-    public function new (
-        playerIndex:Int,
-        initialState:AbsSerialize<T>,
-        blankFrame:FrameInput,
-        onSimulateInput:Array<FrameInput> -> Float -> AbsSerialize<T>,
-        onRollbackState:T -> Void
-    ) {
-        this.playerIndex = playerIndex;
-        this.onSimulateInput = onSimulateInput;
-        this.onRollbackState = onRollbackState;
+	var onSimulateInput:Array<FrameInput>->Float->AbsSerialize<T>;
+	var onRollbackState:T->Void;
 
-        // frame 0 always blank.
-        frames.push({
-            frameNumber: 0,
-            input: [blankFrame.copy(), blankFrame.copy()],
-            state: initialState.serialize()
-        });
+	public function new(playerIndex:Int, initialState:AbsSerialize<T>, blankFrame:FrameInput, onSimulateInput:Array<FrameInput>->Float->AbsSerialize<T>,
+			onRollbackState:T->Void) {
+		this.playerIndex = playerIndex;
+		this.onSimulateInput = onSimulateInput;
+		this.onRollbackState = onRollbackState;
 
-        // pad the local input with blank frames as well as the remotes
-        // as we know the first x frames will be blank.
-        // We won't be receiving those inputs because of the input delay.
-        for (i in 0...INPUT_DELAY_FRAMES) {
-            localInputs.push(blankFrame.copy());
-            futureRemotes.push({ index: i + 1, input: blankFrame.copy() });
-        }
-    }
+		// frame 0 always blank.
+		frames.push({
+			frameNumber: 0,
+			input: [blankFrame.copy(), blankFrame.copy()],
+			state: initialState.serialize()
+		});
 
-    // update the frame, add the frame
-    public function tick (localInput:FrameInput, delta:Float) {
-        if (frames.length > 10) {
-            trace('should halt!!');
-            isHalted = true;
-            return;
-        } else {
-            isHalted = false;
-        }
+		// pad the local input with blank frames as well as the remotes
+		// as we know the first x frames will be blank.
+		// We won't be receiving those inputs because of the input delay.
+		for (i in 0...INPUT_DELAY_FRAMES) {
+			localInputs.push(blankFrame.copy());
+			futureRemotes.push({index: i + 1, input: blankFrame.copy()});
+		}
+	}
 
-        currentFrame++;
+	// update the frame, add the frame
+	public function tick(localInput:FrameInput, delta:Float) {
+		if (frames.length > 10) {
+			trace('should halt!!');
+			isHalted = true;
+			return;
+		} else {
+			isHalted = false;
+		}
 
-        #if js
-        // send off the frame now that we will be simulating later.
-        Connection.inst.sendInput(currentFrame + INPUT_DELAY_FRAMES, serializeInput(localInput));
-        #end
+		currentFrame++;
 
-        // HACK: input delay
-        localInputs.push(localInput);
-        final currentLocalInput = localInputs.shift();
+		#if js
+		// send off the frame now that we will be simulating later.
+		Connection.inst.sendInput(currentFrame + INPUT_DELAY_FRAMES, serializeInput(localInput));
+		#end
 
-        var remoteInput:FrameInput;
-        var behind:Bool = false;
-        final futureFrame = futureRemotes[0];
-        if (futureFrame != null) {
-            // we are behind, add the local input to the frame
-            // NOTE: this assumes ordered messages
-            behind = true;
-            final fut = futureRemotes.shift();
-            remoteInput = fut.input;
-            if (currentFrame != fut.index) {
-                trace(currentFrame, fut.index);
-                throw 'bad future';
-            }
-        } else {
-            remoteInput = getFrame(currentFrame - 1).input[oppIndex()];
-        }
+		// HACK: input delay
+		localInputs.push(localInput);
+		final currentLocalInput = localInputs.shift();
 
-        // for now since we have only 2 players this kinda stuff is ok
-        final frameInput = playerIndex == 0 ? [currentLocalInput, remoteInput] : [remoteInput, currentLocalInput];
+		var remoteInput:FrameInput;
+		var behind:Bool = false;
+		final futureFrame = futureRemotes[0];
+		if (futureFrame != null) {
+			// we are behind, add the local input to the frame
+			// NOTE: this assumes ordered messages
+			behind = true;
+			final fut = futureRemotes.shift();
+			remoteInput = fut.input;
+			if (currentFrame != fut.index) {
+				trace(currentFrame, fut.index);
+				throw 'bad future';
+			}
+		} else {
+			remoteInput = getFrame(currentFrame - 1).input[oppIndex()];
+		}
 
-        final state = onSimulateInput(frameInput, delta);
+		// for now since we have only 2 players this kinda stuff is ok
+		final frameInput = playerIndex == 0 ? [currentLocalInput, remoteInput] : [remoteInput, currentLocalInput];
 
-        final frame:Frame = {
-            frameNumber: currentFrame,
-            input: frameInput,
-            state: state.serialize()
-        }
+		final state = onSimulateInput(frameInput, delta);
 
-        // update the head.
-        frames.push(frame);
+		final frame:Frame = {
+			frameNumber: currentFrame,
+			input: frameInput,
+			state: state.serialize()
+		}
 
-        // if we are behind, we can remove all frames since we know we are accurate.
-        if (behind) {
-            removeCorrectFrames(currentFrame);
+		// update the head.
+		frames.push(frame);
 
-            // Re-run based on frames behind.
-            // The further behind, the more likely we re-run.
-            final framesBehind = futureRemotes.length;
-            var framesToSkip = frameModulos[framesBehind - INPUT_DELAY_FRAMES];
-            if (framesToSkip == null) {
-                framesToSkip = 2;
-            }
-            if (framesBehind > INPUT_DELAY_FRAMES && currentFrame % framesToSkip == 0) {
-                // consider a half-frame delay here.
-                // kinda dangerous as getting out of order would break everything.
-                tick(localInput, delta);
-            }
-        }
-    }
+		// if we are behind, we can remove all frames since we know we are accurate.
+		if (behind) {
+			removeCorrectFrames(currentFrame);
 
-    // if > 2 players, this should come with an index from the connection
-    public function handleRemoteInput (remote:RemoteInput) {
-        // trace('remote input', input);
+			// Re-run based on frames behind.
+			// The further behind, the more likely we re-run.
+			final framesBehind = futureRemotes.length;
+			var framesToSkip = frameModulos[framesBehind - INPUT_DELAY_FRAMES];
+			#if js
+			if (framesToSkip == null) {
+				framesToSkip = 2;
+			}
+			#else
+			if (framesToSkip < 2)
+				framesToSkip = 2;
+			#end
+			if (framesBehind > INPUT_DELAY_FRAMES && currentFrame % framesToSkip == 0) {
+				// consider a half-frame delay here.
+				// kinda dangerous as getting out of order would break everything.
+				tick(localInput, delta);
+			}
+		}
+	}
 
-        // find input frame.
-        final frame = getFrame(remote.index);
-        if (frame == null) {
-            futureRemotes.push(remote);
-        } else {
-            final wasPredictionCorrect = compareInput(remote.input, frame.input[oppIndex()]);
+	// if > 2 players, this should come with an index from the connection
+	public function handleRemoteInput(remote:RemoteInput) {
+		// trace('remote input', input);
 
-            // if it's right, shift() anything before it's index.
-            // (besides the frame though, that's our confirm frame)
-            // if it's wrong, do the rollback.
-            if (wasPredictionCorrect) {
-                removeCorrectFrames(remote.index);
-            } else {
-                doRollback(remote.index, remote.input);
-            }
-        }
-    }
+		// find input frame.
+		final frame = getFrame(remote.index);
+		if (frame == null) {
+			futureRemotes.push(remote);
+		} else {
+			final wasPredictionCorrect = compareInput(remote.input, frame.input[oppIndex()]);
 
-    // Remove all the frames we have certified remote input from,
-    // up to but not including the frame index.
-    function removeCorrectFrames (frameIndex:Int) {
-        for (frame in frames) {
-            if (frame.frameNumber < frameIndex) {
-                frames.shift();
-            }
-        }
-    }
+			// if it's right, shift() anything before it's index.
+			// (besides the frame though, that's our confirm frame)
+			// if it's wrong, do the rollback.
+			if (wasPredictionCorrect) {
+				removeCorrectFrames(remote.index);
+			} else {
+				doRollback(remote.index, remote.input);
+			}
+		}
+	}
 
-    // Rollback, this is it!
-    function doRollback (toIndex:Int, remoteInput:FrameInput) {
-        trace('rolling back!');
-        var goodState = frames[0].state;
-        onRollbackState(goodState);
+	// Remove all the frames we have certified remote input from,
+	// up to but not including the frame index.
+	function removeCorrectFrames(frameIndex:Int) {
+		for (frame in frames) {
+			if (frame.frameNumber < frameIndex) {
+				frames.shift();
+			}
+		}
+	}
 
-        // Resimulate the state by restoring the true state, replacing the input,
-        // and simulating the inputs up to the present.
-        for (frameNum in 1...frames.length) {
-            final frame = frames[frameNum];
-            final frameInput = playerIndex == 0 ? [frame.input[0], remoteInput] : [remoteInput, frame.input[1]];
-            frame.input = frameInput;
-            final state = onSimulateInput(frameInput, GLOBAL_DELTA);
-            // this doesn't _always_ need to be serizlized, just everything after toIndex
-            frame.state = state.serialize();
-        }
+	// Rollback, this is it!
+	function doRollback(toIndex:Int, remoteInput:FrameInput) {
+		trace('rolling back!');
+		var goodState = frames[0].state;
+		onRollbackState(goodState);
 
-        removeCorrectFrames(toIndex);
-    }
+		// Resimulate the state by restoring the true state, replacing the input,
+		// and simulating the inputs up to the present.
+		for (frameNum in 1...frames.length) {
+			final frame = frames[frameNum];
+			final frameInput = playerIndex == 0 ? [frame.input[0], remoteInput] : [remoteInput, frame.input[1]];
+			frame.input = frameInput;
+			final state = onSimulateInput(frameInput, GLOBAL_DELTA);
+			// this doesn't _always_ need to be serizlized, just everything after toIndex
+			frame.state = state.serialize();
+		}
 
-    // get frame from framequeue
-    function getFrame (index:Int):Null<Frame> {
-        for (f in frames) {
-            if (f.frameNumber == index) {
-                return f;
-            }
-        }
+		removeCorrectFrames(toIndex);
+	}
 
-        return null;
-    }
+	// get frame from framequeue
+	function getFrame(index:Int):Null<Frame> {
+		for (f in frames) {
+			if (f.frameNumber == index) {
+				return f;
+			}
+		}
 
-    // little hack to get the opponents index. won't work with more than 2 players.
-    function oppIndex () {
-        return playerIndex == 0 ? 1 : 0;
-    }
+		return null;
+	}
+
+	// little hack to get the opponents index. won't work with more than 2 players.
+	function oppIndex() {
+		return playerIndex == 0 ? 1 : 0;
+	}
 }

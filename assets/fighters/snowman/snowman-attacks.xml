@@ -1,9 +1,9 @@
 <root>
     <attack name="ground">
         <!--Attack Links-->
-        <link attack="ground-neutral" />
         <link attack="ground-forward" />
         <link attack="ground-backward" />
+        <link attack="ground-neutral" />
     </attack>
 
     <attack name="air">

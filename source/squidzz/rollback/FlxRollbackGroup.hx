@@ -32,8 +32,9 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 
 		for (p in [player1, player2]) {
 			add(p);
-			add(p.hitbox);
+			add(p.visual);
 			add(p.hurtbox);
+			add(p.hitbox);
 		}
 	}
 
@@ -54,19 +55,21 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 		}
 
 		forEach(actor -> {
-			if (actor.x < 0) {
-				actor.x = 0;
-			}
+			if (!actor.immovable) {
+				if (actor.x < 0) {
+					actor.x = 0;
+				}
 
-			if (actor.x + actor.width > Global.width) {
-				actor.x = Global.width - actor.width;
-			}
+				if (actor.x + actor.width > Global.width) {
+					actor.x = Global.width - actor.width;
+				}
 
-			if (actor.y + actor.height > FLOOR_Y) {
-				actor.y = FLOOR_Y - actor.height;
-				actor.touchingFloor = true;
-			} else {
-				actor.touchingFloor = false;
+				if (actor.y + actor.height > FLOOR_Y) {
+					actor.y = FLOOR_Y - actor.height;
+					actor.touchingFloor = true;
+				} else {
+					actor.touchingFloor = false;
+				}
 			}
 		});
 

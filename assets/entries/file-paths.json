@@ -217,6 +217,14 @@
             "path": "assets/fighters/snowman"
         },
         {
+            "file": "snowman-ground-hitbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
+            "file": "snowman-ground-hurtbox.png",
+            "path": "assets/fighters/snowman"
+        },
+        {
             "file": "snowman-ground-neutral-hitbox.png",
             "path": "assets/fighters/snowman"
         },
@@ -305,12 +313,104 @@
             "path": "assets/images"
         },
         {
+            "file": "character-select-bg.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "character-select-fg.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "dom-icon.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "joe-icon.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "ketu-icon.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p1Health.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p1HealthBg.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p1Power.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p1PowerBg.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p1PowerMeter.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p2Health.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p2HealthBg.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p2Power.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p2PowerBg.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p2PowerMeter.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "poot-icon.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "present.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "timerBg.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "wreath.png",
+            "path": "assets/images/ui"
+        },
+        {
             "file": "music-goes-here.txt",
             "path": "assets/music"
         },
         {
             "file": "sounds-go-here.txt",
             "path": "assets/sounds"
+        },
+        {
+            "file": "pub-1.png",
+            "path": "assets/stages/pub"
+        },
+        {
+            "file": "pub-2.png",
+            "path": "assets/stages/pub"
+        },
+        {
+            "file": "pub-3.png",
+            "path": "assets/stages/pub"
+        },
+        {
+            "file": "pub-4.png",
+            "path": "assets/stages/pub"
         }
     ]
 }

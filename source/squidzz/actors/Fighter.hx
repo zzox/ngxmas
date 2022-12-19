@@ -37,8 +37,14 @@ class Fighter extends FlxRollbackActor {
 	/**A seperated hitbox anim that track this sprite and  is only used for hitbox spawning*/
 	public var hitbox:FlxRollbackActor;
 
+	/**A seperated graphic sheet, this is the only visible sheet*/
+	public var visual:FlxRollbackActor;
+
 	public var hurtbox_sheet:FlxRollbackActor;
 	public var hitbox_sheet:FlxRollbackActor;
+	public var cur_sheet(get, default):FlxRollbackActor;
+
+	var cur_anim(get, default):FlxAnimationController;
 
 	var JUMPING_STYLE:JumpingStyle = JumpingStyle.TRADITIONAL;
 	var JUMP_DIRECTION:JumpDirection = JumpDirection.NONE;
@@ -67,9 +73,6 @@ class Fighter extends FlxRollbackActor {
 
 	public var current_attack_data:AttackDataType;
 
-	var cur_anim(get, default):FlxAnimationController;
-	var main_sheet(get, default):FlxRollbackActor;
-
 	var attacking(get, default):Bool;
 	var can_attack(get, default):Bool;
 
@@ -88,8 +91,16 @@ class Fighter extends FlxRollbackActor {
 		state = FighterState.IDLE;
 
 		CONTROL_LOCK = ControlLock.FULL_CONTROL;
+
+		visual = new FlxRollbackActor();
 		hurtbox = new FlxRollbackActor();
 		hitbox = new FlxRollbackActor();
+
+		visual.immovable = hurtbox.immovable = hitbox.immovable = true;
+
+		visual.moves = hurtbox.moves = hitbox.moves = false;
+
+		visible = false;
 
 		reset_gravity();
 	}
@@ -173,9 +184,12 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	public function fighter_hit_check(fighter:Fighter) {
-		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 100) && inv <= 0) {
-			var fighter_hitbox_data:HitboxType = fighter.current_hitbox_data();
+		var fighter_hitbox_data:HitboxType = fighter.current_hitbox_data();
 
+		if (fighter_hitbox_data == null)
+			return;
+
+		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 100) && inv <= 0) {
 			stun = fighter.current_attack_data.stun;
 			velocity.copyFrom(fighter_hitbox_data.kb);
 			velocity.x *= -Utils.flipMod(this);
@@ -185,25 +199,26 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	function update_graphics(delta:Float, input:FrameInput) {
-		main_sheet.updateWithInputs(delta, input);
+		cur_sheet.updateWithInputs(delta, input);
 
 		hitbox_sheet.animation.frameIndex = cur_anim.frameIndex;
 		hurtbox_sheet.animation.frameIndex = cur_anim.frameIndex;
 
-		for (box in [hitbox, hurtbox]) {
-			box.setPosition(x - offset.x, y - offset.y);
+		for (box in [visual, hitbox, hurtbox]) {
 			box.velocity.copyFrom(velocity);
 			box.acceleration.copyFrom(acceleration);
-			box.alpha = 0.5;
 			box.flipX = flipX;
+			box.alpha = box == visual ? 1 : 0.5;
 		}
 
 		hitbox_sheet.updateWithInputs(delta, input);
 		hurtbox_sheet.updateWithInputs(delta, input);
 
-		stamp_ext(this, main_sheet);
+		stamp_ext(visual, cur_sheet);
 		stamp_ext(hitbox, hitbox_sheet);
 		stamp_ext(hurtbox, hurtbox_sheet);
+
+		update_offsets();
 	}
 
 	function stamp_ext(target_sprite:FlxSpriteExt, stamp_sprite:FlxSpriteExt) {
@@ -213,6 +228,13 @@ class Fighter extends FlxRollbackActor {
 			target_sprite.graphic.bitmap.fillRect(target_sprite.graphic.bitmap.rect, FlxColor.TRANSPARENT);
 
 		target_sprite.stamp(stamp_sprite);
+	}
+
+	function update_offsets() {
+		for (box in [visual, hitbox, hurtbox]) {
+			box.offset.copyFrom(!flipX ? cur_sheet.offset_left : cur_sheet.offset_right);
+			box.setPosition(x, y);
+		}
 	}
 
 	function reset_gravity()
@@ -243,7 +265,7 @@ class Fighter extends FlxRollbackActor {
 		var multi:Float = calculate_thrust_multiplier(input);
 
 		for (thrust in attackData.thrust) {
-			if (thrust.frames.indexOf(cur_anim.frameIndex) > -1 && (thrust.once && main_sheet.isOnNewFrame || !thrust.once)) {
+			if (thrust.frames.indexOf(cur_anim.frameIndex) > -1 && (thrust.once && cur_sheet.isOnNewFrame || !thrust.once)) {
 				var thrust_x:Float = thrust.x * multi;
 				velocity.set(velocity.x + thrust_x * Utils.flipMod(this), velocity.y + thrust.y);
 			}
@@ -257,9 +279,10 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	public function current_hitbox_data():HitboxType {
-		for (hitbox_data in current_attack_data.hitboxes)
-			if (hitbox_data.frames.indexOf(cur_anim.frameIndex) > -1)
-				return hitbox_data;
+		if (current_attack_data != null)
+			for (hitbox_data in current_attack_data.hitboxes)
+				if (hitbox_data.frames.indexOf(cur_anim.frameIndex) > -1)
+					return hitbox_data;
 		return null;
 	}
 
@@ -402,11 +425,11 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	override function anim(s:String) {
-		var prev_sheet:FlxSpriteExt = main_sheet;
+		var prev_sheet:FlxSpriteExt = cur_sheet;
 
-		update_main_sheet(s);
+		update_cur_sheet(s);
 
-		if (prev_sheet != main_sheet) {
+		if (prev_sheet != cur_sheet) {
 			if (cur_anim != null) {
 				cur_anim.reset();
 				hitbox_sheet.animation.reset();
@@ -414,11 +437,8 @@ class Fighter extends FlxRollbackActor {
 			}
 		}
 
-		main_sheet.anim(s);
+		cur_sheet.anim(s);
 	}
-
-	function update_offsets()
-		offset.set(flipX ? offset_left.x : offset_right.x, flipX ? offset_left.y : offset_right.y);
 
 	function get_is_touching_floor():Bool
 		return touchingFloor;
@@ -427,10 +447,10 @@ class Fighter extends FlxRollbackActor {
 		return isTouching(FlxDirectionFlags.LEFT) || isTouching(FlxDirectionFlags.RIGHT);
 
 	function get_cur_anim():FlxAnimationController
-		return main_sheet.animation;
+		return cur_sheet.animation;
 
-	function get_main_sheet():FlxRollbackActor
-		return main_sheet;
+	function get_cur_sheet():FlxRollbackActor
+		return cur_sheet;
 
 	function get_attacking():Bool
 		return state == FighterState.ATTACKING;
@@ -455,10 +475,16 @@ class Fighter extends FlxRollbackActor {
 		return null;
 	}
 
-	function update_main_sheet(anim_name:String) {
-		main_sheet = find_anim_in_sprite_atlas(anim_name);
-		hitbox_sheet = sprite_atlas.get('${main_sheet.loaded_image}-hitbox');
-		hurtbox_sheet = sprite_atlas.get('${main_sheet.loaded_image}-hurtbox');
+	function update_cur_sheet(anim_name:String) {
+		cur_sheet = find_anim_in_sprite_atlas(anim_name);
+		hitbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
+		hurtbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');
+
+		cur_sheet = find_anim_in_sprite_atlas(anim_name);
+
+		if (graphic == null) {
+			makeGraphic(cur_sheet.width.floor(), cur_sheet.height.floor(), FlxColor.WHITE);
+		}
 	}
 
 	override function set_group(group:FlxRollbackGroup) {
