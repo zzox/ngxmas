@@ -6,14 +6,15 @@
         <anim name = "jump-up">14t15</anim>
         <anim name = "jump-mid">14t15</anim>
         <anim name = "jump-down">14t15</anim>
-        <anim name = "jump-squat" looping = "false">24</anim>
-        <anim name = "jump-land" looping = "false">25</anim>
-        <anim name = "ground-neutral" looping = "false">4t6</anim>
+        <anim name = "jump-squat" looping = "false">26</anim>
+        <anim name = "jump-land" looping = "false">27</anim>
+        <anim name = "ground-neutral" looping = "false">4,28,5h2,6</anim>
         <anim name = "ground-back" looping = "false">7t8,9h3</anim>
         <anim name = "ground-forwards" looping = "false">7t8,9h3</anim>
         <anim name = "ground-up" looping = "false">10t13</anim>
         <anim name = "air-neutral" looping = "false">16t19</anim>
         <anim name = "special-all-slide" looping = "false">20t21</anim>
         <anim name = "hit">22t23</anim>
+        <anim name = "hit-recover" looping = "false" fps = "100ms">24t25</anim>
     </animSet>
 </root>

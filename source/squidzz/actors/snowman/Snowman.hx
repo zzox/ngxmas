@@ -12,7 +12,7 @@ class Snowman extends Fighter {
 
 		max_health = 1500;
 
-		kb_resistance.set(0.9, 0.75);
+		kb_resistance.set(0.9, 0.9);
 
 		backwards_air_multiplier = backwards_ground_multiplier = 1;
 

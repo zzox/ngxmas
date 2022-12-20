@@ -8,13 +8,23 @@
         <anim name = "walk-forwards">0t23</anim>
         <anim name = "walk-backwards">23t0</anim>
     </animSet>
-
+    
     <animSet image = "snowman-jump" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
         <anim name = "jump-squat" looping = "false">0t9</anim>
         <anim name = "jump-up">10t29</anim>
         <anim name = "jump-mid" looping = "false">30t32</anim>
         <anim name = "jump-down">33t50</anim>
         <anim name = "jump-land" looping = "false">51t59</anim>
+    </animSet>
+
+    <animSet image = "snowman-block" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "block-start" looping = "false">0t10</anim>
+        <anim name = "block-loop">11</anim>
+    </animSet>
+
+    <animSet image = "snowman-hit" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+        <anim name = "hit">0t16</anim>
+        <anim name = "hit-recover" looping = "false">17t36</anim>
     </animSet>
 
     <animSet image = "snowman-ground-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">

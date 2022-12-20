@@ -44,7 +44,7 @@ class TestMatchState extends BaseState {
 		FighterAIMode.WALK_FORWARDS
 	];
 
-	static var current_ai_mode:FighterAIMode = FighterAIMode.IDLE;
+	static var current_ai_mode:FighterAIMode = FighterAIMode.JAB;
 
 	override function create() {
 		super.create();

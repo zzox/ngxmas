@@ -4,10 +4,10 @@ import squidzz.actors.FlxRollbackActor;
 import squidzz.rollback.FrameInput;
 
 class CameraController extends FlxRollbackActor {
-	var player1:FlxSprite;
-	var player2:FlxSprite;
+	var player1:FlxSpriteExt;
+	var player2:FlxSpriteExt;
 
-	public function new(player1:FlxSprite, player2:FlxSprite) {
+	public function new(player1:FlxSpriteExt, player2:FlxSpriteExt) {
 		super(x, y);
 
 		this.player1 = player1;
@@ -21,7 +21,7 @@ class CameraController extends FlxRollbackActor {
 	}
 
 	function update_midpoint() {
-		setPosition((player1.x + player2.x) / 2, (player1.y + player2.y) / 2);
+		setPosition((player1.mp().x + player2.mp().x) / 2, (player1.mp().y + player2.mp().y) / 2);
 	}
 
 	override function update(elapsed:Float) {

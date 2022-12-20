@@ -205,4 +205,11 @@ class FlxSpriteExt extends FlxSprite {
 	function ttick():Int {
 		return tick++;
 	}
+
+	/**
+	 * Shorthand for getMidpoint(FlxPoint.weak())
+	 * @return FlxPoint
+	 */
+	public function mp():FlxPoint
+		return getMidpoint(FlxPoint.weak());
 }

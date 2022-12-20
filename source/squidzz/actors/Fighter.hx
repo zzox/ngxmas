@@ -7,6 +7,7 @@ import squidzz.actors.ActorTypes.ControlLock;
 import squidzz.actors.ActorTypes.JumpDirection;
 import squidzz.actors.ActorTypes.JumpingStyle;
 import squidzz.actors.ActorTypes.WalkDirection;
+import squidzz.display.FightingStage;
 import squidzz.display.MatchUi;
 import squidzz.ext.AttackData;
 import squidzz.ext.ListTypes.HitboxType;
@@ -99,6 +100,8 @@ class Fighter extends FlxRollbackActor {
 
 	var ai_tick:Int = 0;
 
+	var block_input:Bool = false;
+
 	public function new(?Y:Float = 0, ?X:Float = 0, type:String) {
 		super(X, Y);
 
@@ -152,9 +155,13 @@ class Fighter extends FlxRollbackActor {
 		input = ai_control(input);
 		drag.set(touchingFloor ? traction : 0, 0);
 
+		block_input = !flipX && pressed(input, Left) || flipX && pressed(input, Right);
+		block_input = block_input && !(pressed(input, Right) && pressed(input, Left));
+
 		inv--;
 		if (touchingFloor) // remove if too much stun
-			stun--;
+			if (state != FighterState.BLOCKING || cur_anim.name == "block-loop")
+				stun--;
 
 		hitbox.visible = hurtbox.visible = Main.SHOW_HITBOX;
 
@@ -165,15 +172,25 @@ class Fighter extends FlxRollbackActor {
 
 		WALKING_DIRECTION = WalkDirection.NONE;
 
+		handle_fighter_states(delta, input);
+
+		update_graphics(delta, input);
+		super.updateWithInputs(delta, input);
+		prevInput = input;
+	}
+
+	function handle_fighter_states(delta:Float, input:FrameInput) {
 		switch (cast(state, FighterState)) {
 			case FighterState.IDLE | FighterState.JUMPING:
 				var acl:Float = 0.0;
 
-				if (justPressed(input, Jump) && touchingFloor) {
+				var hit_recovery:Bool = cur_anim.name == "hit-recover" && !cur_anim.finished;
+
+				if (justPressed(input, Jump) && touchingFloor && !hit_recovery) {
 					sstate(FighterState.JUMP_SQUAT);
 				}
 
-				if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE) {
+				if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE && !hit_recovery) {
 					if (pressed(input, Left))
 						acl -= ground_speed / ground_rate;
 
@@ -193,7 +210,7 @@ class Fighter extends FlxRollbackActor {
 
 				do_jump(delta, input);
 
-				if (CONTROL_LOCK == ControlLock.FULL_CONTROL) {
+				if (CONTROL_LOCK == ControlLock.FULL_CONTROL && !hit_recovery) {
 					if (touchingFloor && cur_anim.name == "jump-down")
 						anim("jump-land");
 					if (touchingFloor && (cur_anim.name != "jump-land" || cur_anim.finished)) {
@@ -244,15 +261,20 @@ class Fighter extends FlxRollbackActor {
 
 			case FighterState.HIT:
 				anim("hit");
-				if (stun <= 0 && touchingFloor)
+				if (stun <= 0 && touchingFloor) {
+					anim("hit-recover");
 					sstate(FighterState.IDLE);
+				}
 			case FighterState.KNOCKDOWN:
-				// pass, not sure if we'll have this in the advent version, but this is a unique fall down state where you cannot take any damage but can't act
+			// pass, not sure if we'll have this in the advent version, but this is a unique fall down state where you cannot take any damage but can't act
+			case FighterState.BLOCKING:
+				if (cur_anim.name.indexOf("block") <= -1)
+					anim("block-start");
+				if (cur_anim.finished)
+					anim("block-loop");
+				if (stun <= 0 && cur_anim.name == "block-loop")
+					sstate(FighterState.IDLE);
 		}
-
-		update_graphics(delta, input);
-		super.updateWithInputs(delta, input);
-		prevInput = input;
 	}
 
 	public function fighter_hit_check(fighter:Fighter) {
@@ -261,19 +283,32 @@ class Fighter extends FlxRollbackActor {
 		if (fighter_hitbox_data == null)
 			return;
 
+		var blocking:Bool = block_input && !opponent_on_opposite_side() && state != FighterState.HIT;
+
 		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) && inv <= 0) {
-			stun = fighter.current_attack_data.stun;
-			velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
-			velocity.x *= -Utils.flipMod(this);
-			fighter.attack_hit_success = true;
-			health -= fighter_hitbox_data.str;
-			inv = 10;
+			make_hit_circle((mp().x + fighter.mp().x) / 2, (mp().y + fighter.mp().y) / 2, blocking);
+			if (blocking) {
+				sstate(FighterState.BLOCKING);
+				stun = fighter.current_attack_data.stun;
+				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
+				velocity.x *= -Utils.flipMod(this);
 
-			if (health < 0)
-				health = 0;
+				fighter.velocity.scale(-1, 1);
+				inv = 10;
+			} else {
+				stun = fighter.current_attack_data.stun;
+				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
+				velocity.x *= -Utils.flipMod(this);
+				fighter.attack_hit_success = true;
+				health -= fighter_hitbox_data.str;
+				inv = 10;
 
-			sstate(FighterState.HIT);
-			update_match_ui();
+				if (health < 0)
+					health = 0;
+
+				sstate(FighterState.HIT);
+				update_match_ui();
+			}
 		}
 	}
 
@@ -516,12 +551,11 @@ class Fighter extends FlxRollbackActor {
 
 		var acl:Float = 0.0;
 
-		if (JUMP_DIRECTION == JumpDirection.FORWARDS) {
+		if (JUMP_DIRECTION == JumpDirection.FORWARDS)
 			acl += !flipX ? -air_speed : air_speed;
-		}
-		if (JUMP_DIRECTION == JumpDirection.BACKWARDS) {
+
+		if (JUMP_DIRECTION == JumpDirection.BACKWARDS)
 			acl += !flipX ? air_speed : -air_speed;
-		}
 
 		var dir_multiplier:Float = JUMP_DIRECTION == JumpDirection.BACKWARDS ? backwards_air_multiplier : 1;
 
@@ -649,6 +683,16 @@ class Fighter extends FlxRollbackActor {
 		match_ui.healths[team - 1] = health;
 		match_ui.max_healths[team - 1] = max_health;
 	}
+
+	function opponent_on_opposite_side()
+		return flipX && opponent.mp().x > mp().x || !flipX && opponent.mp().x < mp().x;
+
+	function make_hit_circle(X:Float, Y:Float, blocked:Bool = false) {
+		var hit_circle:HitCircle = new HitCircle(X, Y);
+		hit_circle.setPosition(hit_circle.x - hit_circle.width / 2, hit_circle.y - hit_circle.height / 2);
+		hit_circle.color = blocked ? FlxColor.GRAY : FlxColor.RED;
+		group.add(hit_circle);
+	}
 }
 
 typedef AttackDataInputCheckResult = {
@@ -664,6 +708,7 @@ enum abstract FighterState(String) to String {
 	var ATTACKING = "ATTACKING";
 	var HIT = "HIT";
 	var KNOCKDOWN = "KNOCKDOWN";
+	var BLOCKING = "BLOCKING";
 }
 
 enum abstract FighterAIMode(String) to String {

@@ -121,10 +121,6 @@
             "path": "assets/fighters/penguin"
         },
         {
-            "file": "notes.txt",
-            "path": "assets/fighters/snowman"
-        },
-        {
             "file": "snowman-air-back-hitbox.png",
             "path": "assets/fighters/snowman"
         },
@@ -331,6 +327,10 @@
         {
             "file": "player-pink.png",
             "path": "assets/images"
+        },
+        {
+            "file": "hit-circle.png",
+            "path": "assets/images/fx"
         },
         {
             "file": "character-select-bg.png",
