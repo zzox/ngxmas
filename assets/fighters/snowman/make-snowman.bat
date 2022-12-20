@@ -47,8 +47,3 @@ aseprite -b --layer "Sprite Sheet" snowman-idle.aseprite --sheet snowman-idle.pn
 aseprite -b --layer "Sprite Sheet" snowman-jump.aseprite --sheet snowman-jump.png
 aseprite -b --layer "Sprite Sheet" snowman-ko.aseprite --sheet snowman-ko.png
 aseprite -b --layer "Sprite Sheet" snowman-walk.aseprite --sheet snowman-walk.png
-
-
-aseprite -b --layer "hurtbox" penguin-base.aseprite --sheet penguin-base-hurtbox.png
-aseprite -b --layer "hitbox" penguin-base.aseprite --sheet penguin-base-hitbox.png
-aseprite -b --layer "main" penguin-base.aseprite --sheet penguin-base.png

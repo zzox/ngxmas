@@ -8,6 +8,7 @@ import squidzz.actors.ActorTypes.ControlLock;
 import squidzz.actors.ActorTypes.JumpDirection;
 import squidzz.actors.ActorTypes.JumpingStyle;
 import squidzz.actors.ActorTypes.WalkDirection;
+import squidzz.display.MatchUi;
 import squidzz.ext.AttackData;
 import squidzz.ext.ListTypes.HitboxType;
 import squidzz.rollback.FlxRollbackGroup;
@@ -22,14 +23,18 @@ enum abstract FInput(String) to String {
 	var Right = 'RIGHT';
 	var Up = 'UP';
 	var Down = 'DOWN';
-	var Attack = 'A';
-	var Special = 'B';
+	var Jump = 'A';
+	var Attack = 'B';
+	var Special = '';
 }
 
 class Fighter extends FlxRollbackActor {
 	var prevInput:FrameInput;
 
 	public var opponent:Fighter;
+
+	// team 1 = player 1, team 2 = player 2, team 0 = neutral (not used)
+	public var team:Int = 0;
 
 	/**A seperated hurtbox anim that track this sprite and  is only used for hitbox spawning*/
 	public var hurtbox:FlxRollbackActor;
@@ -52,6 +57,8 @@ class Fighter extends FlxRollbackActor {
 
 	var CONTROL_LOCK:ControlLock = ControlLock.FULL_CONTROL;
 
+	var kb_resistance:FlxPoint = new FlxPoint(1, 1);
+
 	var air_speed:Int = 125;
 	var backwards_air_multiplier:Float = 1.25;
 
@@ -62,7 +69,11 @@ class Fighter extends FlxRollbackActor {
 	var gravity:Int = 2000;
 	var traction:Int = 750;
 
+	var max_health:Int = 1000;
+
 	var jump_height:Int = 960;
+
+	var match_ui:MatchUi;
 
 	/**Can't take damage inv > 0*/
 	var inv:Int = 0;
@@ -82,6 +93,12 @@ class Fighter extends FlxRollbackActor {
 	var SUPER_ARMORED:Bool = false;
 
 	public var sprite_atlas:Map<String, FlxRollbackActor> = new Map<String, FlxRollbackActor>();
+
+	public var attack_hit_success:Bool = false;
+
+	public var ai_mode:FighterAIMode = FighterAIMode.IDLE;
+
+	var ai_tick:Int = 0;
 
 	public function new(?Y:Float = 0, ?X:Float = 0, type:String) {
 		super(X, Y);
@@ -109,19 +126,35 @@ class Fighter extends FlxRollbackActor {
 		reset_gravity();
 	}
 
+	function ai_control(input:FrameInput):FrameInput {
+		if (ai_mode == FighterAIMode.IDLE)
+			return input;
+
+		input = blankInput();
+		ai_tick++;
+
+		switch (ai_mode) {
+			case FighterAIMode.JUMP:
+				if (ai_tick % 2 == 0)
+					input.set("A", true);
+			case FighterAIMode.JAB:
+			case FighterAIMode.WALK_BACKWARDS:
+			case FighterAIMode.WALK_FORWARDS:
+			default:
+		}
+		return input;
+	}
+
 	override function updateWithInputs(delta:Float, input:FrameInput) {
 		update_offsets();
 
+		input = ai_control(input);
 		drag.set(touchingFloor ? traction : 0, 0);
 
 		inv--;
 		stun--;
 
 		hitbox.visible = hurtbox.visible = Main.SHOW_HITBOX;
-
-		if (justPressed(input, Up) && touchingFloor) {
-			sstate(FighterState.JUMP_SQUAT);
-		}
 
 		if (touchingFloor && cast(JUMP_DIRECTION, Int) > JumpDirection.NONE) {
 			JUMP_DIRECTION = JumpDirection.NONE;
@@ -130,11 +163,15 @@ class Fighter extends FlxRollbackActor {
 
 		WALKING_DIRECTION = WalkDirection.NONE;
 
-		flipX = opponent.getMidpoint().x < getMidpoint().x;
-
 		switch (cast(state, FighterState)) {
 			case FighterState.IDLE | FighterState.JUMPING:
 				var acl:Float = 0.0;
+
+				if (justPressed(input, Jump) && touchingFloor) {
+					sstate(FighterState.JUMP_SQUAT);
+				}
+
+				flipX = opponent.getMidpoint().x < getMidpoint().x;
 
 				if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE) {
 					if (pressed(input, Left))
@@ -154,8 +191,10 @@ class Fighter extends FlxRollbackActor {
 
 				do_jump(delta, input);
 
-				if (CONTROL_LOCK == ControlLock.FULL_CONTROL)
-					if (touchingFloor) {
+				if (CONTROL_LOCK == ControlLock.FULL_CONTROL) {
+					if (touchingFloor && cur_anim.name == "jump-down")
+						anim("jump-land");
+					if (touchingFloor && (cur_anim.name != "jump-land" || cur_anim.finished)) {
 						if (cast(WALKING_DIRECTION, Int) > WalkDirection.NEUTRAL)
 							anim(WALKING_DIRECTION == WalkDirection.FORWARDS ? 'walk-forwards' : 'walk-backwards');
 						else
@@ -169,6 +208,7 @@ class Fighter extends FlxRollbackActor {
 						else if (velocity.y > mid_jump_limit && cur_anim.finished)
 							anim("jump-down");
 					}
+				}
 
 				if (pressed(input, Attack))
 					choose_attack(delta, input);
@@ -180,11 +220,16 @@ class Fighter extends FlxRollbackActor {
 					velocity.y = -jump_height;
 					start_jump(delta, input);
 				}
+
 			case FighterState.JUMP_LAND:
 				animProtect("jump-land");
 				if (cur_anim.finished)
 					sstate(FighterState.IDLE);
+
 			case FighterState.ATTACKING:
+				if (attack_cancellable_check(current_attack_data) && pressed(input, Attack))
+					choose_attack(delta, input);
+
 				if (current_attack_data != null) {
 					var attack_finished:Bool = cur_anim.finished && cur_anim.name == current_attack_data.name;
 					if (attack_finished && !auto_continuing_attack_check(current_attack_data)) {
@@ -194,9 +239,10 @@ class Fighter extends FlxRollbackActor {
 						simulate_attack(current_attack_data, delta, input);
 					}
 				}
+
 			case FighterState.HIT:
 				anim("hit");
-				if (stun < 0)
+				if (stun <= 0 && touchingFloor)
 					sstate(FighterState.IDLE);
 			case FighterState.KNOCKDOWN:
 				// pass, not sure if we'll have this in the advent version, but this is a unique fall down state where you cannot take any damage but can't act
@@ -215,11 +261,28 @@ class Fighter extends FlxRollbackActor {
 
 		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) && inv <= 0) {
 			stun = fighter.current_attack_data.stun;
-			velocity.copyFrom(fighter_hitbox_data.kb);
+			velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
 			velocity.x *= -Utils.flipMod(this);
+			fighter.attack_hit_success = true;
+			health -= fighter_hitbox_data.str;
+			inv = 10;
+
+			if (health < 0)
+				health = 0;
 
 			sstate(FighterState.HIT);
+			update_match_ui();
 		}
+	}
+
+	function get_appropriate_kb(fighter_hitbox_data:HitboxType):FlxPoint {
+		if (touchingFloor && (fighter_hitbox_data.kb_ground.x != 0 || fighter_hitbox_data.kb_ground.y != 0))
+			return fighter_hitbox_data.kb_ground;
+
+		if (!touchingFloor && (fighter_hitbox_data.kb_air.x != 0 || fighter_hitbox_data.kb_air.y != 0))
+			return fighter_hitbox_data.kb_air;
+
+		return fighter_hitbox_data.kb;
 	}
 
 	function update_graphics(delta:Float, input:FrameInput) {
@@ -243,6 +306,14 @@ class Fighter extends FlxRollbackActor {
 		stamp_ext(hurtbox, hurtbox_sheet);
 
 		update_offsets();
+	}
+
+	function attack_cancellable_check(attackData:AttackDataType):Bool {
+		if (!attack_hit_success || attackData == null)
+			return false;
+		if (attackData.cancellableFrames.indexOf(cur_anim.frameIndex) > -1)
+			return true;
+		return false;
 	}
 
 	function stamp_ext(target_sprite:FlxSpriteExt, stamp_sprite:FlxSpriteExt) {
@@ -274,6 +345,7 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	function load_attack(attack_data_to_load:AttackDataType):AttackDataType {
+		attack_hit_success = false;
 		if (attack_data_to_load.name != "ground" && attack_data_to_load.name != "air") {
 			animProtect(attack_data_to_load.name);
 			state = FighterState.ATTACKING;
@@ -556,6 +628,22 @@ class Fighter extends FlxRollbackActor {
 		}
 		return false;
 	}
+
+	public function set_team(team:Int)
+		this.team = team;
+
+	public function set_match_ui(match_ui:MatchUi)
+		this.match_ui = match_ui;
+
+	public function reset_new_round() {
+		health = max_health;
+		update_match_ui();
+	}
+
+	public function update_match_ui() {
+		match_ui.healths[team - 1] = health;
+		match_ui.max_healths[team - 1] = max_health;
+	}
 }
 
 typedef AttackDataInputCheckResult = {
@@ -571,4 +659,12 @@ enum abstract FighterState(String) to String {
 	var ATTACKING = "ATTACKING";
 	var HIT = "HIT";
 	var KNOCKDOWN = "KNOCKDOWN";
+}
+
+enum abstract FighterAIMode(String) to String {
+	var IDLE = "IDLE";
+	var JUMP = "JUMP";
+	var WALK_BACKWARDS = "WALK-FORWARDS";
+	var WALK_FORWARDS = "WALK-BACKWARDS";
+	var JAB = "JAB";
 }

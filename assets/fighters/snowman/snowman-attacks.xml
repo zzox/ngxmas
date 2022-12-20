@@ -1,13 +1,16 @@
 <root>
     <attack name="ground">
         <!--Attack Links-->
+        <link attack="ground-up" />
         <link attack="ground-forward" />
         <link attack="ground-backward" />
+        <link attack="ground-down" />
         <link attack="ground-neutral" />
     </attack>
 
     <attack name="air">
         <!--Attack Links-->
+        <link attack="air-down-start" />
         <link attack="air-neutral-start" />
     </attack>
 
@@ -21,7 +24,7 @@
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
         <!--Special Attributes-->
-        <cancellable frames="6" />
+        <cancellable frames="4t7" />
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>
@@ -46,7 +49,22 @@
         <!--Controls-->
         <input controls="attack,backward" />
         <!--Hitboxes-->
-        <hitbox frames="0t99" kb = "50,-700" str = "100" stun = "30"/>
+        <hitbox frames="8t10" kb = "50,-400" str = "50" stun = "10"/>
+        <!--Movement Attributes-->
+        <drag frames="4,6" rates=".6,1" />
+        <thrust frames="8" velocity="75,0" />
+        <!--Special Attributes-->
+        <cancellable frames="11t17" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-down">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,down" />
+        <!--Hitboxes-->
+        <hitbox frames="13t15" kb = "50,-700" str = "100" stun = "30"/>
         <!--Movement Attributes-->
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
@@ -54,6 +72,26 @@
         <cancellable frames="6" />
         <!--Attack Links-->
         <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-up">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,up" />
+        <!--Hitboxes-->
+        <hitbox frames="4t17" kb = "300,-300" str = "75" stun = "30"/>
+        <!--Movement Attributes-->
+        <drag frames="0" rates="1,1" />
+        <!--Special Attributes-->
+        <cancellable frames="4t21" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="air-land">
+        <air/>
+        <!--Attack Links-->
+        <inherits from="air" />
     </attack>
 
     <attack name="air-neutral-start">
@@ -77,12 +115,30 @@
         <!--Movement Attributes-->
         <thrust frames="5" velocity="50,150" />
         <!--Attack Links-->
-        <ground_cancel_attack name="air-neutral-land" />
+        <ground_cancel_attack name="air-land" />
     </attack>
 
-    <attack name="air-neutral-land">
+    <attack name="air-down-start">
         <air/>
+        <!--Controls-->
+        <input controls="attack,down" />
+        <!--Hitboxes-->
+        <hitbox frames="5t6" kb_air = "0,1000" kb_ground = "100,-500" str = "100" stun = "60"/>
+        <hitbox frames="7t8" kb_air = "0,1000" kb_ground = "100,-500" str = "75" stun = "30"/>
+        <!--Movement Attributes-->
+        <thrust frames="6" velocity="0,100" />
+        <!--Special Attributes-->
+        <cancellable frames="5t8" />
+        <auto_continue on_complete="air-down-loop" />
+        <ground_cancel_attack name="air-land" />
+    </attack>
+
+    <attack name="air-down-loop">
+        <air/>
+        <!--Hitboxes-->
+        <hitbox frames="9" kb = "200,-300" kb_ground = "200,-500" str = "25" stun = "20"/>
+        <cancellable frames="9" />
         <!--Attack Links-->
-        <inherits from="air" />
+        <ground_cancel_attack name="air-land" />
     </attack>
 </root>

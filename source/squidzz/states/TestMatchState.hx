@@ -27,12 +27,23 @@ class TestMatchState extends BaseState {
 	// hack to simulate input delay
 	var localInputs:Array<FrameInput> = [];
 
+	var match_ui:MatchUi;
 	var debugUi:DebugUi;
 
 	var player1:Fighter;
 	var player2:Fighter;
 
 	var stage:FightingStage;
+
+	var ai_modes:Array<FighterAIMode> = [
+		FighterAIMode.IDLE,
+		FighterAIMode.JUMP,
+		FighterAIMode.JAB,
+		FighterAIMode.WALK_BACKWARDS,
+		FighterAIMode.WALK_FORWARDS
+	];
+
+	static var current_ai_mode:FighterAIMode = FighterAIMode.IDLE;
 
 	override function create() {
 		super.create();
@@ -58,14 +69,22 @@ class TestMatchState extends BaseState {
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
 
-		player1.set_group(stateGroup);
-		player2.set_group(stateGroup);
+		add(match_ui = new MatchUi());
+
+		var count:Int = 0;
+		for (p in [player1, player2]) {
+			count++;
+			p.set_group(stateGroup);
+			p.set_team(count);
+			p.set_match_ui(match_ui);
+			p.reset_new_round();
+		}
 
 		for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {
 			localInputs.push(blankInput());
 		}
 
-		add(new MatchUi());
+		switch_ai_mode();
 	}
 
 	override function update(elapsed:Float) {
@@ -82,8 +101,23 @@ class TestMatchState extends BaseState {
 			debugUi.visible = !debugUi.visible;
 		}
 
+		#if dev
 		if (FlxG.keys.anyJustPressed([FlxKey.R]))
 			Global.switchState(new TestMatchState());
+
+		if (FlxG.keys.anyJustPressed([FlxKey.V]))
+			Main.SHOW_HITBOX = !Main.SHOW_HITBOX;
+
+		if (FlxG.keys.anyJustPressed([FlxKey.Q])) {
+			var index:Int = ai_modes.indexOf(current_ai_mode);
+			index++;
+			if (index >= ai_modes.length)
+				index = 0;
+			current_ai_mode = ai_modes[index];
+			switch_ai_mode();
+			trace('new ai mode: ', current_ai_mode);
+		}
+		#end
 	}
 
 	function createTileLayer(map:TiledMap, layerName:String, offset:FlxPoint):Null<FlxTilemap> {
@@ -100,4 +134,7 @@ class TestMatchState extends BaseState {
 		}
 		return null;
 	}
+
+	function switch_ai_mode()
+		player2.ai_mode = current_ai_mode;
 }

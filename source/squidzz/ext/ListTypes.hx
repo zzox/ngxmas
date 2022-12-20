@@ -103,6 +103,8 @@ typedef HitboxType = {
 	melee_id:Int,
 	str:Float,
 	kb:FlxPoint,
+	kb_air:FlxPoint,
+	kb_ground:FlxPoint,
 	stun:Int,
 	bonus_defines:Array<String>,
 }

@@ -189,7 +189,9 @@ class AttackData {
 					frames: Utils.animFromString(box.get("frames")),
 					melee_id: box.get("melee_id") != null ? Std.parseInt(box.get("melee_id")) : -999,
 					str: box.get("str") != null ? Std.parseFloat(box.get("str")) : 0,
-					kb: new FlxPoint(Std.parseInt(box.get("kb").split(",")[0]), Std.parseInt(box.get("kb").split(",")[1])),
+					kb: point_from_string(box.get("kb")),
+					kb_air: point_from_string(box.get("kb_air")),
+					kb_ground: point_from_string(box.get("kb_ground")),
 					stun: box.get("stun") != null ? Std.parseInt(box.get("stun")) : DEFAULT_STUN,
 					bonus_defines: box.get("bonus_defines") != null ? box.get("bonus_defines").split(",") : []
 				});
@@ -245,5 +247,15 @@ class AttackData {
 		if (xml.elementsNamed(element).hasNext())
 			return xml.elementsNamed(element).next().get(attribute);
 		return "";
+	}
+
+	static function point_from_string(src_string:String, default_X:Float = 0, default_Y:Float = 0):FlxPoint {
+		if (src_string != null) {
+			var split:Array<String> = src_string.split(",");
+
+			default_X = split.length > 0 ? Std.parseFloat(split[0]) : default_X;
+			default_Y = split.length > 1 ? Std.parseFloat(split[1]) : default_Y;
+		}
+		return new FlxPoint(default_X, default_Y);
 	}
 }
