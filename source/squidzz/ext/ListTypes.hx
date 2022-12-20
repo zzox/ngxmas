@@ -54,7 +54,8 @@ typedef AttackDataType = {
 		frames:Array<Int>,
 		x:Float,
 		y:Float,
-		once:Bool
+		once:Bool,
+		fixed:FlxPoint
 	}>;
 	var drag:Array<{frames:Array<Int>, x:Float, y:Float}>;
 	var airOnly:Bool;
@@ -72,6 +73,8 @@ typedef AttackDataType = {
 		layer:String
 	}>;
 	var ground_cancel_attack:GroundCancelAttackType;
+	var wall_cancel_attack:WallCancelAttackType;
+	var opponent_cancel_attack:OpponentCancelAttackType;
 	var super_armor:Array<Int>;
 	var invincible:Array<Int>;
 	var auto_continue:Array<{on_complete:String, time:Int, lock:Bool}>;
@@ -96,6 +99,7 @@ typedef AttackDataType = {
 	var learnable:Bool;
 	var max_uses:{count:Int, reset_on:String};
 	var attack_landed:Bool;
+	var input_cancel_attack:Bool;
 }
 
 typedef HitboxType = {
@@ -130,6 +134,16 @@ typedef AsepriteFrameTag = {
 }
 
 typedef GroundCancelAttackType = {
+	var name:String;
+	var frames:Array<Int>;
+}
+
+typedef WallCancelAttackType = {
+	var name:String;
+	var frames:Array<Int>;
+}
+
+typedef OpponentCancelAttackType = {
 	var name:String;
 	var frames:Array<Int>;
 }

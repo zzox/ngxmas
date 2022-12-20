@@ -1,11 +1,14 @@
 <root>
     <attack name="ground">
         <!--Attack Links-->
+        <link attack="penguin-slide-start" />
+        <link attack="ground-neutral" />
         <link attack="ground-neutral" />
     </attack>
 
     <attack name="air">
         <!--Attack Links-->
+        <link attack="penguin-slide-start" />
         <link attack="air-neutral" />
     </attack>
 
@@ -24,6 +27,53 @@
         <inherits from="ground" />
     </attack>
 
+    <attack name="penguin-slide-start">
+        <air/>
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,forward" />
+        <thrust frames="35" velocity="250,500" once = "true" fixed = "0.01,0"/>
+        <!--Attack Links-->
+        <auto_continue on_complete="penguin-slide-loop" />
+    </attack>
+
+    <attack name="penguin-slide-loop">
+        <air/>
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,forward" />
+        <thrust frames="20t21" velocity="550,0" fixed = "0,1" />
+        <!--Attack Links-->
+        <wall_cancel_attack name="penguin-slide-bonk" />
+        <opponent_cancel_attack name="penguin-slide-escape" />
+
+        <input_cancel_attack/>
+        <link attack = "penguin-slide-escape"/>
+    </attack>
+
+    <attack name="penguin-slide-bonk">
+        <air/>
+        <ground/>
+        <thrust frames="32" velocity="-300,-350" once="true" fixed = "0.01,0"/>
+        <ground_cancel_attack name="air-land" frames="34"/>
+    </attack>
+
+    <attack name="penguin-slide-escape">
+        <air/>
+        <ground/>
+        <thrust frames="39" velocity="-200,-400" once="true" fixed = "0.01,0" />
+        <hitbox frames="35t39" kb = "300,-300" str = "50"/>
+        <!--Controls-->
+        <input controls="attack" />
+        <ground_cancel_attack name="air-land" frames="35t38"/>
+    </attack>
+
+    <attack name="air-land">
+        <air/>
+        <ground/>
+        <inherits from="ground" />
+    </attack>
+
     <attack name="air-neutral">
         <air/>
         <!--Special Attributes-->
@@ -32,5 +82,5 @@
         <input controls="attack" />
         <!--Attack Links-->
         <inherits from="air" />
-    </attack>
+    </attack>  
 </root>

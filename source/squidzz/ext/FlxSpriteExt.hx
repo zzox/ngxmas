@@ -12,7 +12,7 @@ class FlxSpriteExt extends FlxSprite {
 	var types:Array<String> = [];
 
 	/**Replaced with spritesheet name*/
-	var type:String = "";
+	public var type:String = "";
 
 	/**Animations that auto link when an animation is over*/
 	var animationLinks:Array<Array<String>> = [];

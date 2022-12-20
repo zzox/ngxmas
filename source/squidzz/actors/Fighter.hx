@@ -102,6 +102,8 @@ class Fighter extends FlxRollbackActor {
 
 	var block_input:Bool = false;
 
+	var overlaps_fighter:Bool = false;
+
 	public function new(?Y:Float = 0, ?X:Float = 0, type:String) {
 		super(X, Y);
 
@@ -246,7 +248,7 @@ class Fighter extends FlxRollbackActor {
 					sstate(FighterState.IDLE);
 
 			case FighterState.ATTACKING:
-				if (attack_cancellable_check(current_attack_data) && pressed(input, Attack))
+				if ((attack_cancellable_check(current_attack_data) || current_attack_data.input_cancel_attack) && pressed(input, Attack))
 					choose_attack(delta, input);
 
 				if (current_attack_data != null) {
@@ -279,6 +281,8 @@ class Fighter extends FlxRollbackActor {
 
 	public function fighter_hit_check(fighter:Fighter) {
 		var fighter_hitbox_data:HitboxType = fighter.current_hitbox_data();
+
+		overlaps_fighter = FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10);
 
 		if (fighter_hitbox_data == null)
 			return;
@@ -405,7 +409,13 @@ class Fighter extends FlxRollbackActor {
 		for (thrust in attackData.thrust) {
 			if (thrust.frames.indexOf(cur_anim.frameIndex) > -1 && (thrust.once && cur_sheet.isOnNewFrame || !thrust.once)) {
 				var thrust_x:Float = thrust.x * multi;
+				if (thrust.fixed.x != 0 || thrust.fixed.y != 0)
+					velocity.scalePoint(thrust.fixed);
 				velocity.set(velocity.x + thrust_x * Utils.flipMod(this), velocity.y + thrust.y);
+				if (velocity.y < 0) {
+					y--;
+					touchingFloor = false;
+				}
 			}
 		}
 
@@ -420,6 +430,25 @@ class Fighter extends FlxRollbackActor {
 			if (attackData.ground_cancel_attack.frames == null
 				|| attackData.ground_cancel_attack.frames.indexOf(cur_anim.frameIndex) > -1) {
 				var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.ground_cancel_attack.name);
+				load_attack(new_attack);
+				simulate_attack(new_attack, delta, input);
+			}
+		}
+
+		// wall interrupt attack
+		if (attackData.wall_cancel_attack.name != "" && touchingWall) {
+			if (attackData.wall_cancel_attack.frames == null || attackData.wall_cancel_attack.frames.indexOf(cur_anim.frameIndex) > -1) {
+				var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.wall_cancel_attack.name);
+				load_attack(new_attack);
+				simulate_attack(new_attack, delta, input);
+			}
+		}
+
+		// wall interrupt attack
+		if (attackData.opponent_cancel_attack.name != "" && overlaps_fighter) {
+			if (attackData.opponent_cancel_attack.frames == null
+				|| attackData.opponent_cancel_attack.frames.indexOf(cur_anim.frameIndex) > -1) {
+				var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.opponent_cancel_attack.name);
 				load_attack(new_attack);
 				simulate_attack(new_attack, delta, input);
 			}
@@ -643,6 +672,7 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	function update_cur_sheet(anim_name:String) {
+		trace(anim_name);
 		cur_sheet = find_anim_in_sprite_atlas(anim_name);
 		hitbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
 		hurtbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');

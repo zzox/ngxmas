@@ -6,6 +6,7 @@ import squidzz.rollback.FrameInput;
 
 class FlxRollbackActor extends FlxSpriteExt {
 	public var touchingFloor:Bool = false;
+	public var touchingWall:Bool = false;
 
 	var group:FlxRollbackGroup;
 

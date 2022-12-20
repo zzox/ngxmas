@@ -56,6 +56,8 @@ class AttackData {
 				flippableFrames: [],
 				fx: [],
 				ground_cancel_attack: null,
+				wall_cancel_attack: null,
+				opponent_cancel_attack: null,
 				super_armor: [],
 				invincible: [],
 				auto_continue: [],
@@ -65,7 +67,8 @@ class AttackData {
 				gravity: [],
 				learnable: false,
 				max_uses: null,
-				attack_landed: false
+				attack_landed: false,
+				input_cancel_attack: false
 			};
 
 			attackData.name = attack.get("name");
@@ -108,6 +111,16 @@ class AttackData {
 				frames: Utils.animFromString(get_xml_atr(attack, "ground_cancel_attack", "frames"))
 			};
 
+			attackData.wall_cancel_attack = {
+				name: get_xml_atr(attack, "wall_cancel_attack", "name"),
+				frames: Utils.animFromString(get_xml_atr(attack, "wall_cancel_attack", "frames"))
+			};
+
+			attackData.opponent_cancel_attack = {
+				name: get_xml_atr(attack, "opponent_cancel_attack", "name"),
+				frames: Utils.animFromString(get_xml_atr(attack, "opponent_cancel_attack", "frames"))
+			};
+
 			for (fx in attack.elementsNamed("fx")) {
 				var offsetSplit:Array<String> = fx.get("offset") != null ? fx.get("offset").split(",") : [];
 				attackData.fx.push({
@@ -124,6 +137,9 @@ class AttackData {
 
 			if (attack.elementsNamed("attack_landed").hasNext())
 				attackData.attack_landed = true;
+
+			if (attack.elementsNamed("input_cancel_attack").hasNext())
+				attackData.input_cancel_attack = true;
 
 			// think, Aine, think!
 			if (attack.elementsNamed("invincible").hasNext())
@@ -215,7 +231,8 @@ class AttackData {
 					frames: Utils.animFromString(thrust.get("frames")),
 					x: Std.parseInt(split[0]),
 					y: Std.parseInt(split[1]),
-					once: thrust.get("once") == "true"
+					once: thrust.get("once") == "true",
+					fixed: point_from_string(thrust.get("fixed"))
 				});
 			}
 

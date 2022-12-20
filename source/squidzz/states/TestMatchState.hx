@@ -44,7 +44,7 @@ class TestMatchState extends BaseState {
 		FighterAIMode.WALK_FORWARDS
 	];
 
-	static var current_ai_mode:FighterAIMode = FighterAIMode.JAB;
+	static var current_ai_mode:FighterAIMode = FighterAIMode.IDLE;
 
 	override function create() {
 		super.create();
@@ -58,8 +58,8 @@ class TestMatchState extends BaseState {
 		for (layer in stage.layers)
 			add(layer);
 
-		player1 = new Snowman(7 * 16, 328);
-		player2 = new Penguin(768, 328);
+		player1 = new Penguin(7 * 16, 328);
+		player2 = new Snowman(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;
