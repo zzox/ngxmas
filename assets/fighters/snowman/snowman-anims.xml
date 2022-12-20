@@ -43,7 +43,8 @@
     </animSet>
 
     <animSet image = "snowman-air-forward" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "air-forward" looping = "false">0t20</anim>
+        <anim name = "air-forward-start" looping = "false">0t13</anim>
+        <anim name = "air-forward-loop">14</anim>
     </animSet>
 
     <animSet image = "snowman-air-back" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
@@ -51,7 +52,8 @@
     </animSet>
 
     <animSet image = "snowman-air-up" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "air-up" looping = "false">0t19</anim>
+        <anim name = "air-up-start" looping = "false">0t14</anim>
+        <anim name = "air-up-loop">15</anim>
     </animSet>
 
     <animSet image = "snowman-air-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">

@@ -71,7 +71,7 @@ typedef AttackDataType = {
 		offset_y:Int,
 		layer:String
 	}>;
-	var ground_cancel_attack:String;
+	var ground_cancel_attack:GroundCancelAttackType;
 	var super_armor:Array<Int>;
 	var invincible:Array<Int>;
 	var auto_continue:Array<{on_complete:String, time:Int, lock:Bool}>;
@@ -127,4 +127,9 @@ typedef AsepriteFrameTag = {
 	from:Int,
 	to:Int,
 	color:String
+}
+
+typedef GroundCancelAttackType = {
+	var name:String;
+	var frames:Array<Int>;
 }

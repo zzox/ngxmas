@@ -29,6 +29,8 @@ class Utils {
 	 * ex: "0t2r2, 3h2" returns [0, 1, 2, 0, 1, 2, 3, 3, 3]
 	 */
 	public static function animFromString(animString:String):Array<Int> {
+		if (animString == null || animString == "")
+			return null;
 		var frames:Array<Int> = [];
 		var framesGroup:Array<String> = StringTools.replace(animString, " ", "").toLowerCase().split(",");
 		if (framesGroup.length <= 0)

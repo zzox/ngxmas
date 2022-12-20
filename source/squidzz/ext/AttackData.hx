@@ -55,7 +55,7 @@ class AttackData {
 				offset_left: null,
 				flippableFrames: [],
 				fx: [],
-				ground_cancel_attack: "",
+				ground_cancel_attack: null,
 				super_armor: [],
 				invincible: [],
 				auto_continue: [],
@@ -103,7 +103,10 @@ class AttackData {
 			for (max_uses in attack.elementsNamed("max_uses"))
 				attackData.max_uses = {count: Std.parseInt(max_uses.get("count")), reset_on: max_uses.get("reset_on")};
 
-			attackData.ground_cancel_attack = get_xml_atr(attack, "ground_cancel_attack", "name");
+			attackData.ground_cancel_attack = {
+				name: get_xml_atr(attack, "ground_cancel_attack", "name"),
+				frames: Utils.animFromString(get_xml_atr(attack, "ground_cancel_attack", "frames"))
+			};
 
 			for (fx in attack.elementsNamed("fx")) {
 				var offsetSplit:Array<String> = fx.get("offset") != null ? fx.get("offset").split(",") : [];

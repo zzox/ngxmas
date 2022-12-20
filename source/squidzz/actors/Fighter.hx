@@ -137,6 +137,8 @@ class Fighter extends FlxRollbackActor {
 				if (ai_tick % 2 == 0)
 					input.set("A", true);
 			case FighterAIMode.JAB:
+				if (ai_tick % 2 == 0)
+					input.set("B", true);
 			case FighterAIMode.WALK_BACKWARDS:
 			case FighterAIMode.WALK_FORWARDS:
 			default:
@@ -151,7 +153,8 @@ class Fighter extends FlxRollbackActor {
 		drag.set(touchingFloor ? traction : 0, 0);
 
 		inv--;
-		stun--;
+		if (touchingFloor) // remove if too much stun
+			stun--;
 
 		hitbox.visible = hurtbox.visible = Main.SHOW_HITBOX;
 
@@ -170,8 +173,6 @@ class Fighter extends FlxRollbackActor {
 					sstate(FighterState.JUMP_SQUAT);
 				}
 
-				flipX = opponent.getMidpoint().x < getMidpoint().x;
-
 				if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE) {
 					if (pressed(input, Left))
 						acl -= ground_speed / ground_rate;
@@ -186,6 +187,8 @@ class Fighter extends FlxRollbackActor {
 
 					velocity.x += acl * dir_multiplier;
 					velocity.x = FlxMath.bound(velocity.x, -ground_speed * dir_multiplier, ground_speed * dir_multiplier);
+
+					flipX = opponent.getMidpoint().x < getMidpoint().x;
 				}
 
 				do_jump(delta, input);
@@ -378,10 +381,13 @@ class Fighter extends FlxRollbackActor {
 		SUPER_ARMORED = attackData.super_armor.indexOf(cur_anim.frameIndex) > -1;
 
 		// ground interrupt attack
-		if (attackData.ground_cancel_attack != "" && touchingFloor) {
-			var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.ground_cancel_attack);
-			load_attack(new_attack);
-			simulate_attack(new_attack, delta, input);
+		if (attackData.ground_cancel_attack.name != "" && touchingFloor) {
+			if (attackData.ground_cancel_attack.frames == null
+				|| attackData.ground_cancel_attack.frames.indexOf(cur_anim.frameIndex) > -1) {
+				var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.ground_cancel_attack.name);
+				load_attack(new_attack);
+				simulate_attack(new_attack, delta, input);
+			}
 		}
 	}
 
