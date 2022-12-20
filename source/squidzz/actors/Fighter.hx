@@ -2,7 +2,6 @@ package squidzz.actors;
 
 import flixel.animation.FlxAnimationController;
 import flixel.math.FlxMath;
-import flixel.util.FlxDirection;
 import flixel.util.FlxDirectionFlags;
 import squidzz.actors.ActorTypes.ControlLock;
 import squidzz.actors.ActorTypes.JumpDirection;

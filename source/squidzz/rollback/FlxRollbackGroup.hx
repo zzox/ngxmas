@@ -56,12 +56,12 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 
 		forEach(actor -> {
 			if (!actor.immovable) {
-				if (actor.x < 0) {
-					actor.x = 0;
+				if (actor.x < FlxG.camera.scroll.x) {
+					actor.x = FlxG.camera.scroll.x;
 				}
 
-				if (actor.x + actor.width > Global.width) {
-					actor.x = Global.width - actor.width;
+				if (actor.x + actor.width > FlxG.camera.width + FlxG.camera.scroll.x) {
+					actor.x = FlxG.camera.scroll.x + FlxG.camera.width - actor.width;
 				}
 
 				if (actor.y + actor.height > FLOOR_Y) {

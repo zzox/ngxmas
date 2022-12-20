@@ -10,6 +10,7 @@ import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Fighter;
 import squidzz.actors.snowman.Snowman;
+import squidzz.display.CameraController;
 import squidzz.display.DebugUi;
 import squidzz.display.FightingStage;
 import squidzz.display.MatchUi;
@@ -79,6 +80,8 @@ class TestMatchState extends BaseState {
 			p.set_match_ui(match_ui);
 			p.reset_new_round();
 		}
+
+		add(new CameraController(player1, player2));
 
 		for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {
 			localInputs.push(blankInput());

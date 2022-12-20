@@ -38,8 +38,8 @@
     </animSet>
     
     <animSet image = "snowman-air-down" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "air-down-start" looping = "false">0t9</anim>
-        <anim name = "air-down-loop">10</anim>
+        <anim name = "air-down-start" looping = "false">0t8</anim>
+        <anim name = "air-down-loop">9</anim>
     </animSet>
 
     <animSet image = "snowman-air-forward" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">

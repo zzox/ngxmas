@@ -59,6 +59,10 @@ class MatchUi extends FlxGroup {
 		add(p2Presents[1]);
 
 		add(new FlxSprite(416, 0, 'assets/images/ui/timerBg.png'));
+
+		forEach(function(basic:FlxBasic) {
+			cast(basic, FlxSprite).scrollFactor.set(0, 0);
+		});
 	}
 
 	override function update(delta:Float) {

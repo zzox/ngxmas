@@ -20,6 +20,8 @@ class FightingStage {
 
 		for (l in layers)
 			l.y -= 180;
+
+		FlxG.camera.setScrollBounds(layers[0].x, layers[0].x + layers[0].width, layers[0].y, layers[0].y + layers[0].height);
 	}
 
 	function add_layer(layer_name:String, ?position:FlxPoint, ?scroll_x:Float = 1, ?scroll_x:Float = 1) {
