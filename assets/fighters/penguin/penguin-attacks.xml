@@ -8,6 +8,7 @@
 
     <attack name="air">
         <!--Attack Links-->
+        <link attack="air-back-summon" />
         <link attack="air-up-start" />
         <link attack="penguin-slide-start" />
         <link attack="air-neutral" />
@@ -46,10 +47,10 @@
         <thrust frames="20t21" velocity="550,0" fixed = "0,1" />
         <!--Attack Links-->
         <wall_cancel_attack name="penguin-slide-bonk" />
-        <opponent_cancel_attack name="penguin-slide-escape" />
+        <opponent_cancel_attack name="penguin-slide-escape-start" />
 
         <input_cancel_attack/>
-        <link attack = "penguin-slide-escape"/>
+        <link attack = "penguin-slide-escape-start"/>
     </attack>
 
     <attack name="penguin-slide-bonk">
@@ -59,7 +60,7 @@
         <ground_cancel_attack name="air-land" frames="34"/>
     </attack>
 
-    <attack name="penguin-slide-escape">
+    <attack name="penguin-slide-escape-start">
         <air/>
         <ground/>
         <thrust frames="39" velocity="-200,-400" once="true" fixed = "0.01,0" />
@@ -118,7 +119,18 @@
         <ground_cancel_attack name="air-land" />
     </attack>
 
-    <attack name="penguin-slide-escape">
+    <attack name="penguin-slide-escape-start">
+        <air/>
+        <ground/>
+        <thrust frames="52" velocity="-200,-400" once="true" fixed = "0.01,0" />
+        <hitbox frames="52" kb = "300,-300" str = "50"/>
+        <!--Controls-->
+        <input controls="attack" />
+        <auto_continue on_complete="penguin-slide-escape-loop" />
+        <ground_cancel_attack name="air-land" frames="35t38"/>
+    </attack>
+
+    <attack name="penguin-slide-escape-loop">
         <air/>
         <ground/>
         <thrust frames="39" velocity="-200,-400" once="true" fixed = "0.01,0" />
@@ -126,5 +138,31 @@
         <!--Controls-->
         <input controls="attack" />
         <ground_cancel_attack name="air-land" frames="35t38"/>
+    </attack>
+
+
+
+    <attack name="summon-walk">
+        <air/>
+        <!--Hitboxes-->
+        <hitbox frames="44t45" kb = "100,-250" str = "25" stun = "10"/>
+    </attack>
+
+    <attack name="air-back-summon">
+        <air/>
+        <!--controls-->
+        <input controls="attack,backwards" />
+        <!--Hitboxes-->
+        <drag frames="48t51" rates="0,0" />
+        <thrust frames="48t51" velocity="0,-50" once="true" fixed = "0.5,0" />
+        <hitbox frames="51" kb = "100,-100" str = "25" stun = "60"/>
+        <auto_continue on_complete="air-back-loop" />
+        <summon name = "penguin-summon" max = "1" frames = "51"/>
+    </attack>
+
+    
+    <attack name="air-back-loop">
+        <air/>
+        <ground_cancel_attack name="air-land"/>
     </attack>
 </root>

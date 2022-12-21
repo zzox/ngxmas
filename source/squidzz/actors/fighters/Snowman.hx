@@ -1,7 +1,7 @@
 package squidzz.actors.fighters;
 
 class Snowman extends Fighter {
-	public function new(?Y:Float = 0, ?X:Float = 0) {
+	public function new(?X:Float = 0, ?Y:Float = 0) {
 		super(X, Y, "snowman");
 
 		update_cur_sheet("idle");

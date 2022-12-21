@@ -25,7 +25,8 @@
         <anim name = "penguin-slide-start" looping = "false">35</anim>
         <anim name = "penguin-slide-loop">20t21</anim>
         <anim name = "penguin-slide-bonk">32,33t34r30</anim>
-        <anim name = "penguin-slide-escape">39,35t38r30</anim>
+        <anim name = "penguin-slide-escape-start" fps = "20ms" looping = "false">52</anim>
+        <anim name = "penguin-slide-escape-loop">39,35t38r30</anim>
 
         <anim name = "air-land" looping = "false">27</anim>
 
@@ -34,5 +35,11 @@
         <anim name = "air-up-start" looping = "false">40t41</anim>
         <anim name = "air-up-loop">42t43</anim>
         <anim name = "air-up-escape">40t41</anim>
+
+        <anim name = "summon-walk" fps = "150ms">44t45</anim>
+        <anim name = "summon-hit">46t47</anim>
+
+        <anim name = "air-back-summon" looping = "false">48t49,51h2,49t50,51h2</anim>
+        <anim name = "air-back-loop">49t50</anim>
     </animSet>
 </root>

@@ -100,6 +100,7 @@ typedef AttackDataType = {
 	var max_uses:{count:Int, reset_on:String};
 	var attack_landed:Bool;
 	var input_cancel_attack:Bool;
+	var summons:Array<SummonDataType>;
 }
 
 typedef HitboxType = {
@@ -111,6 +112,12 @@ typedef HitboxType = {
 	kb_ground:FlxPoint,
 	stun:Int,
 	bonus_defines:Array<String>,
+}
+
+typedef SummonDataType = {
+	name:String,
+	frames:Array<Int>,
+	max:Int
 }
 
 /**

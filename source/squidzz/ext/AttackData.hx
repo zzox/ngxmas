@@ -68,7 +68,8 @@ class AttackData {
 				learnable: false,
 				max_uses: null,
 				attack_landed: false,
-				input_cancel_attack: false
+				input_cancel_attack: false,
+				summons: []
 			};
 
 			attackData.name = attack.get("name");
@@ -213,6 +214,14 @@ class AttackData {
 					kb_ground: point_from_string(box.get("kb_ground")),
 					stun: box.get("stun") != null ? Std.parseInt(box.get("stun")) : DEFAULT_STUN,
 					bonus_defines: box.get("bonus_defines") != null ? box.get("bonus_defines").split(",") : []
+				});
+			}
+
+			for (summon in attack.elementsNamed("summon")) {
+				attackData.summons.push({
+					name: summon.get("name"),
+					frames: Utils.animFromString(summon.get("frames")),
+					max: summon.get("max") == null ? 0 : Std.parseInt(summon.get("max"))
 				});
 			}
 

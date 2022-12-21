@@ -6,6 +6,7 @@ import flixel.*;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import squidzz.actors.DamageSource;
+import squidzz.actors.FightableObject;
 import squidzz.actors.fighters.*;
 import squidzz.ext.AttackData;
 import squidzz.ext.FlxSpriteExt;
@@ -14,6 +15,7 @@ import squidzz.ext.ListTypes.AttackDataType;
 import squidzz.ext.Lists;
 import squidzz.ext.Paths;
 import squidzz.ext.Utils;
+import squidzz.rollback.FrameInput;
 import squidzz.states.BaseState;
 import ui.Controls;
 #if ADVENT

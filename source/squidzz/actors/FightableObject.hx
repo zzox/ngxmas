@@ -52,6 +52,35 @@ class FightableObject extends FlxRollbackActor {
 
 	var match_ui:MatchUi;
 
+	public var attack_hit_success:Bool = false;
+
+	var prefix:String;
+
+	public function new(?X:Float = 0, ?Y:Float = 0, prefix:String) {
+		super(X, Y);
+
+		this.prefix = prefix;
+		type = prefix;
+
+		visual = new FlxRollbackActor();
+		hurtbox = new FlxRollbackActor();
+		hitbox = new FlxRollbackActor();
+
+		visual.immovable = hurtbox.immovable = hitbox.immovable = true;
+		visual.moves = hurtbox.moves = hitbox.moves = false;
+
+		fill_sprite_atlas(prefix);
+	}
+
+	override function updateWithInputs(delta:Float, input:FrameInput) {
+		update_offsets();
+		update_graphics(delta, input);
+
+		hitbox.visible = hurtbox.visible = Main.SHOW_HITBOX;
+
+		super.updateWithInputs(delta, input);
+	}
+
 	override function anim(s:String) {
 		var prev_sheet:FlxSpriteExt = cur_sheet;
 
@@ -100,6 +129,14 @@ class FightableObject extends FlxRollbackActor {
 		target_sprite.stamp(stamp_sprite);
 	}
 
+	public function current_hitbox_data():HitboxType {
+		if (current_attack_data != null)
+			for (hitbox_data in current_attack_data.hitboxes)
+				if (hitbox_data.frames.indexOf(cur_anim.frameIndex) > -1)
+					return hitbox_data;
+		return null;
+	}
+
 	function update_offsets()
 		for (box in [visual, hitbox, hurtbox]) {
 			box.offset.copyFrom(!flipX ? cur_sheet.offset_left : cur_sheet.offset_right);
@@ -130,9 +167,8 @@ class FightableObject extends FlxRollbackActor {
 
 		cur_sheet = find_anim_in_sprite_atlas(anim_name);
 
-		if (graphic == null) {
+		if (graphic == null)
 			makeGraphic(cur_sheet.width.floor(), cur_sheet.height.floor(), FlxColor.WHITE);
-		}
 	}
 
 	function get_cur_anim():FlxAnimationController
@@ -152,5 +188,26 @@ class FightableObject extends FlxRollbackActor {
 		hit_circle.setPosition(hit_circle.x - hit_circle.width / 2, hit_circle.y - hit_circle.height / 2);
 		hit_circle.color = blocked ? FlxColor.GRAY : FlxColor.RED;
 		group.add(hit_circle);
+	}
+
+	function add_self_to_group() {
+		group.add(this);
+		group.add(hitbox);
+		group.add(hurtbox);
+		group.add(visual);
+	}
+
+	public function fighter_hit_check(fighter:FightableObject)
+		return;
+
+	function get_object_count(name:String, team:Int = 0):Int {
+		var count:Int = 0;
+		for (sprite in group)
+			if (Std.isOfType(sprite, FightableObject)) {
+				var object:FightableObject = cast(sprite, FightableObject);
+				if (object.alive && object.type == name && object.team == team)
+					count++;
+			}
+		return count;
 	}
 }

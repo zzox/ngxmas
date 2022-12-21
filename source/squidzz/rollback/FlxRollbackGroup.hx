@@ -20,7 +20,7 @@ typedef RollbackState = {
 }
 
 class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSerialize<RollbackState> {
-	static inline final FLOOR_Y:Int = 456;
+	public static inline final FLOOR_Y:Int = 456;
 
 	var player1:Fighter;
 	var player2:Fighter;
@@ -45,15 +45,23 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 	public function step(input:Array<FrameInput>, delta:Float):FlxRollbackGroup {
 		// forEach(spr -> spr.u) where they arent a player, update
 		// should be 0 right now
-		player1.updateWithInputs(delta, input[0]);
-		player2.updateWithInputs(delta, input[1]);
+
+		for (sprite in members)
+			if (Std.isOfType(sprite, FightableObject)) {
+				// update fightable objects
+				var fighter:FightableObject = cast(sprite, FightableObject);
+				fighter.updateWithInputs(delta, input[fighter.team > 0 ? fighter.team - 1 : 0]);
+				// hit check other fightable objects
+				for (other_sprite in members)
+					if (other_sprite != sprite && Std.isOfType(other_sprite, FightableObject))
+						fighter.fighter_hit_check(cast(other_sprite, FightableObject));
+			}
 
 		// TODO: consider using `Rollback.GLOBAL_DELTA` instead of from a parameter,
 		super.update(delta);
 		if (delta != Rollback.GLOBAL_DELTA) {
 			throw 'bad delta: $delta';
 		}
-
 		forEach(actor -> {
 			if (!actor.immovable) {
 				actor.touchingWall = actor.touchingFloor = false;
@@ -61,22 +69,18 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 					actor.x = FlxG.camera.scroll.x;
 					actor.touchingWall = true;
 				}
-
 				if (actor.x + actor.width > FlxG.camera.width + FlxG.camera.scroll.x) {
 					actor.x = FlxG.camera.scroll.x + FlxG.camera.width - actor.width;
 					actor.touchingWall = true;
 				}
-
 				if (actor.y + actor.height > FLOOR_Y) {
 					actor.y = FLOOR_Y - actor.height;
 					actor.touchingFloor = true;
 				}
 			}
 		});
-
 		if (player1.touchingFloor && player2.touchingFloor)
 			FlxG.collide(player1, player2);
-
 		return this;
 	}
 

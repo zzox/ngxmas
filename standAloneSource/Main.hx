@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxGame;
+import flixel.system.debug.log.LogStyle;
 import squidzz.ext.AttackData;
 import squidzz.ext.Lists;
 import squidzz.ext.Paths;
@@ -18,7 +19,11 @@ class Main extends openfl.display.Sprite {
 		Lists.init();
 		AttackData.init();
 		Paths.fill_path_cache();
+
+		// LogStyle.ERROR.errorSound = "assets/sounds/penguin_says_fuck";
+
 		addChild(new FlxGame(960, 540, BootState, 60, 60, true));
+		LogStyle.ERROR.errorSound = null;
 	}
 }
 

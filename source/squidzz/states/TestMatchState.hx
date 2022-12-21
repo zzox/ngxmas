@@ -6,6 +6,7 @@ import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
+import flixel.system.debug.log.LogStyle;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Fighter;
@@ -50,6 +51,8 @@ class TestMatchState extends BaseState {
 		super.create();
 
 		camera.bgColor = 0xff415d66;
+		FlxG.sound.volume = 0.1; // TODO: Remove
+		LogStyle.ERROR.errorSound = null;
 
 		// add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
 
@@ -58,14 +61,11 @@ class TestMatchState extends BaseState {
 		for (layer in stage.layers)
 			add(layer);
 
-		player1 = new Penguin(7 * 16, 328);
+		player1 = new Penguin(112, 328);
 		player2 = new Snowman(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;
-
-		player1.x += 300;
-		player2.x -= 200;
 
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
@@ -96,9 +96,6 @@ class TestMatchState extends BaseState {
 		// simulate input delay
 		localInputs.push(getLocalInput());
 		stateGroup.step([localInputs.shift(), blankInput()], elapsed);
-
-		player1.fighter_hit_check(player2);
-		player2.fighter_hit_check(player1);
 
 		if (Controls.justPressed.PAUSE) {
 			debugUi.visible = !debugUi.visible;

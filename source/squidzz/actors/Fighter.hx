@@ -7,6 +7,7 @@ import squidzz.actors.ActorTypes.ControlLock;
 import squidzz.actors.ActorTypes.JumpDirection;
 import squidzz.actors.ActorTypes.JumpingStyle;
 import squidzz.actors.ActorTypes.WalkDirection;
+import squidzz.actors.projectiles.PenguinSummon;
 import squidzz.display.FightingStage;
 import squidzz.display.MatchUi;
 import squidzz.ext.AttackData;
@@ -58,34 +59,20 @@ class Fighter extends FightableObject {
 	var attacking(get, default):Bool;
 	var can_attack(get, default):Bool;
 
-	public var attack_hit_success:Bool = false;
-
 	public var ai_mode:FighterAIMode = FighterAIMode.IDLE;
 
 	var ai_tick:Int = 0;
 
 	var block_input:Bool = false;
 
-	public function new(?Y:Float = 0, ?X:Float = 0, type:String) {
-		super(X, Y);
-
-		this.type = type;
-
-		fill_sprite_atlas(type);
+	public function new(?X:Float, ?Y:Float, prefix:String) {
+		super(X, Y, prefix);
 
 		prevInput = blankInput();
 
 		state = FighterState.IDLE;
 
 		CONTROL_LOCK = ControlLock.FULL_CONTROL;
-
-		visual = new FlxRollbackActor();
-		hurtbox = new FlxRollbackActor();
-		hitbox = new FlxRollbackActor();
-
-		visual.immovable = hurtbox.immovable = hitbox.immovable = true;
-
-		visual.moves = hurtbox.moves = hitbox.moves = false;
 
 		visible = false;
 
@@ -127,8 +114,6 @@ class Fighter extends FightableObject {
 			if (state != FighterState.BLOCKING || cur_anim.name == "block-loop")
 				stun--;
 
-		hitbox.visible = hurtbox.visible = Main.SHOW_HITBOX;
-
 		if (touchingFloor && cast(JUMP_DIRECTION, Int) > JumpDirection.NONE) {
 			JUMP_DIRECTION = JumpDirection.NONE;
 			velocity.x = 0;
@@ -138,7 +123,6 @@ class Fighter extends FightableObject {
 
 		handle_fighter_states(delta, input);
 
-		update_graphics(delta, input);
 		super.updateWithInputs(delta, input);
 		prevInput = input;
 	}
@@ -241,7 +225,10 @@ class Fighter extends FightableObject {
 		}
 	}
 
-	public function fighter_hit_check(fighter:Fighter) {
+	override public function fighter_hit_check(fighter:FightableObject) {
+		if (fighter.team == team)
+			return;
+
 		var fighter_hitbox_data:HitboxType = fighter.current_hitbox_data();
 
 		overlaps_fighter = FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10);
@@ -342,10 +329,16 @@ class Fighter extends FightableObject {
 			}
 		}
 
+		for (summon in attackData.summons) {
+			if (cur_sheet.isOnNewFrame
+				&& summon.frames.indexOf(cur_anim.frameIndex) > -1
+				&& (get_object_count(summon.name, team) < summon.max || summon.max == 0))
+				make_projectile(summon.name);
+		}
+
 		for (attack_drag in attackData.drag)
 			if (attack_drag.frames.indexOf(cur_anim.frameIndex) > -1)
 				velocity.set(velocity.x * attack_drag.x, velocity.y * attack_drag.y);
-
 		SUPER_ARMORED = attackData.super_armor.indexOf(cur_anim.frameIndex) > -1;
 
 		// ground interrupt attack
@@ -353,20 +346,20 @@ class Fighter extends FightableObject {
 			if (attackData.ground_cancel_attack.frames == null
 				|| attackData.ground_cancel_attack.frames.indexOf(cur_anim.frameIndex) > -1) {
 				var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.ground_cancel_attack.name);
+
 				load_attack(new_attack);
 				simulate_attack(new_attack, delta, input);
 			}
 		}
-
 		// wall interrupt attack
 		if (attackData.wall_cancel_attack.name != "" && touchingWall) {
 			if (attackData.wall_cancel_attack.frames == null || attackData.wall_cancel_attack.frames.indexOf(cur_anim.frameIndex) > -1) {
 				var new_attack:AttackDataType = AttackData.get_attack_by_name(type, attackData.wall_cancel_attack.name);
+
 				load_attack(new_attack);
 				simulate_attack(new_attack, delta, input);
 			}
 		}
-
 		// wall interrupt attack
 		if (attackData.opponent_cancel_attack.name != "" && overlaps_fighter) {
 			if (attackData.opponent_cancel_attack.frames == null
@@ -396,14 +389,6 @@ class Fighter extends FightableObject {
 			}
 		}
 		return false;
-	}
-
-	public function current_hitbox_data():HitboxType {
-		if (current_attack_data != null)
-			for (hitbox_data in current_attack_data.hitboxes)
-				if (hitbox_data.frames.indexOf(cur_anim.frameIndex) > -1)
-					return hitbox_data;
-		return null;
 	}
 
 	/**
@@ -509,6 +494,10 @@ class Fighter extends FightableObject {
 		velocity.x += acl * dir_multiplier;
 		velocity.x = FlxMath.bound(velocity.x, -air_speed * dir_multiplier, air_speed * dir_multiplier);
 	}
+
+	/**Makes a projectile, override in characters*/
+	function make_projectile(projectile_type:String)
+		return;
 
 	/**Receive a hit**/
 	function get_hit(source:DamageSource)
