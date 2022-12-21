@@ -1,4 +1,4 @@
-package squidzz.actors.snowman;
+package squidzz.actors.fighters;
 
 class Snowman extends Fighter {
 	public function new(?Y:Float = 0, ?X:Float = 0) {

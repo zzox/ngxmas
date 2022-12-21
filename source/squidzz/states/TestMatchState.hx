@@ -9,7 +9,7 @@ import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Fighter;
-import squidzz.actors.snowman.Snowman;
+import squidzz.actors.fighters.Snowman;
 import squidzz.display.CameraController;
 import squidzz.display.DebugUi;
 import squidzz.display.FightingStage;

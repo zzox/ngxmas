@@ -28,28 +28,10 @@ enum abstract FInput(String) to String {
 	var Special = '';
 }
 
-class Fighter extends FlxRollbackActor {
+class Fighter extends FightableObject {
 	var prevInput:FrameInput;
 
 	public var opponent:Fighter;
-
-	// team 1 = player 1, team 2 = player 2, team 0 = neutral (not used)
-	public var team:Int = 0;
-
-	/**A seperated hurtbox anim that track this sprite and  is only used for hitbox spawning*/
-	public var hurtbox:FlxRollbackActor;
-
-	/**A seperated hitbox anim that track this sprite and  is only used for hitbox spawning*/
-	public var hitbox:FlxRollbackActor;
-
-	/**A seperated graphic sheet, this is the only visible sheet*/
-	public var visual:FlxRollbackActor;
-
-	public var hurtbox_sheet:FlxRollbackActor;
-	public var hitbox_sheet:FlxRollbackActor;
-	public var cur_sheet(get, default):FlxRollbackActor;
-
-	var cur_anim(get, default):FlxAnimationController;
 
 	var JUMPING_STYLE:JumpingStyle = JumpingStyle.TRADITIONAL;
 	var JUMP_DIRECTION:JumpDirection = JumpDirection.NONE;
@@ -73,26 +55,8 @@ class Fighter extends FlxRollbackActor {
 
 	var jump_height:Int = 960;
 
-	var match_ui:MatchUi;
-
-	/**Can't take damage inv > 0*/
-	var inv:Int = 0;
-
-	/**Can't act while stun > 0*/
-	var stun:Int = 0;
-
-	public var is_touching_floor(get, default):Bool;
-	public var is_touching_wall(get, default):Bool;
-
-	public var current_attack_data:AttackDataType;
-
 	var attacking(get, default):Bool;
 	var can_attack(get, default):Bool;
-
-	/**No hit animation while active, but takes damage*/
-	var SUPER_ARMORED:Bool = false;
-
-	public var sprite_atlas:Map<String, FlxRollbackActor> = new Map<String, FlxRollbackActor>();
 
 	public var attack_hit_success:Bool = false;
 
@@ -101,8 +65,6 @@ class Fighter extends FlxRollbackActor {
 	var ai_tick:Int = 0;
 
 	var block_input:Bool = false;
-
-	var overlaps_fighter:Bool = false;
 
 	public function new(?Y:Float = 0, ?X:Float = 0, type:String) {
 		super(X, Y);
@@ -326,51 +288,12 @@ class Fighter extends FlxRollbackActor {
 		return fighter_hitbox_data.kb;
 	}
 
-	function update_graphics(delta:Float, input:FrameInput) {
-		cur_sheet.updateWithInputs(delta, input);
-
-		hitbox_sheet.animation.frameIndex = cur_anim.frameIndex;
-		hurtbox_sheet.animation.frameIndex = cur_anim.frameIndex;
-
-		for (box in [visual, hitbox, hurtbox]) {
-			box.velocity.copyFrom(velocity);
-			box.acceleration.copyFrom(acceleration);
-			box.flipX = flipX;
-			box.alpha = box == visual ? 1 : 0.5;
-		}
-
-		hitbox_sheet.updateWithInputs(delta, input);
-		hurtbox_sheet.updateWithInputs(delta, input);
-
-		stamp_ext(visual, cur_sheet);
-		stamp_ext(hitbox, hitbox_sheet);
-		stamp_ext(hurtbox, hurtbox_sheet);
-
-		update_offsets();
-	}
-
 	function attack_cancellable_check(attackData:AttackDataType):Bool {
 		if (!attack_hit_success || attackData == null)
 			return false;
 		if (attackData.cancellableFrames.indexOf(cur_anim.frameIndex) > -1)
 			return true;
 		return false;
-	}
-
-	function stamp_ext(target_sprite:FlxSpriteExt, stamp_sprite:FlxSpriteExt) {
-		if (target_sprite.graphic == null)
-			target_sprite.makeGraphic(stamp_sprite.frameWidth, stamp_sprite.frameHeight, FlxColor.TRANSPARENT, true);
-		else
-			target_sprite.graphic.bitmap.fillRect(target_sprite.graphic.bitmap.rect, FlxColor.TRANSPARENT);
-
-		target_sprite.stamp(stamp_sprite);
-	}
-
-	function update_offsets() {
-		for (box in [visual, hitbox, hurtbox]) {
-			box.offset.copyFrom(!flipX ? cur_sheet.offset_left : cur_sheet.offset_right);
-			box.setPosition(x, y);
-		}
 	}
 
 	function reset_gravity()
@@ -501,11 +424,11 @@ class Fighter extends FlxRollbackActor {
 	function get_base_attack_data(change_animation:Bool = false) {
 		var currentAttackName:String = "";
 
-		if (is_touching_floor) {
+		if (touchingFloor) {
 			currentAttackName = "ground";
 			if (change_animation)
 				anim("idle");
-		} else if (!is_touching_floor) {
+		} else if (!touchingFloor) {
 			currentAttackName = "air";
 			if (change_animation)
 				animProtect("jump");
@@ -520,7 +443,7 @@ class Fighter extends FlxRollbackActor {
 			var validInput:Bool = false;
 
 			// input data validity check
-			if (linkedAttackData.airOnly && !is_touching_floor || linkedAttackData.groundOnly && is_touching_floor) {
+			if (linkedAttackData.airOnly && !touchingFloor || linkedAttackData.groundOnly && touchingFloor) {
 				for (inputArray in linkedAttackData.inputs) {
 					validInput = true;
 					for (inputToCheck in inputArray) {
@@ -538,11 +461,8 @@ class Fighter extends FlxRollbackActor {
 							break;
 						}
 					}
-					if (validInput) {
-						for (inputToRemove in inputArray)
-							buffRemove(inputToRemove.input);
+					if (validInput)
 						break;
-					}
 				}
 			}
 
@@ -560,8 +480,6 @@ class Fighter extends FlxRollbackActor {
 			inputMatched: false
 		};
 	}
-
-	function buffRemove(input:String) {}
 
 	function start_jump(delta:Float, input:FrameInput) {
 		if (JUMPING_STYLE == JumpingStyle.TRADITIONAL) {
@@ -620,68 +538,11 @@ class Fighter extends FlxRollbackActor {
 		return input[dir] && !prevInput[dir];
 	}
 
-	override function anim(s:String) {
-		var prev_sheet:FlxSpriteExt = cur_sheet;
-
-		update_cur_sheet(s);
-
-		if (prev_sheet != cur_sheet) {
-			if (cur_anim != null) {
-				cur_anim.reset();
-				hitbox_sheet.animation.reset();
-				hurtbox_sheet.animation.reset();
-			}
-		}
-
-		cur_sheet.anim(s);
-	}
-
-	function get_is_touching_floor():Bool
-		return touchingFloor;
-
-	function get_is_touching_wall():Bool
-		return isTouching(FlxDirectionFlags.LEFT) || isTouching(FlxDirectionFlags.RIGHT);
-
-	function get_cur_anim():FlxAnimationController
-		return cur_sheet.animation;
-
-	function get_cur_sheet():FlxRollbackActor
-		return cur_sheet;
-
 	function get_attacking():Bool
 		return state == FighterState.ATTACKING;
 
 	function get_can_attack():Bool
 		return !attacking && (state == FighterState.IDLE || state == FighterState.JUMPING);
-
-	function fill_sprite_atlas(prefix:String)
-		for (animSet in Lists.animSets)
-			if (animSet.image.indexOf(prefix) == 0)
-				for (image in [animSet.image, '${animSet.image}-hitbox', '${animSet.image}-hurtbox']) {
-					var sprite:FlxRollbackActor = new FlxRollbackActor();
-					sprite.loadAllFromAnimationSet(image, animSet.image);
-					sprite_atlas.set(image, sprite);
-				}
-
-	function find_anim_in_sprite_atlas(anim_name:String):FlxRollbackActor {
-		for (sprite in sprite_atlas)
-			for (anim in sprite.animation.getNameList())
-				if (anim == anim_name)
-					return sprite;
-		return null;
-	}
-
-	function update_cur_sheet(anim_name:String) {
-		cur_sheet = find_anim_in_sprite_atlas(anim_name);
-		hitbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
-		hurtbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');
-
-		cur_sheet = find_anim_in_sprite_atlas(anim_name);
-
-		if (graphic == null) {
-			makeGraphic(cur_sheet.width.floor(), cur_sheet.height.floor(), FlxColor.WHITE);
-		}
-	}
 
 	override function set_group(group:FlxRollbackGroup) {
 		for (h in [hitbox, hitbox_sheet, hurtbox, hurtbox_sheet])
@@ -697,12 +558,6 @@ class Fighter extends FlxRollbackActor {
 		return false;
 	}
 
-	public function set_team(team:Int)
-		this.team = team;
-
-	public function set_match_ui(match_ui:MatchUi)
-		this.match_ui = match_ui;
-
 	public function reset_new_round() {
 		health = max_health;
 		update_match_ui();
@@ -715,13 +570,6 @@ class Fighter extends FlxRollbackActor {
 
 	function opponent_on_opposite_side()
 		return flipX && opponent.mp().x > mp().x || !flipX && opponent.mp().x < mp().x;
-
-	function make_hit_circle(X:Float, Y:Float, blocked:Bool = false) {
-		var hit_circle:HitCircle = new HitCircle(X, Y);
-		hit_circle.setPosition(hit_circle.x - hit_circle.width / 2, hit_circle.y - hit_circle.height / 2);
-		hit_circle.color = blocked ? FlxColor.GRAY : FlxColor.RED;
-		group.add(hit_circle);
-	}
 }
 
 typedef AttackDataInputCheckResult = {
