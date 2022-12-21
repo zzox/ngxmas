@@ -215,6 +215,7 @@ class Fighter extends FightableObject {
 				}
 			case FighterState.KNOCKDOWN:
 			// pass, not sure if we'll have this in the advent version, but this is a unique fall down state where you cannot take any damage but can't act
+
 			case FighterState.BLOCKING:
 				if (cur_anim.name.indexOf("block") <= -1)
 					anim("block-start");
@@ -231,7 +232,7 @@ class Fighter extends FightableObject {
 
 		var fighter_hitbox_data:HitboxType = fighter.current_hitbox_data();
 
-		overlaps_fighter = FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10);
+		overlaps_fighter = collide_overlaps_fighter || FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10);
 
 		if (fighter_hitbox_data == null)
 			return;

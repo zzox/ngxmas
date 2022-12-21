@@ -46,6 +46,8 @@ class FightableObject extends FlxRollbackActor {
 
 	var overlaps_fighter:Bool = false;
 
+	public var collide_overlaps_fighter:Bool = false;
+
 	public var sprite_atlas:Map<String, FlxRollbackActor> = new Map<String, FlxRollbackActor>();
 
 	public var current_attack_data:AttackDataType;

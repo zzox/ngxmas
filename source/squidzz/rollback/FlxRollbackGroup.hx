@@ -79,8 +79,13 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 				}
 			}
 		});
+
+		player1.collide_overlaps_fighter = player2.collide_overlaps_fighter = false;
 		if (player1.touchingFloor && player2.touchingFloor)
-			FlxG.collide(player1, player2);
+			FlxG.collide(player1, player2, function(p1:FightableObject, p2:FightableObject) {
+				p1.collide_overlaps_fighter = p2.collide_overlaps_fighter = true;
+			});
+
 		return this;
 	}
 
