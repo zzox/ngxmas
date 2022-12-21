@@ -24,7 +24,7 @@
 
     <animSet image = "snowman-hit" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
         <anim name = "hit">0t16</anim>
-        <anim name = "hit-recover" looping = "false">17t36</anim>
+        <anim name = "hit-recover" looping = "false">17t35</anim>
     </animSet>
 
     <animSet image = "snowman-ground-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">

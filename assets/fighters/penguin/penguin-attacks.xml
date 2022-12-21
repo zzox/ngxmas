@@ -8,6 +8,7 @@
 
     <attack name="air">
         <!--Attack Links-->
+        <link attack="air-up-start" />
         <link attack="penguin-slide-start" />
         <link attack="air-neutral" />
     </attack>
@@ -82,5 +83,48 @@
         <input controls="attack" />
         <!--Attack Links-->
         <inherits from="air" />
-    </attack>  
+    </attack>
+
+    <attack name="air-up-start">
+        <air/>
+        <!--Controls-->
+        <input controls="attack,up" />
+        <thrust frames="40t41" velocity="0,-500" fixed = "0.95,0" once = "true"/>
+        <!--Attack Links-->
+        <auto_continue on_complete="air-up-loop" />
+    </attack>
+
+    <attack name="air-up-loop">
+        <air/>
+        <thrust frames="42t43" velocity="0,300" once="true" fixed = "1x,0"/>
+        <!--Hitboxes-->
+        <hitbox frames="42t43" kb = "50,-250" str = "25" stun = "10"/>
+
+        <input_cancel_attack/>
+        <link attack = "air-up-escape"/>
+
+        <ground_cancel_attack name="air-land"/>
+    </attack>
+
+    <attack name="air-up-escape">
+        <air/>
+        <input controls="attack" />
+
+        <thrust frames="40t41" velocity="0,700" once="true" fixed = "0.01,0"/>
+
+        <input_cancel_attack/>
+        <inherits from="air" />
+
+        <ground_cancel_attack name="air-land" />
+    </attack>
+
+    <attack name="penguin-slide-escape">
+        <air/>
+        <ground/>
+        <thrust frames="39" velocity="-200,-400" once="true" fixed = "0.01,0" />
+        <hitbox frames="35t39" kb = "300,-300" str = "50"/>
+        <!--Controls-->
+        <input controls="attack" />
+        <ground_cancel_attack name="air-land" frames="35t38"/>
+    </attack>
 </root>

@@ -72,7 +72,7 @@
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="7t9" velocity="75,0" />
         <!--Special Attributes-->
-        <cancellable frames="6" />
+        <cancellable frames="16t99" />
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>

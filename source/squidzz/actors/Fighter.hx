@@ -672,7 +672,6 @@ class Fighter extends FlxRollbackActor {
 	}
 
 	function update_cur_sheet(anim_name:String) {
-		trace(anim_name);
 		cur_sheet = find_anim_in_sprite_atlas(anim_name);
 		hitbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
 		hurtbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');

@@ -118,7 +118,6 @@ class TestMatchState extends BaseState {
 				index = 0;
 			current_ai_mode = ai_modes[index];
 			switch_ai_mode();
-			trace('new ai mode: ', current_ai_mode);
 		}
 		#end
 	}
