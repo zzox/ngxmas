@@ -1,0 +1,15 @@
+<root>
+    <attack name="ground">
+        <!--Attack Links-->
+    </attack>
+
+    <attack name="air">
+        <!--Attack Links-->
+    </attack>
+
+    <attack name="ground-neutral-near">
+        <ground/>
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+</root>

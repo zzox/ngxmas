@@ -135,6 +135,8 @@ typedef AttackInput = {
 	var input:String;
 	var input_release:String;
 	var charge_time:Int;
+	var flag_req:String;
+	var flag_req_not:String;
 }
 
 typedef AsepriteJSON = {

@@ -101,6 +101,702 @@
             "path": "assets/fighters/donkey/raws/Dominique_Walk"
         },
         {
+            "file": "duoYeti-anims.xml",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-girl-attacks.xml",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-girl-hitbox.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-girl-hurtbox.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-girl.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-snowball-hitbox.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-snowball-hurtbox.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-snowball.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-yeti-attacks.xml",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-yeti-hitbox.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-yeti-hurtbox.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-yeti.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "Girl - BLOCK (Tankmas Fighting Game 2022).png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - CROUCH + BLOCK"
+        },
+        {
+            "file": "Girl - CROUCH (Tankmas Fighting Game 2022).png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - CROUCH + BLOCK"
+        },
+        {
+            "file": "Girl - HIT (Tankmas Fighting Game 2022).png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - HIT"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10013.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10014.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10015.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10016.png",
+            "path": "assets/fighters/duoYeti/Abby - 1/Abby - IDLE"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10013.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10014.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10015.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10016.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10017.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10018.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10019.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10020.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10021.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10022.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10023.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10024.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - JUMP + FALL + LAND"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10013.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10014.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10015.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10016.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - RUN"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Abby_-_2 (1)/Abby - 2/Abby - SNOWBALL"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10013.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10014.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10015.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10016.png",
+            "path": "assets/fighters/duoYeti/Ketu - IDLE"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10013.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10014.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10015.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Timeline 10016.png",
+            "path": "assets/fighters/duoYeti/Ketu - WALK"
+        },
+        {
+            "file": "Yeti - BACK KICK.png",
+            "path": "assets/fighters/duoYeti/Yeti - BACK KICK"
+        },
+        {
+            "file": "Yeti - BELLY FLOP 1.png",
+            "path": "assets/fighters/duoYeti/Yeti - BELLY FLOP"
+        },
+        {
+            "file": "Yeti - BELLY FLOP 2.png",
+            "path": "assets/fighters/duoYeti/Yeti - BELLY FLOP"
+        },
+        {
+            "file": "Yeti - BLOCK.png",
+            "path": "assets/fighters/duoYeti/Yeti - BLOCK"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Yeti - HIT"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Yeti - HIT"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Yeti - HIT"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Yeti - HIT"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10013.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10014.png",
+            "path": "assets/fighters/duoYeti/Yeti - JUMP + LAND"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Yeti - PICK UP"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Yeti - PUNCH"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Yeti - PUNCH"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Yeti - PUNCH"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Yeti - PUNCH"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Yeti - PUNCH"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Yeti - PUNCH"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10008.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10009.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10010.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10011.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10012.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10013.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10014.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10015.png",
+            "path": "assets/fighters/duoYeti/Yeti - QUAKE"
+        },
+        {
+            "file": "Timeline 10001.png",
+            "path": "assets/fighters/duoYeti/Yeti - THROW"
+        },
+        {
+            "file": "Timeline 10002.png",
+            "path": "assets/fighters/duoYeti/Yeti - THROW"
+        },
+        {
+            "file": "Timeline 10003.png",
+            "path": "assets/fighters/duoYeti/Yeti - THROW"
+        },
+        {
+            "file": "Timeline 10004.png",
+            "path": "assets/fighters/duoYeti/Yeti - THROW"
+        },
+        {
+            "file": "Timeline 10005.png",
+            "path": "assets/fighters/duoYeti/Yeti - THROW"
+        },
+        {
+            "file": "Timeline 10006.png",
+            "path": "assets/fighters/duoYeti/Yeti - THROW"
+        },
+        {
+            "file": "Timeline 10007.png",
+            "path": "assets/fighters/duoYeti/Yeti - THROW"
+        },
+        {
             "file": "penguin-anims.xml",
             "path": "assets/fighters/penguin"
         },
