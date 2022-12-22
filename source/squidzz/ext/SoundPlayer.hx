@@ -13,7 +13,7 @@ class SoundPlayer {
 		#if hl
 		var sound:FlxSound = FlxG.sound.play(Paths.get(name + ".ogg"));
 		#elseif js
-		var sound:FlxSound = FlxG.sound.play(Paths.get(name + ".mp3"))
+		var sound:FlxSound = FlxG.sound.play(Paths.get(name + ".mp3"));
 		#end
 		sound.play();
 		// trace(sound);

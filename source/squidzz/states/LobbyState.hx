@@ -44,9 +44,7 @@ class LobbyState extends BaseState {
 
 		if (Connection.inst.isServerConnected) {
 			if (Controls.justPressed.A) {
-				createRoom();
-			} else if (Controls.justPressed.B) {
-				joinRoom();
+                joinOrCreate();
 			}
 		}
 
@@ -58,6 +56,10 @@ class LobbyState extends BaseState {
 			ping.text = 'ping: ${Connection.inst.pingTime}ms';
 		}
 	}
+
+    function joinOrCreate () {
+        Connection.inst.joinOrCreateRoom();
+    }
 
 	function createRoom() {
 		Connection.inst.createRoom();

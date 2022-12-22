@@ -12,8 +12,6 @@ class DamageSource extends FlxRollbackActor {
 	public function new(?X:Float = 0, ?Y:Float = 0, ?stamp:FlxSpriteExt, ?attributes:DamageSourceAttributes) {
 		super(X, Y);
 
-		MatchState.self.damage.add(this);
-
 		if (stamp != null || attributes == null) {
 			stamp = stamp == null ? load_from_attributes(attributes) : stamp;
 
