@@ -17,6 +17,7 @@ for file in raw_files:
         ".ttf",
         ".world",
         ".tasc",
+        ".mp3",
     ]:
         if extension in file:
             files.append(file)

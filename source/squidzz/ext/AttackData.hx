@@ -69,7 +69,8 @@ class AttackData {
 				max_uses: null,
 				attack_landed: false,
 				input_cancel_attack: false,
-				summons: []
+				summons: [],
+				sounds: []
 			};
 
 			attackData.name = attack.get("name");
@@ -222,6 +223,15 @@ class AttackData {
 					name: summon.get("name"),
 					frames: Utils.animFromString(summon.get("frames")),
 					max: summon.get("max") == null ? 0 : Std.parseInt(summon.get("max"))
+				});
+			}
+
+			for (sound in attack.elementsNamed("sound")) {
+				attackData.sounds.push({
+					name: sound.get("name"),
+					frame: Std.parseInt(sound.get("frame")),
+					min: Std.parseInt(sound.get("min")),
+					max: Std.parseInt(sound.get("max"))
 				});
 			}
 

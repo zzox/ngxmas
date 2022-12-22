@@ -101,6 +101,7 @@ typedef AttackDataType = {
 	var attack_landed:Bool;
 	var input_cancel_attack:Bool;
 	var summons:Array<SummonDataType>;
+	var sounds:Array<AttackSoundDataType>;
 }
 
 typedef HitboxType = {
@@ -117,6 +118,13 @@ typedef HitboxType = {
 typedef SummonDataType = {
 	name:String,
 	frames:Array<Int>,
+	max:Int
+}
+
+typedef AttackSoundDataType = {
+	frame:Int,
+	name:String,
+	min:Int,
 	max:Int
 }
 

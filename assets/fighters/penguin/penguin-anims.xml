@@ -20,7 +20,7 @@
         <anim name = "ground-down-down">55t56</anim>
         
         <anim name = "hit">22t23</anim>
-        <anim name = "hit-recover" looping = "false" fps = "100ms">24t2</anim>
+        <anim name = "hit-recover" looping = "false" fps = "100ms">24h2</anim>
         
         <anim name = "block-start" looping = "false">31</anim>
         <anim name = "block-loop">29t30</anim>

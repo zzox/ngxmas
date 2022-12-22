@@ -30,6 +30,7 @@
         <cancellable frames="4t7" />
         <!--Attack Links-->
         <inherits from="ground" />
+        <sound frame = "0" name = "Joe_GROUND_NEUTRAL$" min = "1" max = "2"/>
     </attack>
 
     <attack name="ground-forward">
@@ -45,6 +46,8 @@
         <cancellable frames="6" />
         <!--Attack Links-->
         <inherits from="ground" />
+        <!--Sound Data-->
+        <sound frame = "0" name = "joe schnoe ground forward 1 take $" min = "1" max = "5"/>
     </attack>
 
     <attack name="ground-backward">
@@ -60,6 +63,7 @@
         <cancellable frames="11t17" />
         <!--Attack Links-->
         <inherits from="ground" />
+        <sound frame = "0" name = "joe schnoe ground back $" min = "1" max = "4"/>
     </attack>
 
     <attack name="ground-down">
@@ -75,6 +79,8 @@
         <cancellable frames="16t99" />
         <!--Attack Links-->
         <inherits from="ground" />
+        <!--Sound Data-->
+        <sound frame = "0" name = "Joe_GROUND_DOWN$" min = "1" max = "2"/>
     </attack>
 
     <attack name="ground-up">
@@ -89,12 +95,16 @@
         <cancellable frames="4t21" />
         <!--Attack Links-->
         <inherits from="ground" />
+        <!--Sound Data-->
+        <sound frame = "0" name = "Joe_GROUND_UP" min = "1" max = "1"/>
     </attack>
 
     <attack name="air-land">
         <air/>
         <!--Attack Links-->
         <inherits from="air" />
+        <!--Sound Data-->
+        <sound frame = "20" name = "joe schnoe landing $" min = "1" max = "3"/>
     </attack>
 
     <attack name="air-neutral-start">
@@ -105,8 +115,9 @@
         <hitbox frames="2" kb = "200,-500" str = "100" stun = "30"/>
         <!--Movement Attributes-->
         <thrust frames="5" velocity="50,150" />
-
         <auto_continue on_complete="air-neutral-loop" />
+        <!--Sound Data-->
+        <sound frame = "0" name = "Joe_AIR_NEUTRAL" min = "1" max = "1"/>
     </attack>
 
     <attack name="air-neutral-loop">
@@ -131,6 +142,8 @@
         <!--Special Attributes-->
         <cancellable frames="5t8" />
         <auto_continue on_complete="air-down-loop" />
+        <!--Sound Data-->
+        <sound frame = "0" name = "joe schnoe down air $" min = "1" max = "3"/>
     </attack>
 
     <attack name="air-down-loop">
@@ -151,6 +164,8 @@
         <!--Special Attributes-->
         <cancellable frames="11t20" />
         <ground_cancel_attack name="air-land" frames="11t20"/>
+        <!--Sound Data-->
+        <sound frame = "0" name = "joe schnoe back air $" min = "1" max = "3"/>
     </attack>
 
     <attack name="air-up-start">
@@ -162,6 +177,7 @@
         <!--Special Attributes-->
         <cancellable frames="10t14" />
         <auto_continue on_complete="air-up-loop" />
+        <sound frame = "0" name = "Joe_UP_AIR" min = "1" max = "1"/>
     </attack>
     
     <attack name="air-up-loop">
@@ -181,6 +197,7 @@
         <cancellable frames="8t13" />
         <auto_continue on_complete="air-forward-loop" />
         <ground_cancel_attack name="air-land" frames = "12t13"/>
+        <sound frame = "0" name = "Joe_FORWARD_AIR" min = "1" max = "2"/>
     </attack>
     
     <attack name="air-forward-loop">

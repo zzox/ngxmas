@@ -51,7 +51,6 @@ class TestMatchState extends BaseState {
 		super.create();
 
 		camera.bgColor = 0xff415d66;
-		FlxG.sound.volume = 0.1; // TODO: Remove
 		LogStyle.ERROR.errorSound = null;
 
 		// add(new FlxSprite(0, 456).makeGraphic(960, 84, 0xffa8a8a8));
@@ -61,8 +60,8 @@ class TestMatchState extends BaseState {
 		for (layer in stage.layers)
 			add(layer);
 
-		player1 = new Penguin(112, 328);
-		player2 = new Snowman(768, 328);
+		player1 = new Snowman(112, 328);
+		player2 = new Penguin(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;

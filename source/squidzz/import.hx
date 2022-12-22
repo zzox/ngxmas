@@ -14,6 +14,7 @@ import squidzz.ext.ListTypes.AnimSetData;
 import squidzz.ext.ListTypes.AttackDataType;
 import squidzz.ext.Lists;
 import squidzz.ext.Paths;
+import squidzz.ext.SoundPlayer;
 import squidzz.ext.Utils;
 import squidzz.rollback.FrameInput;
 import squidzz.states.BaseState;

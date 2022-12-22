@@ -159,8 +159,10 @@ class Fighter extends FightableObject {
 				do_jump(delta, input);
 
 				if (CONTROL_LOCK == ControlLock.FULL_CONTROL && !hit_recovery) {
-					if (touchingFloor && cur_anim.name == "jump-down")
+					if (touchingFloor && cur_anim.name == "jump-down") {
 						anim("jump-land");
+						jump_land_sound();
+					}
 					if (touchingFloor && (cur_anim.name != "jump-land" || cur_anim.finished)) {
 						if (cast(WALKING_DIRECTION, Int) > WalkDirection.NEUTRAL)
 							anim(WALKING_DIRECTION == WalkDirection.FORWARDS ? 'walk-forwards' : 'walk-backwards');
@@ -186,6 +188,7 @@ class Fighter extends FightableObject {
 					sstate(FighterState.JUMPING);
 					velocity.y = -jump_height;
 					start_jump(delta, input);
+					jump_sound();
 				}
 
 			case FighterState.JUMP_LAND:
@@ -262,6 +265,8 @@ class Fighter extends FightableObject {
 
 				sstate(FighterState.HIT);
 				update_match_ui();
+
+				hit_sound();
 			}
 		}
 	}
@@ -336,6 +341,10 @@ class Fighter extends FightableObject {
 				&& (get_object_count(summon.name, team) < summon.max || summon.max == 0))
 				make_projectile(summon.name);
 		}
+
+		for (sound in attackData.sounds)
+			if (cur_sheet.isOnNewFrame && sound.frame == cur_anim.frameIndex)
+				SoundPlayer.random_sound(sound.name, sound.min, sound.max);
 
 		for (attack_drag in attackData.drag)
 			if (attack_drag.frames.indexOf(cur_anim.frameIndex) > -1)
@@ -560,6 +569,30 @@ class Fighter extends FightableObject {
 
 	function opponent_on_opposite_side()
 		return flipX && opponent.mp().x > mp().x || !flipX && opponent.mp().x < mp().x;
+
+	function jump_sound()
+		return;
+
+	function hit_sound()
+		return;
+
+	function jump_land_sound()
+		return;
+
+	function block_sound()
+		return;
+
+	function css_sound()
+		return;
+
+	function ko_sound()
+		return;
+
+	function intro_sound()
+		return;
+
+	function win_sound(round:Int)
+		return;
 }
 
 typedef AttackDataInputCheckResult = {

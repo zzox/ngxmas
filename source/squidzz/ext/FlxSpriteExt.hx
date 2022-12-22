@@ -2,6 +2,7 @@ package squidzz.ext;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxTileFrames;
+import flixel.math.FlxRandom;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 
 /**
@@ -28,6 +29,8 @@ class FlxSpriteExt extends FlxSprite {
 	/**simple tick**/
 	var tick:Int = 0;
 
+	var ran:FlxRandom;
+
 	/**Previous frame of animation**/
 	var prevFrame:Int = 0;
 
@@ -47,6 +50,8 @@ class FlxSpriteExt extends FlxSprite {
 	override function update(elapsed:Float) {
 		isOnNewFrame = animation == null ? false : prevFrame != animation.frameIndex;
 		prevFrame = animation == null ? 0 : animation.frameIndex;
+
+		ran = new FlxRandom();
 
 		super.update(elapsed);
 	}
@@ -129,6 +134,8 @@ class FlxSpriteExt extends FlxSprite {
 	 * Shorthand for animation play
 	 */
 	public function anim(s:String) {
+		if (s != animation.name)
+			prevFrame = -1;
 		animation.play(s);
 		lastAnim = s;
 	}

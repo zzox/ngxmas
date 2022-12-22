@@ -321,6 +321,550 @@
             "path": "assets/fighters/snowman"
         },
         {
+            "file": "joe schnoe air neutral block ground up grunts.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe back air 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe back air 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe back air 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe css 1 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe css 1 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe css 1 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe down air 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe down air 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe down air 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe foward air up air ground neutral ground down grunts.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 4.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 5.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground back 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground back 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground back 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground back 4.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 4.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 5.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 4.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 5.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 6.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe hey 1 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe hey 1 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe intro 1 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe intro 1 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe intro 1 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe intro 2 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe intro 2 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe intro 2 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe jump 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe jump 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe jump 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ko 1 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ko 1 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ko 1 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ko 2 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ko 2 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe ko 2 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe landing 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe landing 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe landing 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 1 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 1 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 2 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 2 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 2 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 3 take 1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 3 take 2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe round win 3 take 3.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_AIR_NEUTRAL.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_BLOCK.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_FORWARD_AIR.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_GROUND_DOWN1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_GROUND_DOWN2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_GROUND_NEUTRAL1.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_GROUND_NEUTRAL2.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_GROUND_UP.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "Joe_UP_AIR.mp3",
+            "path": "assets/fighters/snowman/sounds"
+        },
+        {
+            "file": "joe schnoe air neutral block ground up grunts.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe back air 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe back air 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe back air 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe css 1 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe css 1 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe css 1 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe down air 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe down air 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe down air 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe foward air up air ground neutral ground down grunts.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 4.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe getting hit grunt 5.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground back 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground back 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground back 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground back 4.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 4.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 1 take 5.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 4.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 5.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ground forward 2 take 6.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe hey 1 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe hey 1 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe intro 1 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe intro 1 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe intro 1 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe intro 2 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe intro 2 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe intro 2 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe jump 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe jump 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe jump 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ko 1 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ko 1 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ko 1 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ko 2 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ko 2 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe ko 2 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe landing 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe landing 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe landing 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 1 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 1 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 2 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 2 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 2 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 3 take 1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 3 take 2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "joe schnoe round win 3 take 3.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_AIR_NEUTRAL.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_BLOCK.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_FORWARD_AIR.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_GROUND_DOWN1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_GROUND_DOWN2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_GROUND_NEUTRAL1.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_GROUND_NEUTRAL2.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_GROUND_UP.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
+            "file": "Joe_UP_AIR.ogg",
+            "path": "assets/fighters/snowman/sounds/ogg"
+        },
+        {
             "file": "player-blue.png",
             "path": "assets/images"
         },
@@ -350,6 +894,10 @@
         },
         {
             "file": "ketu-icon.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "ko.png",
             "path": "assets/images/ui"
         },
         {
@@ -411,6 +959,10 @@
         {
             "file": "music-goes-here.txt",
             "path": "assets/music"
+        },
+        {
+            "file": "penguin says fuck.mp3",
+            "path": "assets/sounds"
         },
         {
             "file": "sounds-go-here.txt",
