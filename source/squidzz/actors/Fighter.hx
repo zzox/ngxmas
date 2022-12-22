@@ -167,15 +167,15 @@ class Fighter extends FightableObject {
 						if (cast(WALKING_DIRECTION, Int) > WalkDirection.NEUTRAL)
 							anim(WALKING_DIRECTION == WalkDirection.FORWARDS ? 'walk-forwards' : 'walk-backwards');
 						else
-							anim('idle');
+							animProtect('idle');
 					} else {
 						var mid_jump_limit:Int = 10;
 						if (velocity.y < -mid_jump_limit)
-							anim('jump-up');
+							animProtect('jump-up');
 						else if (Math.abs(velocity.y) < mid_jump_limit)
-							anim("jump-mid");
+							animProtect("jump-mid");
 						else if (velocity.y > mid_jump_limit && cur_anim.finished)
-							anim("jump-down");
+							animProtect("jump-down");
 					}
 				}
 
@@ -301,7 +301,7 @@ class Fighter extends FightableObject {
 			load_attack(input_result.attackData);
 	}
 
-	function load_attack(attack_data_to_load:AttackDataType):AttackDataType {
+	public function load_attack(attack_data_to_load:AttackDataType):AttackDataType {
 		attack_hit_success = false;
 		if (attack_data_to_load.name != "ground" && attack_data_to_load.name != "air") {
 			animProtect(attack_data_to_load.name);
@@ -442,6 +442,11 @@ class Fighter extends FightableObject {
 				for (inputArray in linkedAttackData.inputs) {
 					validInput = true;
 					for (inputToCheck in inputArray) {
+						if (inputToCheck.flag_req != null
+							&& (internal_flags.get(inputToCheck.flag_req) == false || internal_flags.get(inputToCheck.flag_req) == null)) {
+							validInput = false;
+							break;
+						}
 						var DOWN_INPUT = inputToCheck.input == "down" && pressed(input, Down);
 						var UP_INPUT = inputToCheck.input == "up" && pressed(input, Up);
 						var FORWARD_INPUT = (inputToCheck.input == "forward" || inputToCheck.input == "forwards")

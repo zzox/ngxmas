@@ -12,8 +12,9 @@ class PenguinSummon extends Projectile {
 
 		type = "penguin-summon";
 
-		// flip based on side owner is of the stage NOT what dir they're facing
-		flipX = owner.mp().x >= FlxG.camera.scroll.x + FlxG.camera.width / 2;
+		// flip based on side owner is of the stage NOT what dir they're facing - EDIT: nvm
+		// flipX = owner.mp().x >= FlxG.camera.scroll.x + FlxG.camera.width / 2;
+		flipX = owner.flipX;
 
 		anim("summon-walk");
 

@@ -192,7 +192,9 @@ class AttackData {
 						attackData.inputs[cIndex].push({
 							input: charge_time <= 1 ? input_parts[0] : input_parts[0] + "_hold",
 							input_release: charge_time > 1 && input_parts[1] == "CHARGE" ? input_parts[0] + "_release" : "",
-							charge_time: charge_time
+							charge_time: charge_time,
+							flag_req: inputSet.get("if"),
+							flag_req_not: inputSet.get("if_not")
 						});
 					}
 				}

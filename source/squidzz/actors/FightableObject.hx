@@ -58,6 +58,8 @@ class FightableObject extends FlxRollbackActor {
 
 	var prefix:String;
 
+	var internal_flags:Map<String, Dynamic> = new Map<String, Dynamic>();
+
 	public function new(?X:Float = 0, ?Y:Float = 0, prefix:String) {
 		super(X, Y);
 
