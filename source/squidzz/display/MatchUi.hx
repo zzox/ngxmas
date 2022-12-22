@@ -76,7 +76,7 @@ class MatchUi extends FlxGroup {
 		p2HealthBar.clipRect = new FlxRect(352 - (HEALTH_WIDTH * (healths[1] / max_healths[1])), 0, 352, 64);
 
 		p1PowerBar.clipRect = new FlxRect(0, 0, 11 + (POWER_WIDTH * (p1Power / 100)), 64);
-		p2PowerBar.clipRect = new FlxRect(25 + (POWER_WIDTH * (p2Power / 100)), 0, 272, 64);
+		p2PowerBar.clipRect = new FlxRect(260 - (POWER_WIDTH * (p2Power / 100)), 0, 272, 64);
 
 		p1Power += (1 / 60);
 		p2Power += (1 / 60);
