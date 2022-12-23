@@ -69,6 +69,8 @@ class TestMatchState extends BaseState {
 		player1.opponent = player2;
 		player2.opponent = player1;
 
+		player2.aiControlled = true;
+
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
 
