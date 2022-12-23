@@ -1073,20 +1073,40 @@
             "path": "assets/sounds"
         },
         {
-            "file": "pub-1.png",
+            "file": "pub +1 layer.png",
             "path": "assets/stages/pub"
         },
         {
-            "file": "pub-2.png",
+            "file": "pub +2 layer.png",
             "path": "assets/stages/pub"
         },
         {
-            "file": "pub-3.png",
+            "file": "pub - 1 layer.png",
             "path": "assets/stages/pub"
         },
         {
-            "file": "pub-4.png",
+            "file": "pub 0 layer.png",
             "path": "assets/stages/pub"
+        },
+        {
+            "file": "Yeti's Ice Sauna Layer 1.png",
+            "path": "assets/stages/sauna"
+        },
+        {
+            "file": "Yeti's Ice Sauna Layer 2.png",
+            "path": "assets/stages/sauna"
+        },
+        {
+            "file": "Yeti's Ice Sauna Layer 3.png",
+            "path": "assets/stages/sauna"
+        },
+        {
+            "file": "Yeti's Ice Sauna Layer 4.png",
+            "path": "assets/stages/sauna"
+        },
+        {
+            "file": "Yeti's Ice Sauna Layer 5.png",
+            "path": "assets/stages/sauna"
         }
     ]
 }

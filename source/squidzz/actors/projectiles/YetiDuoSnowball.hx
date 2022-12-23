@@ -43,7 +43,7 @@ class YetiDuoSnowball extends Projectile {
 		super.updateWithInputs(delta, input);
 	}
 
-	override function fighter_hit_check(fighter:FightableObject) {
+	override function fighter_hit_check(fighter:FightableObject, shield_break:Bool = false) {
 		if (state == YetiDuoSnowballState.HIT || fighter.team == team)
 			return;
 

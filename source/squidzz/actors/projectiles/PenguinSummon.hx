@@ -42,8 +42,10 @@ class PenguinSummon extends Projectile {
 					y -= 20;
 				}
 				immovable = true;
-				if (!isOnScreen())
+				if (!isOnScreen()) {
 					kill();
+					visual.kill();
+				}
 		}
 
 		super.updateWithInputs(delta, input);
