@@ -1,9 +1,11 @@
 <root>
-    <animSet image = "duoYeti-girl" path = "assets" fps = "40ms" hitbox="66,109" offset_left="83,45" offset_right="74,75">
+    <animSet image = "duoYeti-girl" path = "assets" fps = "40ms" hitbox="66,109" offset_left="83,45" offset_right="74,45">
         <anim name = "idle" fps = "160ms">0t3</anim>
         <anim name = "walk-forwards">13,14h3,15h4,16,17h3,18h4</anim>
         <anim name = "walk-backwards">13,14h3,15h4,16,17h3,18h4</anim>
-        <anim name = "block">4</anim>
+        <anim name = "block-start" looping = "false">4</anim>
+        <anim name = "block-loop">4</anim>
+        <anim name = "block-recover" looping = "false">4</anim>
         <anim name = "hit">5</anim>
         <anim name = "hit-recover" looping = "false">8</anim>
         <anim name = "jump-squat" looping = "false">6h2</anim>
@@ -12,25 +14,50 @@
         <anim name = "jump-down">9</anim>
         <anim name = "jump-land" looping = "false" fps = "80ms">10t12</anim>
         <anim name = "ground-neutral-snowball-throw" looping = "false">19h4,20,21h3,22h2</anim>
-        <anim name = "ground-neutral-yeti-jab" looping = "false">12h8</anim>
+        <anim name = "ground-neutral-yeti-jab" looping = "false">24h6</anim>
+        <anim name = "ground-forward-yeti-send" looping = "false">26h6</anim>
+        <anim name = "ground-forward-yeti-jab" looping = "false">24h6</anim>
+        <anim name = "ground-backward-yeti-recall" looping = "false">27h6</anim>
+        <anim name = "ground-backward-yeti-kick" looping = "false">24h6</anim>
+        <anim name = "ground-up-yeti-jump" looping = "false">25h6</anim>
+        <anim name = "ground-down-yeti-yeet-fail" looping = "false">24h6</anim>
+        <anim name = "ground-down-yeti-yeet-success">24</anim>
+        <anim name = "air-down-yeti-slam" looping = "false">24h4</anim>
+        <anim name = "air-up-yeti-slam" looping = "false">24h4</anim>
+        <anim name = "air-back-yeti-kick" looping = "false">24h4</anim>
+        <anim name = "air-forward-yeti-punch" looping = "false">24h4</anim>
+        <anim name = "air-neutral-yeti-punch" looping = "false">24h4</anim>
+        <anim name = "yeet-thrown">23</anim>
+        <anim name = "yeet-recover">9</anim>
+        <anim name = "yeet-recover-end" looping = "false">10</anim>
     </animSet>
 
     <animSet image = "duoYeti-yeti" path = "assets" fps = "40ms" hitbox = "253,190" offset_left="83,108" offset_right="98,108" >
         <anim name = "idle" fps = "280ms">0t1</anim>
-        <anim name = "walk" fps = "180ms">2t5</anim>
-        <anim name = "block">6</anim>
+        <anim name = "walk-forwards" fps = "180ms">2t5</anim>
+        <anim name = "walk-backwards" fps = "180ms">2t5</anim>
+        <anim name = "block-start" looping = "false">6</anim>
+        <anim name = "block-loop">6</anim>
+        <anim name = "block-recover" looping = "false">6</anim>
         <anim name = "hit-start" looping = "false">7</anim>
         <anim name = "hit" looping = "false">8</anim>
         <anim name = "hit-recover" looping = "false">8</anim>
         <anim name = "jump-squat" fps = "80ms" looping = "false">9</anim>
         <anim name = "jump-up" looping = "false">10</anim>
         <anim name = "jump-mid" looping = "false">10</anim>
+        <anim name = "jump-down" looping = "false">10</anim>
         <anim name = "jump-land" fps = "160ms" looping = "false">11</anim>
-        <anim name = "ground-neutral-near" looping = "false">12t13,14h4</anim>
+        <anim name = "ground-neutral-near" looping = "false">12t13,14h10</anim>
         <anim name = "ground-down" looping = "false">15t17</anim>
-        <anim name = "yeti-grab" looping = "false">18t20,21h3,22,23h3</anim>
-        <anim name = "yeti-grab-throw" looping = "false">24,25h3,26,27h3</anim>
-        <anim name = "ground-back" looping = "false">28h4</anim>
+        <anim name = "yeti-yeet-success-grab-1" looping = "false">18t20</anim>
+        <anim name = "yeti-yeet-success-grab-2" looping = "false">21h3,22,23h3</anim>
+        <anim name = "yeti-yeet-success-throw-1" looping = "false">24t26</anim>
+        <anim name = "yeti-yeet-success-throw-2" looping = "false">27h5</anim>
+        <anim name = "yeti-yeet-throw" looping = "false">24,25h3,26,27h3</anim>
+        <anim name = "yeti-yeet-fail" looping = "false">18,32h6</anim>
+        <anim name = "back-kick" looping = "false">28,29h8</anim>
+        <anim name = "air-slam-up" looping = "false">9h2,10h4</anim>
+        <anim name = "air-slam-down">30t31</anim>
     </animSet>
 
     <animSet image = "duoYeti-snowball" >

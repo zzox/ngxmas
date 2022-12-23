@@ -9,9 +9,11 @@ import squidzz.actors.ActorTypes.JumpingStyle;
 import squidzz.actors.ActorTypes.WalkDirection;
 import squidzz.actors.projectiles.PenguinSummon;
 import squidzz.display.FightingStage;
+import squidzz.display.GuardBreakFX;
 import squidzz.display.MatchUi;
 import squidzz.ext.AttackData;
 import squidzz.ext.ListTypes.HitboxType;
+import squidzz.ext.UUid.Uuid;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
 
@@ -65,6 +67,13 @@ class Fighter extends FightableObject {
 
 	var block_input:Bool = false;
 
+	public static var SHIELD_BREAK_MAX:Int = 150;
+
+	var shield_break:Int = 0;
+	var shield_break_recovery_cd:Int = 0;
+
+	var blocked_hitbox_ids:Array<String> = [];
+
 	public function new(?X:Float, ?Y:Float, prefix:String) {
 		super(X, Y, prefix);
 
@@ -77,6 +86,8 @@ class Fighter extends FightableObject {
 		visible = false;
 
 		reset_gravity();
+
+		maxVelocity.y = 1000;
 	}
 
 	function ai_control(input:FrameInput):FrameInput {
@@ -94,7 +105,12 @@ class Fighter extends FightableObject {
 				if (ai_tick % 2 == 0)
 					input.set("B", true);
 			case FighterAIMode.WALK_BACKWARDS:
+				input.set(flipX ? "RIGHT" : "LEFT", true);
 			case FighterAIMode.WALK_FORWARDS:
+				input.set(flipX ? "LEFT" : "RIGHT", true);
+				if (overlaps(opponent))
+					if (ai_tick % 2 == 0)
+						input.set("B", true);
 			default:
 		}
 		return input;
@@ -125,11 +141,19 @@ class Fighter extends FightableObject {
 
 		super.updateWithInputs(delta, input);
 		prevInput = input;
+
+		shield_break_recovery_cd--;
+		if (shield_break_recovery_cd <= 0 && shield_break > 0) {
+			shield_break--;
+			update_match_ui();
+		}
 	}
 
 	function handle_fighter_states(delta:Float, input:FrameInput) {
 		switch (cast(state, FighterState)) {
 			case FighterState.IDLE | FighterState.JUMPING:
+				current_attack_data = null;
+
 				var acl:Float = 0.0;
 
 				var hit_recovery:Bool = cur_anim.name == "hit-recover" && !cur_anim.finished;
@@ -186,7 +210,7 @@ class Fighter extends FightableObject {
 				animProtect("jump-squat");
 				if (cur_anim.finished) {
 					sstate(FighterState.JUMPING);
-					velocity.y = -jump_height;
+					add_jump_height();
 					start_jump(delta, input);
 					jump_sound();
 				}
@@ -220,27 +244,23 @@ class Fighter extends FightableObject {
 			// pass, not sure if we'll have this in the advent version, but this is a unique fall down state where you cannot take any damage but can't act
 
 			case FighterState.BLOCKING:
-				if (cur_anim.name.indexOf("block") <= -1)
-					anim("block-start");
-				if (cur_anim.finished)
-					anim("block-loop");
-				if (stun <= 0 && cur_anim.name == "block-loop")
-					sstate(FighterState.IDLE);
+				do_block();
 		}
 	}
 
-	override public function fighter_hit_check(fighter:FightableObject) {
+	override public function fighter_hit_check(fighter:FightableObject, shield_broken:Bool = false) {
 		if (fighter.team == team)
 			return;
 
 		var fighter_hitbox_data:HitboxType = fighter.current_hitbox_data();
 
-		overlaps_fighter = collide_overlaps_fighter || FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10);
-
-		if (fighter_hitbox_data == null)
+		if (fighter_hitbox_data == null || blocked_hitbox_ids.indexOf(fighter_hitbox_data.melee_id) > -1)
 			return;
 
-		var blocking:Bool = block_input && !opponent_on_opposite_side() && state != FighterState.HIT;
+		overlaps_fighter = collide_overlaps_fighter || FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10);
+
+		var blocking:Bool = can_block() && block_input && !opponent_on_opposite_side() && state != FighterState.HIT;
+		blocking = blocking && !shield_broken;
 
 		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) && inv <= 0) {
 			make_hit_circle((mp().x + fighter.mp().x) / 2, (mp().y + fighter.mp().y) / 2, blocking);
@@ -249,9 +269,25 @@ class Fighter extends FightableObject {
 				stun = fighter.current_attack_data.stun;
 				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
 				velocity.x *= -Utils.flipMod(this);
+				velocity.y *= 0.5;
 
 				fighter.velocity.scale(-1, 1);
 				inv = 10;
+				shield_break += Math.floor(fighter_hitbox_data.stun / 3 + fighter_hitbox_data.str);
+				shield_break_recovery_cd = 60;
+
+				if (shield_break >= SHIELD_BREAK_MAX) {
+					inv = 0;
+					shield_break = 0;
+					shield_break_recovery_cd = 0;
+					blocking = false;
+					fighter_hit_check(fighter, true);
+					GuardBreakFX.ref.make_lightning(this);
+				} else {
+					blocked_hitbox_ids.push(fighter_hitbox_data.melee_id);
+				}
+
+				update_match_ui();
 			} else {
 				stun = fighter.current_attack_data.stun;
 				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
@@ -267,6 +303,7 @@ class Fighter extends FightableObject {
 				update_match_ui();
 
 				hit_sound();
+				blocked_hitbox_ids = [];
 			}
 		}
 	}
@@ -307,9 +344,24 @@ class Fighter extends FightableObject {
 			animProtect(attack_data_to_load.name);
 			state = FighterState.ATTACKING;
 			current_attack_data = attack_data_to_load;
+			for (hitbox_data in current_attack_data.hitboxes)
+				hitbox_data.melee_id = Uuid.short(); // potentially overkill
 			return current_attack_data;
 		}
 		return null;
+	}
+
+	function can_block():Bool {
+		return true;
+	}
+
+	function do_block() {
+		if (cur_anim.name.indexOf("block") <= -1)
+			anim("block-start");
+		if (cur_anim.finished)
+			anim("block-loop");
+		if (stun <= 0 && cur_anim.name == "block-loop")
+			sstate(FighterState.IDLE);
 	}
 
 	/**
@@ -570,7 +622,11 @@ class Fighter extends FightableObject {
 	public function update_match_ui() {
 		match_ui.healths[team - 1] = health;
 		match_ui.max_healths[team - 1] = max_health;
+		match_ui.shield_breaks[team - 1] = shield_break;
 	}
+
+	function add_jump_height()
+		velocity.y = -jump_height;
 
 	function opponent_on_opposite_side()
 		return flipX && opponent.mp().x > mp().x || !flipX && opponent.mp().x < mp().x;

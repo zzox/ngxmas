@@ -166,6 +166,10 @@ class FightableObject extends FlxRollbackActor {
 
 	function update_cur_sheet(anim_name:String) {
 		cur_sheet = find_anim_in_sprite_atlas(anim_name);
+
+		if (cur_sheet == null)
+			throw "cur sheet is null, looking for " + anim_name;
+
 		hitbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
 		hurtbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');
 
@@ -188,9 +192,8 @@ class FightableObject extends FlxRollbackActor {
 		this.match_ui = match_ui;
 
 	function make_hit_circle(X:Float, Y:Float, blocked:Bool = false) {
-		var hit_circle:HitCircle = new HitCircle(X, Y);
+		var hit_circle:HitFX = new HitFX(X, Y, group, blocked);
 		hit_circle.setPosition(hit_circle.x - hit_circle.width / 2, hit_circle.y - hit_circle.height / 2);
-		hit_circle.color = blocked ? FlxColor.GRAY : FlxColor.RED;
 		group.add(hit_circle);
 	}
 
@@ -201,7 +204,7 @@ class FightableObject extends FlxRollbackActor {
 		group.add(visual);
 	}
 
-	public function fighter_hit_check(fighter:FightableObject)
+	public function fighter_hit_check(fighter:FightableObject, shield_broken:Bool = false)
 		return;
 
 	function get_object_count(name:String, team:Int = 0):Int {

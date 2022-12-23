@@ -24,4 +24,10 @@ class FlxRollbackActor extends FlxSpriteExt {
 
 	public function set_group(group:FlxRollbackGroup)
 		this.group = group;
+
+	override function kill() {
+		if (group != null)
+			group.remove(this, true);
+		super.kill();
+	}
 }

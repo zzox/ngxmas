@@ -5,6 +5,7 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
 import squidzz.actors.Fighter;
 import squidzz.actors.FlxRollbackActor;
+import squidzz.actors.HitFX;
 import squidzz.rollback.Rollback;
 
 // update this after adding more mutable state.
@@ -46,7 +47,7 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 		// forEach(spr -> spr.u) where they arent a player, update
 		// should be 0 right now
 
-		for (sprite in members)
+		for (sprite in members) {
 			if (Std.isOfType(sprite, FightableObject)) {
 				// update fightable objects
 				var fighter:FightableObject = cast(sprite, FightableObject);
@@ -55,7 +56,10 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 				for (other_sprite in members)
 					if (other_sprite != sprite && Std.isOfType(other_sprite, FightableObject))
 						fighter.fighter_hit_check(cast(other_sprite, FightableObject));
+			} else {
+				sprite.updateWithInputs(delta, blankInput());
 			}
+		}
 
 		// TODO: consider using `Rollback.GLOBAL_DELTA` instead of from a parameter,
 		super.update(delta);

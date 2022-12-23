@@ -210,7 +210,7 @@ class AttackData {
 				var split:Array<String> = box.get("kb") != null ? box.get("kb").split(",") : [];
 				attackData.hitboxes.push({
 					frames: Utils.animFromString(box.get("frames")),
-					melee_id: box.get("melee_id") != null ? Std.parseInt(box.get("melee_id")) : -999,
+					melee_id: "",
 					str: box.get("str") != null ? Std.parseFloat(box.get("str")) : 0,
 					kb: point_from_string(box.get("kb")),
 					kb_air: point_from_string(box.get("kb_air")),

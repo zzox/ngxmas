@@ -3,6 +3,7 @@ package squidzz.display;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.math.FlxRect;
+import squidzz.actors.Fighter;
 
 class MatchUi extends FlxGroup {
 	static inline final NEEDED_WINS:Int = 2;
@@ -28,6 +29,8 @@ class MatchUi extends FlxGroup {
 
 	var p1Power:Float = 0;
 	var p2Power:Float = 0;
+
+	public var shield_breaks:Array<Float> = [];
 
 	public function new() {
 		super();
@@ -75,8 +78,8 @@ class MatchUi extends FlxGroup {
 		p1HealthBar.clipRect = new FlxRect(0, 0, 15 + (HEALTH_WIDTH * (healths[0] / max_healths[0])), 64);
 		p2HealthBar.clipRect = new FlxRect(352 - (HEALTH_WIDTH * (healths[1] / max_healths[1])), 0, 352, 64);
 
-		p1PowerBar.clipRect = new FlxRect(0, 0, 11 + (POWER_WIDTH * (p1Power / 100)), 64);
-		p2PowerBar.clipRect = new FlxRect(260 - (POWER_WIDTH * (p2Power / 100)), 0, 272, 64);
+		p1PowerBar.clipRect = new FlxRect(0, 0, 11 + (POWER_WIDTH * (shield_breaks[0] / Fighter.SHIELD_BREAK_MAX)), 64);
+		p2PowerBar.clipRect = new FlxRect(260 - (POWER_WIDTH * (shield_breaks[1] / Fighter.SHIELD_BREAK_MAX)), 0, 272, 64);
 
 		p1Power += (1 / 60);
 		p2Power += (1 / 60);

@@ -1,17 +1,31 @@
 <root>
     <attack name="ground">
         <!--Attack Links-->
+        <!--ANY-->
+        <link attack="ground-up-yeti-jump"/>
+        <!--NEAR-->
+        <link attack="ground-down-yeti-yeet-success"/>
+        <link attack="ground-backward-yeti-kick"/>
+        <link attack="ground-forward-yeti-send"/>
         <link attack="ground-neutral-yeti-jab"/>
+        <!--FAR-->        
+        <link attack="ground-down-yeti-yeet-fail"/>
+        <link attack="ground-backward-yeti-recall"/>
+        <link attack="ground-forward-yeti-jab"/>
         <link attack="ground-neutral-snowball-throw"/>
     </attack>
 
     <attack name="air">
         <!--Attack Links-->
+        <link attack="air-up-yeti-slam"/>
+        <link attack="air-down-yeti-slam"/>
+        <link attack="air-back-yeti-kick"/>
+        <link attack="air-forward-yeti-punch"/>
+        <link attack="air-neutral-yeti-punch"/>
     </attack>
 
     <attack name="ground-neutral-snowball-throw">
         <ground/>
-        <!--Controls-->
         <input controls="attack" if_not="YETI_OVERLAP" />
         <!--Special Attributes-->
         <summon name = "duoYeti-snowball" max = "3" frames = "21"/>
@@ -25,13 +39,121 @@
         <input controls="attack" if="YETI_OVERLAP" />
         <!--Attack Links-->
         <inherits from="ground" />
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="ground-up-yeti-jump">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,up"/>
+        <!--Attack Links-->
+        <inherits from="ground" />
+        <!--sound frame = "25" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="ground-forward-yeti-jab">
+        <ground/>
+        <input controls="attack,forward" if_not="YETI_OVERLAP"/>
+        <!--Attack Links-->
+        <inherits from="ground" />
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="ground-forward-yeti-send">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,forward" if="YETI_OVERLAP" />
+        <!--sound frame = "26" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="ground-backward-yeti-kick">
+        <ground/>
+        <input controls="attack,backward" if="YETI_OVERLAP"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="ground-backward-yeti-recall">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,backward" if_not="YETI_OVERLAP" />
+        <!--sound frame = "27" name = "whistle-recall" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="ground-down-yeti-yeet-success">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,down" if="YETI_OVERLAP" />
+    </attack>
+
+    <attack name="yeet-thrown">
+        <ground/>
+        <!--Special Attributes-->
+        <hitbox frames="23" kb = "300,-500" str = "100" stun = "90"/>
+        <thrust frames="23" velocity="1250,150" fixed = "0.01,0"/>
+        <!--Attack Links-->
+        <wall_cancel_attack name="yeet-recover" />
+        <opponent_cancel_attack name="yeet-recover" />
+    </attack>
+
+    <attack name="yeet-recover">
+        <ground/>
+        <!--Special Attributes-->
+        <thrust frames="9" velocity="-500,-300" fixed = "0.01,0" once="true"/>
+        <!--Attack Links-->
+        <ground_cancel_attack name="yeet-recover-end" />
+    </attack>
+
+    <attack name="yeet-recover-end">
+        <ground/>
+        <!--Special Attributes-->
+        <thrust frames="9" velocity="-500,-150" fixed = "0.01,0" once="true"/>
+    </attack>
+
+    <attack name="ground-down-yeti-yeet-fail">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,down" if_not="YETI_OVERLAP" />
     </attack>
 
     <attack name="snowball">
         <ground/>
         <!--Special Attributes-->
         <hitbox frames="0" kb = "100,-100" str = "25" stun = "60"/>
-        <!--Attack Links-->
-        <inherits from="ground" />
+    </attack>
+
+    <attack name="air-down-yeti-slam">
+        <air/>
+        <!--Controls-->
+        <input controls="attack,down"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="air-up-yeti-slam">
+        <air/>
+        <!--Controls-->
+        <input controls="attack,up"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="air-back-yeti-kick">
+        <air/>
+        <input controls="attack,backward"/>
+        <!--Controls-->
+        <input controls="attack,back"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="air-forward-yeti-punch">
+        <air/>
+        <!--Controls-->
+        <input controls="attack,forward"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
+    </attack>
+
+    <attack name="air-neutral-yeti-punch">
+        <air/>
+        <!--Controls-->
+        <input controls="attack"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 </root>

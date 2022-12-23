@@ -43,11 +43,11 @@ class YetiDuoSnowball extends Projectile {
 		super.updateWithInputs(delta, input);
 	}
 
-	override function fighter_hit_check(fighter:FightableObject) {
+	override function fighter_hit_check(fighter:FightableObject, shield_break:Bool = false) {
 		if (state == YetiDuoSnowballState.HIT || fighter.team == team)
 			return;
 
-		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) || FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10)) {
+		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10)) {
 			sstate(YetiDuoSnowballState.HIT);
 
 			acceleration.set(0, 600);
