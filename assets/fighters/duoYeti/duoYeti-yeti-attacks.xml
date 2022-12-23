@@ -13,9 +13,36 @@
         <inherits from="ground" />
     </attack>
 
-    <attack name="ground-back-kick">
+    <attack name="back-kick">
         <ground/>
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>
+
+    <attack name="yeti-yeet-success-grab-1">
+        <ground/>
+        <auto_continue on_complete="yeti-yeet-success-grab-2" />
+    </attack>
+
+    <attack name="yeti-yeet-success-grab-2">
+        <ground/>
+        <auto_continue on_complete="yeti-yeet-success-throw-1" />
+    </attack>
+
+    <attack name="yeti-yeet-success-throw-1">
+        <ground/>
+        <auto_continue on_complete="yeti-yeet-success-throw-2" />
+    </attack>
+
+    <attack name="yeti-yeet-success-throw-2">
+        <ground/>
+    </attack>
+
+    <attack name="yeti-yeet-fail">
+        <ground/>
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+   
 </root>

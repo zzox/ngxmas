@@ -10,8 +10,6 @@ import flixel.system.debug.log.LogStyle;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Fighter;
-import squidzz.actors.fighters.Snowman;
-import squidzz.actors.fighters.YetiDuoGirl.YetiDuoYeti;
 import squidzz.display.CameraController;
 import squidzz.display.DebugUi;
 import squidzz.display.FightingStage;
@@ -62,7 +60,7 @@ class TestMatchState extends BaseState {
 			add(layer);
 
 		player1 = new YetiDuoGirl(112, 328);
-		player2 = new Snowman(768, 328);
+		player2 = new Penguin(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;

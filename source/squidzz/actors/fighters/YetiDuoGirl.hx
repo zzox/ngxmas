@@ -32,7 +32,24 @@ class YetiDuoGirl extends Fighter {
 			case "ground-backward-yeti-recall":
 				yeti.follow_girl();
 			case "ground-backward-yeti-kick":
-				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "ground-back-kick"));
+				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "back-kick"));
+			case "ground-up-yeti-jump":
+				yeti.force_jump(true);
+			case "ground-down-yeti-yeet-success":
+				if (yeti.current_attack_data == null || yeti.current_attack_data.name.indexOf("yeti-yeet") < -1)
+					yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "yeti-yeet-success-grab-1"));
+				if (yeti.current_attack_data.name != "yeti-yeet-success-grab-1")
+					visual.visible = false;
+				if (yeti.current_attack_data.name == "yeti-yeet-success-throw-2") {
+					load_attack(AttackData.get_attack_by_name(prefix, "yeet-thrown"));
+					visual.visible = true;
+					if (!flipX)
+						setPosition(yeti.visual.x - yeti.offset.x + 311, yeti.visual.y - yeti.offset.y - 32);
+					else
+						setPosition(yeti.visual.x - yeti.offset.x - 98, yeti.visual.y - yeti.offset.y - 32);
+				}
+			case "ground-down-yeti-yeet-fail":
+				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "yeti-yeet-fail"));
 		}
 
 		super.simulate_attack(attackData, delta, input);
@@ -56,7 +73,7 @@ class YetiDuoGirl extends Fighter {
 		yeti.opponent = opponent;
 
 		if (justPressed(input, Jump))
-			yeti.jump();
+			yeti.force_jump();
 
 		if (overlaps(yeti))
 			internal_flags.set("YETI_OVERLAP", true);
@@ -81,6 +98,7 @@ class YetiDuoYeti extends Fighter {
 	var puppet_mode:String = PuppetControlMode.IDLE;
 
 	var jump_command:Bool = false;
+	var super_jump:Bool = false;
 
 	public function new(?X:Float = 0, ?Y:Float = 0, girl:YetiDuoGirl) {
 		super(X, Y, "duoYeti-yeti");
@@ -126,8 +144,16 @@ class YetiDuoYeti extends Fighter {
 	override function update_match_ui()
 		return;
 
-	public function jump() {
+	public function force_jump(super_jump:Bool = false) {
 		jump_command = true;
+		this.super_jump = super_jump;
+	}
+
+	override function add_jump_height() {
+		velocity.y = -jump_height;
+		if (super_jump)
+			velocity.y *= 1.5;
+		return;
 	}
 }
 

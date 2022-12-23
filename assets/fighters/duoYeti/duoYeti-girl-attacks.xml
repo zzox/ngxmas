@@ -1,11 +1,15 @@
 <root>
     <attack name="ground">
         <!--Attack Links-->
+        <!--ANY-->
+        <link attack="ground-up-yeti-jump"/>
         <!--NEAR-->
+        <link attack="ground-down-yeti-yeet-success"/>
         <link attack="ground-backward-yeti-kick"/>
         <link attack="ground-forward-yeti-send"/>
         <link attack="ground-neutral-yeti-jab"/>
         <!--FAR-->        
+        <link attack="ground-down-yeti-yeet-fail"/>
         <link attack="ground-backward-yeti-recall"/>
         <link attack="ground-forward-yeti-jab"/>
         <link attack="ground-neutral-snowball-throw"/>
@@ -28,6 +32,14 @@
         <ground/>
         <!--Controls-->
         <input controls="attack" if="YETI_OVERLAP" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-up-yeti-jump">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,up"/>
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>
@@ -58,6 +70,48 @@
         <ground/>
         <!--Controls-->
         <input controls="attack,backward" if_not="YETI_OVERLAP" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-down-yeti-yeet-success">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,down" if="YETI_OVERLAP" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="yeet-thrown">
+        <ground/>
+        <!--Special Attributes-->
+        <hitbox frames="23" kb = "300,-500" str = "100" stun = "90"/>
+        <thrust frames="23" velocity="1250,150" fixed = "0.01,0"/>
+        <!--Attack Links-->
+        <wall_cancel_attack name="yeet-recover" />
+        <opponent_cancel_attack name="yeet-recover" />
+    </attack>
+
+    <attack name="yeet-recover">
+        <ground/>
+        <!--Special Attributes-->
+        <thrust frames="9" velocity="-500,-300" fixed = "0.01,0" once="true"/>
+        <!--Attack Links-->
+        <ground_cancel_attack name="yeet-recover-end" />
+    </attack>
+
+    <attack name="yeet-recover-end">
+        <ground/>
+        <!--Special Attributes-->
+        <thrust frames="9" velocity="-500,-150" fixed = "0.01,0" once="true"/>
+        <!--Attack Links-->
+        <ground_cancel_attack name="ground" />
+    </attack>
+
+    <attack name="ground-down-yeti-yeet-fail">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,down" if_not="YETI_OVERLAP" />
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>

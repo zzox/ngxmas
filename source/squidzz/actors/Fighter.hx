@@ -188,7 +188,7 @@ class Fighter extends FightableObject {
 				animProtect("jump-squat");
 				if (cur_anim.finished) {
 					sstate(FighterState.JUMPING);
-					velocity.y = -jump_height;
+					add_jump_height();
 					start_jump(delta, input);
 					jump_sound();
 				}
@@ -573,6 +573,9 @@ class Fighter extends FightableObject {
 		match_ui.healths[team - 1] = health;
 		match_ui.max_healths[team - 1] = max_health;
 	}
+
+	function add_jump_height()
+		velocity.y = -jump_height;
 
 	function opponent_on_opposite_side()
 		return flipX && opponent.mp().x > mp().x || !flipX && opponent.mp().x < mp().x;
