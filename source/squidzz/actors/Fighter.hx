@@ -77,6 +77,8 @@ class Fighter extends FightableObject {
 		visible = false;
 
 		reset_gravity();
+
+		maxVelocity.y = 1000;
 	}
 
 	function ai_control(input:FrameInput):FrameInput {

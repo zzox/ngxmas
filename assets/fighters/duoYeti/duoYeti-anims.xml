@@ -12,12 +12,17 @@
         <anim name = "jump-down">9</anim>
         <anim name = "jump-land" looping = "false" fps = "80ms">10t12</anim>
         <anim name = "ground-neutral-snowball-throw" looping = "false">19h4,20,21h3,22h2</anim>
-        <anim name = "ground-neutral-yeti-jab" looping = "false">12h8</anim>
+        <anim name = "ground-neutral-yeti-jab" looping = "false">12h6</anim>
+        <anim name = "ground-forward-yeti-send" looping = "false">12h6</anim>
+        <anim name = "ground-forward-yeti-jab" looping = "false">12h6</anim>
+        <anim name = "ground-backward-yeti-recall" looping = "false">12h6</anim>
+        <anim name = "ground-backward-yeti-kick" looping = "false">12h6</anim>
     </animSet>
 
     <animSet image = "duoYeti-yeti" path = "assets" fps = "40ms" hitbox = "253,190" offset_left="83,108" offset_right="98,108" >
         <anim name = "idle" fps = "280ms">0t1</anim>
-        <anim name = "walk" fps = "180ms">2t5</anim>
+        <anim name = "walk-forwards" fps = "180ms">2t5</anim>
+        <anim name = "walk-backwards" fps = "180ms">2t5</anim>
         <anim name = "block">6</anim>
         <anim name = "hit-start" looping = "false">7</anim>
         <anim name = "hit" looping = "false">8</anim>
@@ -25,12 +30,13 @@
         <anim name = "jump-squat" fps = "80ms" looping = "false">9</anim>
         <anim name = "jump-up" looping = "false">10</anim>
         <anim name = "jump-mid" looping = "false">10</anim>
+        <anim name = "jump-down" looping = "false">10</anim>
         <anim name = "jump-land" fps = "160ms" looping = "false">11</anim>
         <anim name = "ground-neutral-near" looping = "false">12t13,14h4</anim>
         <anim name = "ground-down" looping = "false">15t17</anim>
         <anim name = "yeti-grab" looping = "false">18t20,21h3,22,23h3</anim>
         <anim name = "yeti-grab-throw" looping = "false">24,25h3,26,27h3</anim>
-        <anim name = "ground-back" looping = "false">28h4</anim>
+        <anim name = "ground-back-kick" looping = "false">28h4</anim>
     </animSet>
 
     <animSet image = "duoYeti-snowball" >

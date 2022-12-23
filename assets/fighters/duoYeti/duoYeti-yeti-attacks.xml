@@ -12,4 +12,10 @@
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>
+
+    <attack name="ground-back-kick">
+        <ground/>
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
 </root>

@@ -8,8 +8,7 @@ class Penguin extends Fighter {
 
 		update_cur_sheet("idle");
 
-		// maxVelocity.set(480, 960);
-		maxVelocity.y = 960;
+		jump_height = 850; // aight jump height
 	}
 
 	override function make_projectile(projectile_type:String) {

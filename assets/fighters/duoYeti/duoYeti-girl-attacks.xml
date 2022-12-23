@@ -1,7 +1,13 @@
 <root>
     <attack name="ground">
         <!--Attack Links-->
+        <!--NEAR-->
+        <link attack="ground-backward-yeti-kick"/>
+        <link attack="ground-forward-yeti-send"/>
         <link attack="ground-neutral-yeti-jab"/>
+        <!--FAR-->        
+        <link attack="ground-backward-yeti-recall"/>
+        <link attack="ground-forward-yeti-jab"/>
         <link attack="ground-neutral-snowball-throw"/>
     </attack>
 
@@ -11,7 +17,6 @@
 
     <attack name="ground-neutral-snowball-throw">
         <ground/>
-        <!--Controls-->
         <input controls="attack" if_not="YETI_OVERLAP" />
         <!--Special Attributes-->
         <summon name = "duoYeti-snowball" max = "3" frames = "21"/>
@@ -23,6 +28,36 @@
         <ground/>
         <!--Controls-->
         <input controls="attack" if="YETI_OVERLAP" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-forward-yeti-jab">
+        <ground/>
+        <input controls="attack,forward" if_not="YETI_OVERLAP"/>
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-forward-yeti-send">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,forward" if="YETI_OVERLAP" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-backward-yeti-kick">
+        <ground/>
+        <input controls="attack,backward" if="YETI_OVERLAP"/>
+        <!--Attack Links-->
+        <inherits from="ground" />
+    </attack>
+
+    <attack name="ground-backward-yeti-recall">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,backward" if_not="YETI_OVERLAP" />
         <!--Attack Links-->
         <inherits from="ground" />
     </attack>
