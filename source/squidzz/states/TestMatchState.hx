@@ -59,7 +59,7 @@ class TestMatchState extends BaseState {
 		for (layer in stage.layers)
 			add(layer);
 
-		player1 = new YetiDuoGirl(112, 328);
+		player1 = new Snowman(112, 328);
 		player2 = new Penguin(768, 328);
 
 		player1.opponent = player2;

@@ -26,7 +26,7 @@ class YetiDuoGirl extends Fighter {
 			case "ground-neutral-yeti-jab":
 				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "ground-neutral-near"));
 			case "ground-forward-yeti-send":
-				yeti.go_to_point(new FlxPoint(x + 500, y));
+				yeti.go_to_point(new FlxPoint(x + 500 * Utils.flipMod(this), y));
 			case "ground-forward-yeti-jab":
 				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "ground-neutral-near"));
 			case "ground-backward-yeti-recall":
@@ -50,6 +50,16 @@ class YetiDuoGirl extends Fighter {
 				}
 			case "ground-down-yeti-yeet-fail":
 				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "yeti-yeet-fail"));
+			case "air-down-yeti-slam":
+				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "air-slam-down"));
+			case "air-up-yeti-slam":
+				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "air-slam-up"));
+			case "air-back-yeti-kick":
+				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "back-kick"));
+			case "air-forward-yeti-punch":
+				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "ground-neutral-near"));
+			case "air-neutral-yeti-punch":
+				yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "ground-neutral-near"));
 		}
 
 		super.simulate_attack(attackData, delta, input);
@@ -86,7 +96,7 @@ class YetiDuoGirl extends Fighter {
 	override function make_projectile(projectile_type:String) {
 		switch (projectile_type) {
 			case "duoYeti-snowball":
-				new YetiDuoSnowball(visual.x + 205 - visual.offset.x, visual.y + 55 - visual.offset.y, this);
+				new YetiDuoSnowball(visual.x + (!flipX ? 205 : 0) - visual.offset.x, visual.y + 55 - visual.offset.y, this);
 		}
 		super.make_projectile(projectile_type);
 	}
