@@ -1,10 +1,13 @@
 package squidzz.actors.fighters;
 
+import squidzz.actors.Fighter.FighterState;
 import squidzz.actors.projectiles.YetiDuoSnowball;
 import squidzz.rollback.FlxRollbackGroup;
 
 class YetiDuoGirl extends Fighter {
 	var yeti:YetiDuoYeti;
+
+	var yeti_icon:FlxRollbackActor;
 
 	public function new(?X:Float = 0, ?Y:Float = 0) {
 		super(X, Y, "duoYeti-girl");
@@ -19,6 +22,11 @@ class YetiDuoGirl extends Fighter {
 		jump_height = 750; // bad jump height
 
 		yeti = new YetiDuoYeti(X, Y, this);
+
+		yeti_icon = new FlxRollbackActor(x, y, group);
+		yeti_icon.loadAllFromAnimationSet("duoYeti-yeti-close-icon");
+
+		kb_resistance.set(0.5, 0.5);
 	}
 
 	override function simulate_attack(attackData:AttackDataType, delta:Float, input:FrameInput) {
@@ -72,6 +80,8 @@ class YetiDuoGirl extends Fighter {
 		group.remove(visual, true);
 		yeti.add_self_to_group();
 		group.add(visual);
+
+		group.add(yeti_icon);
 	}
 
 	override function set_team(team:Int) {
@@ -90,7 +100,16 @@ class YetiDuoGirl extends Fighter {
 		else
 			internal_flags.set("YETI_OVERLAP", false);
 
+		yeti_icon.setPosition(visual.x - visual.offset.x, visual.y - visual.offset.y);
+		yeti_icon.velocity.copyFrom(velocity);
+		yeti_icon.acceleration.copyFrom(acceleration);
+		yeti_icon.drag.copyFrom(drag);
+		yeti_icon.flipX = visual.flipX;
+
+		yeti_icon.visible = internal_flags.get("YETI_OVERLAP") && !attacking && !yeti.attacking;
+
 		super.updateWithInputs(delta, input);
+		yeti_icon.updateWithInputs(delta, input);
 	}
 
 	override function make_projectile(projectile_type:String) {
@@ -99,6 +118,15 @@ class YetiDuoGirl extends Fighter {
 				new YetiDuoSnowball(visual.x + (!flipX ? 205 : 0) - visual.offset.x, visual.y + 55 - visual.offset.y, this);
 		}
 		super.make_projectile(projectile_type);
+	}
+
+	override function can_block():Bool
+		return internal_flags.get("YETI_OVERLAP") == true;
+
+	override function do_block() {
+		yeti.setPosition(x + 100 * Utils.flipMod(this) + visual.width / 2 - yeti.visual.width / 2 - offset.x, y + height - yeti.height);
+		yeti.state = FighterState.BLOCKING;
+		super.do_block();
 	}
 }
 

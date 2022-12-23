@@ -4,7 +4,7 @@
         <anim name = "walk-forwards">13,14h3,15h4,16,17h3,18h4</anim>
         <anim name = "walk-backwards">13,14h3,15h4,16,17h3,18h4</anim>
         <anim name = "block-start" looping = "false">4</anim>
-        <anim name = "block">4</anim>
+        <anim name = "block-loop">4</anim>
         <anim name = "block-recover" looping = "false">4</anim>
         <anim name = "hit">5</anim>
         <anim name = "hit-recover" looping = "false">8</anim>
@@ -36,7 +36,9 @@
         <anim name = "idle" fps = "280ms">0t1</anim>
         <anim name = "walk-forwards" fps = "180ms">2t5</anim>
         <anim name = "walk-backwards" fps = "180ms">2t5</anim>
-        <anim name = "block">6</anim>
+        <anim name = "block-start" looping = "false">6</anim>
+        <anim name = "block-loop">6</anim>
+        <anim name = "block-recover" looping = "false">6</anim>
         <anim name = "hit-start" looping = "false">7</anim>
         <anim name = "hit" looping = "false">8</anim>
         <anim name = "hit-recover" looping = "false">8</anim>

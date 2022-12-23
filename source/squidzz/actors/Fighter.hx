@@ -97,6 +97,11 @@ class Fighter extends FightableObject {
 					input.set("B", true);
 			case FighterAIMode.WALK_BACKWARDS:
 			case FighterAIMode.WALK_FORWARDS:
+				input.set(flipX ? "LEFT" : "RIGHT", true);
+				if (overlaps(opponent))
+					if (ai_tick % 2 == 0) {
+						input.set("B", true);
+					}
 			default:
 		}
 		return input;
@@ -222,12 +227,7 @@ class Fighter extends FightableObject {
 			// pass, not sure if we'll have this in the advent version, but this is a unique fall down state where you cannot take any damage but can't act
 
 			case FighterState.BLOCKING:
-				if (cur_anim.name.indexOf("block") <= -1)
-					anim("block-start");
-				if (cur_anim.finished)
-					anim("block-loop");
-				if (stun <= 0 && cur_anim.name == "block-loop")
-					sstate(FighterState.IDLE);
+				do_block();
 		}
 	}
 
@@ -242,7 +242,7 @@ class Fighter extends FightableObject {
 		if (fighter_hitbox_data == null)
 			return;
 
-		var blocking:Bool = block_input && !opponent_on_opposite_side() && state != FighterState.HIT;
+		var blocking:Bool = can_block() && block_input && !opponent_on_opposite_side() && state != FighterState.HIT;
 
 		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) && inv <= 0) {
 			make_hit_circle((mp().x + fighter.mp().x) / 2, (mp().y + fighter.mp().y) / 2, blocking);
@@ -312,6 +312,19 @@ class Fighter extends FightableObject {
 			return current_attack_data;
 		}
 		return null;
+	}
+
+	function can_block():Bool {
+		return true;
+	}
+
+	function do_block() {
+		if (cur_anim.name.indexOf("block") <= -1)
+			anim("block-start");
+		if (cur_anim.finished)
+			anim("block-loop");
+		if (stun <= 0 && cur_anim.name == "block-loop")
+			sstate(FighterState.IDLE);
 	}
 
 	/**

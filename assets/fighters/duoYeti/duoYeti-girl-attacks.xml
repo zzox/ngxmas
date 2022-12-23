@@ -39,6 +39,7 @@
         <input controls="attack" if="YETI_OVERLAP" />
         <!--Attack Links-->
         <inherits from="ground" />
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="ground-up-yeti-jump">
@@ -47,6 +48,7 @@
         <input controls="attack,up"/>
         <!--Attack Links-->
         <inherits from="ground" />
+        <!--sound frame = "25" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="ground-forward-yeti-jab">
@@ -54,23 +56,27 @@
         <input controls="attack,forward" if_not="YETI_OVERLAP"/>
         <!--Attack Links-->
         <inherits from="ground" />
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="ground-forward-yeti-send">
         <ground/>
         <!--Controls-->
         <input controls="attack,forward" if="YETI_OVERLAP" />
+        <!--sound frame = "26" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="ground-backward-yeti-kick">
         <ground/>
         <input controls="attack,backward" if="YETI_OVERLAP"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="ground-backward-yeti-recall">
         <ground/>
         <!--Controls-->
         <input controls="attack,backward" if_not="YETI_OVERLAP" />
+        <!--sound frame = "27" name = "whistle-recall" min = "1" max = "1"/-->
     </attack>
 
     <attack name="ground-down-yeti-yeet-success">
@@ -119,12 +125,14 @@
         <air/>
         <!--Controls-->
         <input controls="attack,down"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="air-up-yeti-slam">
         <air/>
         <!--Controls-->
         <input controls="attack,up"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="air-back-yeti-kick">
@@ -132,17 +140,20 @@
         <input controls="attack,backward"/>
         <!--Controls-->
         <input controls="attack,back"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="air-forward-yeti-punch">
         <air/>
         <!--Controls-->
         <input controls="attack,forward"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 
     <attack name="air-neutral-yeti-punch">
         <air/>
         <!--Controls-->
         <input controls="attack"/>
+        <!--sound frame = "24" name = "whistle-main" min = "1" max = "1"/-->
     </attack>
 </root>
