@@ -137,6 +137,8 @@ class Fighter extends FightableObject {
 	function handle_fighter_states(delta:Float, input:FrameInput) {
 		switch (cast(state, FighterState)) {
 			case FighterState.IDLE | FighterState.JUMPING:
+				current_attack_data = null;
+
 				var acl:Float = 0.0;
 
 				var hit_recovery:Bool = cur_anim.name == "hit-recover" && !cur_anim.finished;

@@ -192,9 +192,8 @@ class FightableObject extends FlxRollbackActor {
 		this.match_ui = match_ui;
 
 	function make_hit_circle(X:Float, Y:Float, blocked:Bool = false) {
-		var hit_circle:HitCircle = new HitCircle(X, Y);
+		var hit_circle:HitFX = new HitFX(X, Y, group, blocked);
 		hit_circle.setPosition(hit_circle.x - hit_circle.width / 2, hit_circle.y - hit_circle.height / 2);
-		hit_circle.color = blocked ? FlxColor.GRAY : FlxColor.RED;
 		group.add(hit_circle);
 	}
 

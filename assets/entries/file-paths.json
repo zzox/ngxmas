@@ -149,6 +149,14 @@
             "path": "assets/fighters/duoYeti"
         },
         {
+            "file": "duoYeti-yeti-Layer 1.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
+            "file": "duoYeti-yeti-main.png",
+            "path": "assets/fighters/duoYeti"
+        },
+        {
             "file": "duoYeti-yeti.json",
             "path": "assets/fighters/duoYeti"
         },
@@ -945,7 +953,19 @@
             "path": "assets/images"
         },
         {
+            "file": "fx-anims.xml",
+            "path": "assets/images/fx"
+        },
+        {
             "file": "hit-circle.png",
+            "path": "assets/images/fx"
+        },
+        {
+            "file": "hit-fx.png",
+            "path": "assets/images/fx"
+        },
+        {
+            "file": "snow-fx.png",
             "path": "assets/images/fx"
         },
         {
