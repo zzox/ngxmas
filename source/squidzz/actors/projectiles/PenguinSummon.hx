@@ -49,7 +49,7 @@ class PenguinSummon extends Projectile {
 		super.updateWithInputs(delta, input);
 	}
 
-	override function fighter_hit_check(fighter:FightableObject) {
+	override function fighter_hit_check(fighter:FightableObject, shield_broken:Bool = false) {
 		if (state == PenguinSummonState.BUMPED || fighter.team == team)
 			return;
 

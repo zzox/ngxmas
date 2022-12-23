@@ -957,6 +957,10 @@
             "path": "assets/images/fx"
         },
         {
+            "file": "guard-break-fx.png",
+            "path": "assets/images/fx"
+        },
+        {
             "file": "hit-circle.png",
             "path": "assets/images/fx"
         },
@@ -1051,6 +1055,14 @@
         {
             "file": "music-goes-here.txt",
             "path": "assets/music"
+        },
+        {
+            "file": "lightning.mp3",
+            "path": "assets/sounds"
+        },
+        {
+            "file": "lightning.ogg",
+            "path": "assets/sounds"
         },
         {
             "file": "penguin says fuck.mp3",

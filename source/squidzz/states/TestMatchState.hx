@@ -10,9 +10,11 @@ import flixel.system.debug.log.LogStyle;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Fighter;
+import squidzz.actors.FlxRollbackActor;
 import squidzz.display.CameraController;
 import squidzz.display.DebugUi;
 import squidzz.display.FightingStage;
+import squidzz.display.GuardBreakFX;
 import squidzz.display.MatchUi;
 import squidzz.rollback.FlxRollbackGroup;
 import squidzz.rollback.FrameInput;
@@ -44,7 +46,9 @@ class TestMatchState extends BaseState {
 		FighterAIMode.WALK_FORWARDS
 	];
 
-	static var current_ai_mode:FighterAIMode = FighterAIMode.WALK_FORWARDS;
+	static var current_ai_mode:FighterAIMode = FighterAIMode.WALK_BACKWARDS;
+
+	var guard_break_fx:FlxRollbackActor;
 
 	override function create() {
 		super.create();
@@ -59,14 +63,16 @@ class TestMatchState extends BaseState {
 		for (layer in stage.layers)
 			add(layer);
 
-		player1 = new Penguin(768, 328);
-		player2 = new Snowman(112, 328);
+		player1 = new Penguin(112 + 400, 328);
+		player2 = new Snowman(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;
 
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
+
+		new GuardBreakFX(stateGroup);
 
 		add(match_ui = new MatchUi());
 

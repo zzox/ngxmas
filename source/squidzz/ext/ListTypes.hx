@@ -106,7 +106,7 @@ typedef AttackDataType = {
 
 typedef HitboxType = {
 	frames:Array<Int>,
-	melee_id:Int,
+	melee_id:String,
 	str:Float,
 	kb:FlxPoint,
 	kb_air:FlxPoint,

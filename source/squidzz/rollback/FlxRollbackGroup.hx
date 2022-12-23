@@ -56,9 +56,9 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 				for (other_sprite in members)
 					if (other_sprite != sprite && Std.isOfType(other_sprite, FightableObject))
 						fighter.fighter_hit_check(cast(other_sprite, FightableObject));
+			} else {
+				sprite.updateWithInputs(delta, blankInput());
 			}
-			if (Std.isOfType(sprite, HitFX))
-				sprite.updateWithInputs(delta, input[0]);
 		}
 
 		// TODO: consider using `Rollback.GLOBAL_DELTA` instead of from a parameter,

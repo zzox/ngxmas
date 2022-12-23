@@ -204,7 +204,7 @@ class FightableObject extends FlxRollbackActor {
 		group.add(visual);
 	}
 
-	public function fighter_hit_check(fighter:FightableObject)
+	public function fighter_hit_check(fighter:FightableObject, shield_broken:Bool = false)
 		return;
 
 	function get_object_count(name:String, team:Int = 0):Int {
