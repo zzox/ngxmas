@@ -62,7 +62,8 @@ class Fighter extends FightableObject {
 	var can_attack(get, default):Bool;
 
 	public var ai_mode:FighterAIMode = FighterAIMode.IDLE;
-    var ai_state:FighterAIState = FighterAIState.STILL;
+
+	var ai_state:FighterAIState = FighterAIState.STILL;
 	var ai_tick:Int = 0;
 	var ai_state_tick:Int = 0;
 
@@ -75,7 +76,7 @@ class Fighter extends FightableObject {
 
 	var blocked_hitbox_ids:Array<String> = [];
 
-    public var aiControlled:Bool = false;
+	public var aiControlled:Bool = false;
 
 	public function new(?X:Float, ?Y:Float, prefix:String) {
 		super(X, Y, prefix);
@@ -94,52 +95,56 @@ class Fighter extends FightableObject {
 	}
 
 	function ai_control(input:FrameInput):FrameInput {
-        if (!aiControlled) return input;
+		if (!aiControlled)
+			return input;
 
 		input = blankInput();
 		ai_tick++;
 
-        final oppDistance = Utils.getDistance(getMidpoint(), opponent.getMidpoint());
+		final oppDistance = Utils.getDistance(getMidpoint(), opponent.getMidpoint());
 
-        final opponentLeft = getMidpoint().x > opponent.getMidpoint().x;
+		final opponentLeft = getMidpoint().x > opponent.getMidpoint().x;
 
-        if (--ai_state_tick < 0) {
-            final rand = Math.random();
+		if (--ai_state_tick < 0) {
+			final rand = Math.random();
 
-            if (rand < 0.5) {
-                ai_state = FighterAIState.AGGRO;
-            } else {
-                ai_state = FighterAIState.RETREAT;
-            }
+			if (rand < 0.75) {
+				ai_state = FighterAIState.AGGRO;
+			} else {
+				ai_state = FighterAIState.RETREAT;
+			}
 
-            // new decisions every 30-90 frames
-            ai_state_tick = Std.int(30 + Math.random() * 60);
-        }
+			// new decisions every 30-90 frames
+			ai_state_tick = Std.int(30 + Math.random() * 60);
+		}
 
-        switch (ai_state) {
-            case FighterAIState.AGGRO:
-                if (oppDistance < 50) {
-                    ai_mode = FighterAIMode.JAB;
-                } else if (oppDistance < 250) {
-                    ai_mode = FighterAIMode.JAB;
-                    input.set(opponentLeft ? "LEFT" : "RIGHT", true);
-                } else {
-                    ai_mode = FighterAIMode.WALK_FORWARDS;
-                }
-            case FighterAIState.RETREAT:
-                ai_mode = FighterAIMode.WALK_BACKWARDS;
-                if (oppDistance < 200) {
-                    ai_mode = FighterAIMode.JUMP;
-                }
+		switch (ai_state) {
+			case FighterAIState.AGGRO:
+				if (oppDistance < 50) {
+					ai_mode = FighterAIMode.JAB;
+				} else if (oppDistance < 250) {
+					ai_mode = FighterAIMode.JAB;
+					if (ran.int(1, 2) == 1)
+						input.set(opponentLeft ? "LEFT" : "RIGHT", true);
+					else
+						input.set(opponentLeft ? "RIGHT" : "LEFT", true);
+				} else {
+					ai_mode = FighterAIMode.WALK_FORWARDS;
+				}
+			case FighterAIState.RETREAT:
+				ai_mode = FighterAIMode.WALK_BACKWARDS;
+				if (oppDistance < 200) {
+					ai_mode = FighterAIMode.JUMP;
+				}
 
-                // walk backwards always on rereat
-                input.set(opponentLeft ? "RIGHT" : "LEFT", true);
-            case FighterAIState.STILL:
-                if (oppDistance < 150) {
-                    ai_state = FighterAIState.AGGRO;
-                }
-                return input;
-        }
+				// walk backwards always on rereat
+				input.set(opponentLeft ? "RIGHT" : "LEFT", true);
+			case FighterAIState.STILL:
+				if (oppDistance < 150) {
+					ai_state = FighterAIState.AGGRO;
+				}
+				return input;
+		}
 
 		switch (ai_mode) {
 			case FighterAIMode.JUMP:
@@ -149,9 +154,9 @@ class Fighter extends FightableObject {
 				if (ai_tick % 2 == 0)
 					input.set("B", true);
 			case FighterAIMode.WALK_BACKWARDS:
-                input.set(opponentLeft ? "RIGHT" : "LEFT", true);
+				input.set(opponentLeft ? "RIGHT" : "LEFT", true);
 			case FighterAIMode.WALK_FORWARDS:
-                input.set(opponentLeft ? "LEFT" : "RIGHT", true);
+				input.set(opponentLeft ? "LEFT" : "RIGHT", true);
 			default:
 		}
 		return input;
