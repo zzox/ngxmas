@@ -93,6 +93,7 @@
         <!--Attack Links-->
         <wall_cancel_attack name="yeet-recover" />
         <opponent_cancel_attack name="yeet-recover" />
+        <ground_cancel_attack name="yeet-recover" />
     </attack>
 
     <attack name="yeet-recover">
