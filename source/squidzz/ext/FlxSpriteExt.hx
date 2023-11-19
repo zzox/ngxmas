@@ -67,7 +67,7 @@ class FlxSpriteExt extends FlxSprite {
 
 		if (animSet == null) {
 			loadGraphic(Paths.get(image + ".png"));
-			animAdd("idle", "1");
+			animAdd("idle", "0");
 			return this;
 		}
 

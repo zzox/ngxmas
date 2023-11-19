@@ -35,8 +35,7 @@ for file in files:
         }
     )
 
-
-with open("./assets/entries/file-paths.json", "w") as output:
+with open("assets/entries/file-paths.json", "w") as output:
     out = json.dumps(cache, indent=4)
     print(out)
     output.writelines(out)

@@ -36,6 +36,8 @@ class Fighter extends FightableObject {
 
 	public var opponent:Fighter;
 
+	var fighter_scale:FlxPoint = new FlxPoint();
+
 	var JUMPING_STYLE:JumpingStyle = JumpingStyle.TRADITIONAL;
 	var JUMP_DIRECTION:JumpDirection = JumpDirection.NONE;
 	var WALKING_DIRECTION:WalkDirection = WalkDirection.NONE;

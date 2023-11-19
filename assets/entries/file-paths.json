@@ -5,6 +5,22 @@
             "path": "assets/entries"
         },
         {
+            "file": "donkey-anims.xml",
+            "path": "assets/fighters/donkey"
+        },
+        {
+            "file": "donkey-attacks.xml",
+            "path": "assets/fighters/donkey"
+        },
+        {
+            "file": "donkey-base-hitbox.png",
+            "path": "assets/fighters/donkey"
+        },
+        {
+            "file": "donkey-base-hurtbox.png",
+            "path": "assets/fighters/donkey"
+        },
+        {
             "file": "donkey-base.png",
             "path": "assets/fighters/donkey"
         },
@@ -13,23 +29,47 @@
             "path": "assets/fighters/donkey/raws"
         },
         {
-            "file": "Dominique_Forward_Ground0001.png",
+            "file": "Dominique_Back_Air0001.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Back_Air"
+        },
+        {
+            "file": "Dominique_Back_Air0002.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Back_Air"
+        },
+        {
+            "file": "Dominique_Back_Air0003.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Back_Air"
+        },
+        {
+            "file": "Dominique_Back_Air0004.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Back_Air"
+        },
+        {
+            "file": "Dominique_Back_Air0005.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Back_Air"
+        },
+        {
+            "file": "Dominique_Back_Air0006.png",
+            "path": "assets/fighters/donkey/raws/Dominique_Back_Air"
+        },
+        {
+            "file": "Dominique_Forward_Ground0016.png",
             "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
         },
         {
-            "file": "Dominique_Forward_Ground0002.png",
+            "file": "Dominique_Forward_Ground0017.png",
             "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
         },
         {
-            "file": "Dominique_Forward_Ground0003.png",
+            "file": "Dominique_Forward_Ground0018.png",
             "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
         },
         {
-            "file": "Dominique_Forward_Ground0004.png",
+            "file": "Dominique_Forward_Ground0019.png",
             "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
         },
         {
-            "file": "Dominique_Forward_Ground0005.png",
+            "file": "Dominique_Forward_Ground0020.png",
             "path": "assets/fighters/donkey/raws/Dominique_Forward_Ground"
         },
         {
@@ -53,19 +93,19 @@
             "path": "assets/fighters/donkey/raws/Dominique_Idle"
         },
         {
-            "file": "Dominique_Jump0001.png",
+            "file": "Dominique_Jump0022.png",
             "path": "assets/fighters/donkey/raws/Dominique_Jump"
         },
         {
-            "file": "Dominique_Jump0002.png",
+            "file": "Dominique_Jump0023.png",
             "path": "assets/fighters/donkey/raws/Dominique_Jump"
         },
         {
-            "file": "Dominique_Jump0003.png",
+            "file": "Dominique_Jump0024.png",
             "path": "assets/fighters/donkey/raws/Dominique_Jump"
         },
         {
-            "file": "Dominique_Jump0004.png",
+            "file": "Dominique_Jump0025.png",
             "path": "assets/fighters/donkey/raws/Dominique_Jump"
         },
         {

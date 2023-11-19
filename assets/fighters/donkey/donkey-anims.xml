@@ -1,0 +1,24 @@
+<root>
+    <animSet image = "donkey-base" fps = "100ms" hitbox = "48,187" offset_right = "373,100" offset_left = "139,100" width="560" height="360">
+        <anim name = "idle">0t4</anim>
+        <anim name = "jump-squat" looping="false">5</anim>
+        <anim name = "jump-up" looping="false">6</anim>
+        <anim name = "jump-mid" looping="false">6</anim>
+        <anim name = "jump-down" looping="false">7</anim>
+        <anim name = "jump-land" looping="false">5</anim>
+        <anim name = "air-land" looping="false">5</anim>
+        <anim name = "walk-forwards">8t14</anim>
+        <anim name = "walk-backwards">14,13,12,11,10,9,8</anim>
+        <anim name = "hit" looping="false">15</anim>
+        <anim name = "hit-recover" looping="false">15</anim>
+        <anim name = "block-start" looping="false">16</anim>
+        <anim name = "block" looping="false">16</anim>
+        <anim name = "block-loop" looping="false">16</anim>
+        <anim name = "block-recover" looping="false">16</anim>
+        <anim name = "ground-forward" looping="false">17t20</anim>
+        <anim name = "air-back" looping="false">21t23,24h2</anim>
+        <anim name = "air-back-loop">24</anim>
+    </animSet>
+
+    <!--animSet image = "donkey-base" fps = "100ms" hitbox = "176,464" offset_left = "335,242" offset_right = "889,242" width="1400" height="900"-->
+</root>

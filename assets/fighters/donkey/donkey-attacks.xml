@@ -1,0 +1,67 @@
+<root>
+    <attack name="ground">
+        <!--Attack Links-->
+        <link attack="ground-forward" />
+    </attack>
+
+    <attack name="air">
+        <!--Attack Links-->
+        <link attack="air-back" />
+    </attack>
+
+    <attack name="air-land">
+        <air/>
+        <!--Attack Links-->
+        <inherits from="air" />
+        <!--Sound Data-->
+    </attack>
+
+    <attack name="ground-forward">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,forward" />
+        <!--Hitboxes-->
+        <hitbox frames="0t99" kb = "200,-50" str = "25" stun = "60"/>
+        <!--Movement Attributes-->
+        <drag frames="17" rates=".6,1" />
+        <thrust frames="18" velocity="100,0" />
+        <drag frames="19" rates="0,0" />
+        <thrust frames="19" velocity="-70,0" />
+        <drag frames="20" rates="0,0" />
+        <!--Special Attributes-->
+        <cancellable frames="20" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+        <!--Sound Data-->
+    </attack>
+
+    <attack name="air-back">
+        <air/>
+        <!--Controls-->
+        <input controls="attack,backwards" />
+        <!--Hitboxes-->
+        <hitbox frames="8t10" kb_air = "-1000,0" kb_ground = "500,-500" str = "125" stun = "60"/>
+        <hitbox frames="24" kb = "300,50" str = "25" stun = "60"/>
+
+        <drag frames="21,22" rates="0.6,0.6" />
+        <thrust frames="23" velocity="150,-100" />
+        <thrust frames="24" velocity="40,75" />
+        <!--Special Attributes-->
+        <ground_cancel_attack name="air-land" frames="24"/>
+        <!--Sound Data-->
+        <auto_continue on_complete="air-back-loop" />
+    </attack>
+
+    <attack name="air-back-loop">
+        <air/>
+        <!--Controls-->
+        <input controls="attack,backwards" />
+        <!--Hitboxes-->
+        <hitbox frames="24" kb = "300,50" str = "25" stun = "60"/>
+        <thrust frames="24" velocity="40,75" />
+        <cancellable frames="24" />
+        <!--Special Attributes-->
+        <ground_cancel_attack name="air-land" frames="24"/>
+    </attack>
+
+</root>

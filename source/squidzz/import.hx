@@ -19,6 +19,11 @@ import squidzz.ext.Utils;
 import squidzz.rollback.FrameInput;
 import squidzz.states.BaseState;
 import ui.Controls;
+
+using Math;
+using StringTools;
+using flixel.util.FlxArrayUtil;
+
 #if ADVENT
 import utils.OverlayGlobal as Global;
 #else
