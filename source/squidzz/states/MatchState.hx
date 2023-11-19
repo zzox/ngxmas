@@ -34,6 +34,8 @@ class MatchState extends BaseState {
 
 	var stage:FightingStage;
 
+	var state:String;
+
 	override function create() {
 		super.create();
 
@@ -58,7 +60,7 @@ class MatchState extends BaseState {
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
 
-        add(match_ui = new MatchUi());
+		add(match_ui = new MatchUi());
 		add(debugUi = new DebugUi(this));
 
 		var count:Int = 0;
@@ -97,7 +99,7 @@ class MatchState extends BaseState {
 			debugUi.visible = !debugUi.visible;
 		}
 
-        // DELETE
+		// DELETE
 		if (FlxG.keys.anyJustPressed([FlxKey.V]))
 			Main.SHOW_HITBOX = !Main.SHOW_HITBOX;
 	}

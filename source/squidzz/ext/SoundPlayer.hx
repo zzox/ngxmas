@@ -1,7 +1,7 @@
 package squidzz.ext;
 
 import flixel.math.FlxRandom;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 
 using StringTools;
 

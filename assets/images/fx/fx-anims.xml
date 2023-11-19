@@ -6,4 +6,8 @@
     <animSet image = "snow-fx">
         <anim name = "idle" looping = "false">0t4</anim>
     </animSet>
+
+    <animSet image = "ko">
+        <anim name = "idle" looping = "false">0t22</anim>
+    </animSet>
 </root>
