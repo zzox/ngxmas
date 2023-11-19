@@ -125,21 +125,6 @@ class TestMatchState extends BaseState {
 		#end
 	}
 
-	function createTileLayer(map:TiledMap, layerName:String, offset:FlxPoint):Null<FlxTilemap> {
-		final layerData = map.getLayer(layerName);
-		if (layerData != null) {
-			final layer = new FlxTilemap();
-			final tileArray = cast(layerData, TiledTileLayer).tileArray;
-			layer.loadMapFromArray(tileArray, map.width, map.height, Global.asset('assets/images/tiles.png'), map.tileWidth, map.tileHeight,
-				FlxTilemapAutoTiling.OFF, 1, 1, 1)
-				.setPosition(offset.x, offset.y);
-			add(layer);
-
-			return layer;
-		}
-		return null;
-	}
-
 	function switch_ai_mode()
 		player2.ai_mode = current_ai_mode;
 }

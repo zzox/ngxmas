@@ -323,6 +323,7 @@ class Fighter extends FightableObject {
 				inv = 10;
 				shield_break += Math.floor(fighter_hitbox_data.stun / 3 + fighter_hitbox_data.str);
 				shield_break_recovery_cd = 60;
+				group.hit_stop = 10;
 
 				if (shield_break >= SHIELD_BREAK_MAX) {
 					inv = 0;
@@ -337,6 +338,8 @@ class Fighter extends FightableObject {
 
 				update_match_ui();
 			} else {
+				group.hit_stop = 15;
+
 				stun = fighter.current_attack_data.stun;
 				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
 				velocity.x *= -Utils.flipMod(this);
@@ -348,6 +351,7 @@ class Fighter extends FightableObject {
 					health = 0;
 
 				sstate(FighterState.HIT);
+				anim("hit");
 				update_match_ui();
 
 				hit_sound();

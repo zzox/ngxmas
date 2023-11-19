@@ -26,6 +26,8 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 	var player1:Fighter;
 	var player2:Fighter;
 
+	public var hit_stop:Int = 0;
+
 	public function new(player1:Fighter, player2:Fighter) {
 		super();
 		this.player1 = player1;
@@ -47,19 +49,22 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 		// forEach(spr -> spr.u) where they arent a player, update
 		// should be 0 right now
 
-		for (sprite in members) {
-			if (Std.isOfType(sprite, FightableObject)) {
-				// update fightable objects
-				var fighter:FightableObject = cast(sprite, FightableObject);
-				fighter.updateWithInputs(delta, input[fighter.team > 0 ? fighter.team - 1 : 0]);
-				// hit check other fightable objects
-				for (other_sprite in members)
-					if (other_sprite != sprite && Std.isOfType(other_sprite, FightableObject))
-						fighter.fighter_hit_check(cast(other_sprite, FightableObject));
-			} else {
-				sprite.updateWithInputs(delta, blankInput());
+		hit_stop--;
+
+		if (hit_stop <= 0)
+			for (sprite in members) {
+				if (Std.isOfType(sprite, FightableObject)) {
+					// update fightable objects
+					var fighter:FightableObject = cast(sprite, FightableObject);
+					fighter.updateWithInputs(delta, input[fighter.team > 0 ? fighter.team - 1 : 0]);
+					// hit check other fightable objects
+					for (other_sprite in members)
+						if (other_sprite != sprite && Std.isOfType(other_sprite, FightableObject))
+							fighter.fighter_hit_check(cast(other_sprite, FightableObject));
+				} else {
+					sprite.updateWithInputs(delta, blankInput());
+				}
 			}
-		}
 
 		// TODO: consider using `Rollback.GLOBAL_DELTA` instead of from a parameter,
 		super.update(delta);

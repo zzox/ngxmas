@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.system.debug.log.LogStyle;
 import squidzz.ext.AttackData;
@@ -14,6 +15,12 @@ class Main extends openfl.display.Sprite {
 	public static var SKIP_MENU:Bool = true;
 	public static var SHOW_HITBOX:Bool = false;
 
+	#if volume
+	static var base_volume:Int = Std.parseInt('${haxe.macro.Compiler.getDefine("volume")}');
+	#else
+	static var base_volume:Int = 50;
+	#end
+
 	public function new() {
 		super();
 		Lists.init();
@@ -23,6 +30,11 @@ class Main extends openfl.display.Sprite {
 		// LogStyle.ERROR.errorSound = "assets/sounds/penguin_says_fuck";
 
 		addChild(new FlxGame(960, 540, BootState, 60, 60, true));
+
+		if (base_volume > -1)
+			FlxG.sound.volume = base_volume / 100;
+		base_volume = -1;
+
 		LogStyle.ERROR.errorSound = null;
 	}
 }

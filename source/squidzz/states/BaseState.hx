@@ -1,5 +1,3 @@
 package squidzz.states;
 
-class BaseState extends FlxState {
-	
-}
+class BaseState extends FlxState {}

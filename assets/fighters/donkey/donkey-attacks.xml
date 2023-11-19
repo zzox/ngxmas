@@ -21,7 +21,7 @@
         <!--Controls-->
         <input controls="attack,forward" />
         <!--Hitboxes-->
-        <hitbox frames="0t99" kb = "200,-50" str = "25" stun = "60"/>
+        <hitbox frames="0t99" kb = "200,-50" str = "25" stun = "999"/>
         <!--Movement Attributes-->
         <drag frames="17" rates=".6,1" />
         <thrust frames="18" velocity="100,0" />
@@ -40,7 +40,7 @@
         <!--Controls-->
         <input controls="attack,backwards" />
         <!--Hitboxes-->
-        <hitbox frames="8t10" kb_air = "-1000,0" kb_ground = "500,-500" str = "125" stun = "60"/>
+        <hitbox frames="8t10" kb_air = "-1000,0" kb_ground = "500,-500" str = "125" stun = "90"/>
         <hitbox frames="24" kb = "300,50" str = "25" stun = "60"/>
 
         <drag frames="21,22" rates="0.6,0.6" />
