@@ -103,6 +103,8 @@ class Fighter extends FightableObject {
 		input = blankInput();
 		ai_tick++;
 
+		return input;
+
 		final oppDistance = Utils.getDistance(getMidpoint(), opponent.getMidpoint());
 
 		final opponentLeft = getMidpoint().x > opponent.getMidpoint().x;
@@ -314,7 +316,8 @@ class Fighter extends FightableObject {
 			make_hit_circle((mp().x + fighter.mp().x) / 2, (mp().y + fighter.mp().y) / 2, blocking);
 			if (blocking) {
 				sstate(FighterState.BLOCKING);
-				stun = fighter.current_attack_data.stun;
+				trace(fighter.current_attack_data.stun);
+				stun = fighter_hitbox_data.stun;
 				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
 				velocity.x *= -Utils.flipMod(this);
 				velocity.y *= 0.5;
@@ -340,7 +343,8 @@ class Fighter extends FightableObject {
 			} else {
 				group.hit_stop = 15;
 
-				stun = fighter.current_attack_data.stun;
+				stun = fighter_hitbox_data.stun;
+
 				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
 				velocity.x *= -Utils.flipMod(this);
 				fighter.attack_hit_success = true;

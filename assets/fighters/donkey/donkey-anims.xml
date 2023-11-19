@@ -15,7 +15,7 @@
         <anim name = "block" looping="false">16</anim>
         <anim name = "block-loop" looping="false">16</anim>
         <anim name = "block-recover" looping="false">16</anim>
-        <anim name = "ground-forward" looping="false">17t20</anim>
+        <anim name = "ground-forward" looping="false">17h2,17t20</anim>
         <anim name = "air-back" looping="false">21t23,24h2</anim>
         <anim name = "air-back-loop">24</anim>
     </animSet>
