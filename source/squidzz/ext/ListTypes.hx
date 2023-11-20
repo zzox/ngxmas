@@ -112,6 +112,7 @@ typedef HitboxType = {
 	kb_air:FlxPoint,
 	kb_ground:FlxPoint,
 	stun:Int,
+	inv:Int,
 	bonus_defines:Array<String>,
 }
 

@@ -12,7 +12,7 @@
         <anim name = "jump-land" looping = "false">27</anim>
         
         <anim name = "ground-neutral" looping = "false">4,28,5h2,6</anim>
-        <anim name = "ground-back" looping = "false">7t8,9h3</anim>
+        <anim name = "ground-back" looping = "false">7t8,9,57,9,57,7</anim>
         <anim name = "ground-up" looping = "false">10t13</anim>
 
         <anim name = "ground-down-up" looping = "false">53t54r2</anim>

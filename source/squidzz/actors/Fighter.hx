@@ -128,7 +128,7 @@ class Fighter extends FightableObject {
 					ai_mode = FighterAIMode.JAB;
 				} else if (oppDistance < 250) {
 					ai_mode = FighterAIMode.JAB;
-					if (ran.int(1, 2) == 1)
+					if (ran != null && ran.int(1, 2) == 1)
 						input.set(opponentLeft ? "LEFT" : "RIGHT", true);
 					else
 						input.set(opponentLeft ? "RIGHT" : "LEFT", true);
@@ -316,14 +316,15 @@ class Fighter extends FightableObject {
 			make_hit_circle((mp().x + fighter.mp().x) / 2, (mp().y + fighter.mp().y) / 2, blocking);
 			if (blocking) {
 				sstate(FighterState.BLOCKING);
-				trace(fighter.current_attack_data.stun);
+
 				stun = fighter_hitbox_data.stun;
+				inv = fighter_hitbox_data.inv;
+
 				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
 				velocity.x *= -Utils.flipMod(this);
 				velocity.y *= 0.5;
 
 				fighter.velocity.scale(-1, 1);
-				inv = 10;
 				shield_break += Math.floor(fighter_hitbox_data.stun / 3 + fighter_hitbox_data.str);
 				shield_break_recovery_cd = 60;
 				group.hit_stop = 10;
@@ -344,6 +345,7 @@ class Fighter extends FightableObject {
 				group.hit_stop = 15;
 
 				stun = fighter_hitbox_data.stun;
+				inv = fighter_hitbox_data.inv;
 
 				velocity.copyFrom(get_appropriate_kb(fighter_hitbox_data).clone().scalePoint(kb_resistance));
 				velocity.x *= -Utils.flipMod(this);

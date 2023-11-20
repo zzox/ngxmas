@@ -37,8 +37,9 @@
         <!--Controls-->
         <input controls="attack,backwards" />
         <!--Hitboxes-->
-        <hitbox frames="8" kb = "300,-300" str = "50" stun = "30"/>
-        <hitbox frames="9" kb = "100,-150" str = "25" stun = "1" once = "true"/>
+        <hitbox frames="8" kb = "100,300" str = "25" stun = "30" inv="3"/>
+        <hitbox frames="9" kb = "150,-300" str = "25" stun = "15" inv="2" once = "true"/>
+        <hitbox frames="57" kb = "300,-300" str = "25" stun = "15" inv="2" once = "true"/>
         <!--Movement Attributes-->
         <thrust frames="7" velocity="-25,0" />
         <thrust frames="8" velocity="75,0" />

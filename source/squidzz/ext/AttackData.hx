@@ -7,6 +7,7 @@ class AttackData {
 	static var data:Map<String, Map<String, AttackDataType>> = new Map<String, Map<String, AttackDataType>>();
 
 	static var DEFAULT_STUN:Int = 10;
+	static var DEFAULT_INV:Int = 10;
 
 	public static function init() {
 		Paths.recursive_file_operation("assets", "attacks.xml", get_all_attack_data);
@@ -216,6 +217,7 @@ class AttackData {
 					kb_air: point_from_string(box.get("kb_air")),
 					kb_ground: point_from_string(box.get("kb_ground")),
 					stun: box.get("stun") != null ? Std.parseInt(box.get("stun")) : DEFAULT_STUN,
+					inv: box.get("inv") != null ? Std.parseInt(box.get("inv")) : DEFAULT_INV,
 					bonus_defines: box.get("bonus_defines") != null ? box.get("bonus_defines").split(",") : []
 				});
 			}
