@@ -10,6 +10,7 @@ import squidzz.actors.ActorTypes.WalkDirection;
 import squidzz.actors.projectiles.PenguinSummon;
 import squidzz.display.FightingStage;
 import squidzz.display.GuardBreakFX;
+import squidzz.display.KO;
 import squidzz.display.MatchUi;
 import squidzz.ext.AttackData;
 import squidzz.ext.ListTypes.HitboxType;
@@ -102,8 +103,6 @@ class Fighter extends FightableObject {
 
 		input = blankInput();
 		ai_tick++;
-
-		return input;
 
 		final oppDistance = Utils.getDistance(getMidpoint(), opponent.getMidpoint());
 
@@ -295,6 +294,9 @@ class Fighter extends FightableObject {
 
 			case FighterState.BLOCKING:
 				do_block();
+
+			case FighterState.DEFEATED:
+				do_defeat();
 		}
 	}
 
@@ -344,6 +346,9 @@ class Fighter extends FightableObject {
 			} else {
 				group.hit_stop = 15;
 
+				sstate(FighterState.HIT);
+				handle_fighter_states(0, blankInput());
+
 				stun = fighter_hitbox_data.stun;
 				inv = fighter_hitbox_data.inv;
 
@@ -362,6 +367,11 @@ class Fighter extends FightableObject {
 
 				hit_sound();
 				blocked_hitbox_ids = [];
+
+				if (health <= 0 && state != FighterState.DEFEATED) {
+					KO.ref.start_ko();
+					sstate(FighterState.DEFEATED);
+				}
 			}
 		}
 	}
@@ -420,6 +430,16 @@ class Fighter extends FightableObject {
 			anim("block-loop");
 		if (stun <= 0 && cur_anim.name == "block-loop")
 			sstate(FighterState.IDLE);
+	}
+
+	function do_defeat() {
+		inv = 999;
+		if (touchingFloor) {
+			animProtect("defeated");
+			if (animation.finished) {
+				KO.ref.fighter_defeat_animation_finished = true;
+			}
+		}
 	}
 
 	/**
@@ -728,6 +748,7 @@ enum abstract FighterState(String) to String {
 	var HIT = "HIT";
 	var KNOCKDOWN = "KNOCKDOWN";
 	var BLOCKING = "BLOCKING";
+	var DEFEATED = "DEFEATED";
 }
 
 enum abstract FighterAIMode(String) to String {

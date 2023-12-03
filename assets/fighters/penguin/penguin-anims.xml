@@ -47,5 +47,7 @@
         <anim name = "air-back-loop">49t50</anim>
 
         <anim name = "air-down">53t54,55t56r5</anim>
+
+        <anim name = "defeated" looping="false">29t30</anim>
     </animSet>
 </root>

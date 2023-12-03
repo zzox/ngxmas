@@ -1,6 +1,5 @@
 package squidzz.display;
 
-import squidzz.actors.FlxRollbackActor;
 import squidzz.rollback.FrameInput;
 
 class CameraController extends FlxRollbackActor {

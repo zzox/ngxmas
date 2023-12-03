@@ -10,7 +10,7 @@ class SoundPlayer {
 
 	public static function sound(name:String, volume:Float = 1) {
 		// trace("Playing " + name);
-		#if hl
+		#if !js
 		var sound:FlxSound = FlxG.sound.play(Paths.get(name + ".ogg"), volume);
 		#elseif js
 		var sound:FlxSound = FlxG.sound.play(Paths.get(name + ".mp3"), volume);

@@ -1,0 +1,20 @@
+In Progress
+
+- Round reset + Round system
+
+TODO:
+
+- Look at game feel
+- Finish Donkey
+- Fix Poot's slide
+- Implement new Yeti/Girl moves
+- Voice lines for Donkey
+- Voice lines for Penguin
+- Voice lines for Yeti/Girl
+- Temporary Announcer
+- End screen
+- Char Select
+- Multiplayer Matchmaking
+- Hit Bar Juice
+- Better AI
+- ...Story/Arcade mode?

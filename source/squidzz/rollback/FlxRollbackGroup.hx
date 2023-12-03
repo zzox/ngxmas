@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
 import squidzz.actors.Fighter;
-import squidzz.actors.FlxRollbackActor;
 import squidzz.actors.HitFX;
 import squidzz.rollback.Rollback;
 

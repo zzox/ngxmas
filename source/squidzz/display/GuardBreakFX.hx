@@ -1,8 +1,5 @@
 package squidzz.display;
 
-import squidzz.actors.FlxRollbackActor;
-import squidzz.rollback.FlxRollbackGroup;
-import squidzz.rollback.FrameInput;
 
 class GuardBreakFX extends FlxRollbackActor {
 	var lightning:FlxRollbackActor;
@@ -20,7 +17,6 @@ class GuardBreakFX extends FlxRollbackActor {
 		scrollFactor.set(0, 0);
 
 		set_group(group);
-
 		group.add(this);
 
 		alpha = 0;

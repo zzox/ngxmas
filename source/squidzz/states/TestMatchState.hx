@@ -10,14 +10,12 @@ import flixel.system.debug.log.LogStyle;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
 import squidzz.actors.Fighter;
-import squidzz.actors.FlxRollbackActor;
 import squidzz.display.CameraController;
 import squidzz.display.DebugUi;
 import squidzz.display.FightingStage;
 import squidzz.display.GuardBreakFX;
+import squidzz.display.KO;
 import squidzz.display.MatchUi;
-import squidzz.rollback.FlxRollbackGroup;
-import squidzz.rollback.FrameInput;
 import squidzz.rollback.Rollback;
 
 // TODO: add updates alongside MatchState.
@@ -64,7 +62,7 @@ class TestMatchState extends BaseState {
 			add(layer);
 
 		player1 = new Penguin(112, 328);
-		player2 = new Donkey(768 - 500, 328);
+		player2 = new Snowman(768 - 500, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;
@@ -75,6 +73,7 @@ class TestMatchState extends BaseState {
 		add(stateGroup);
 
 		new GuardBreakFX(stateGroup);
+		new KO(stateGroup);
 
 		add(match_ui = new MatchUi());
 

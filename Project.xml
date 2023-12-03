@@ -33,7 +33,7 @@
 	<source path="source" />
 	<classpath name="standAloneSource" />
 
-	<assets path="assets" />
+	<assets path="assets" embed="false"/>
 
 	<!-- Directive enabled when playing the advent game without launching via advent -->
 	<define name="STAND_ALONE" />

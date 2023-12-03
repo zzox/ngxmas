@@ -8,6 +8,7 @@
     </animSet>
 
     <animSet image = "ko">
-        <anim name = "idle" looping = "false">0t22</anim>
+        <anim name = "in" looping = "false">0t17</anim>
+        <anim name = "out" looping = "false">18t20</anim>
     </animSet>
 </root>

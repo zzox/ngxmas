@@ -1,7 +1,5 @@
 package squidzz.display;
 
-import squidzz.actors.FlxRollbackActor;
-
 class FightingStage {
 	public var layers:Array<FlxRollbackActor> = [];
 
