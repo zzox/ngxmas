@@ -92,6 +92,8 @@ class TestMatchState extends BaseState {
 			localInputs.push(blankInput());
 		}
 
+		match_ui.update_players(player1, player2);
+
 		switch_ai_mode();
 	}
 

@@ -74,7 +74,7 @@ class FlxSpriteExt extends FlxSprite {
 		var animWidth:Float = animSet.dimensions.x;
 		var animHeight:Float = animSet.dimensions.y;
 
-		var fullPath:String = animSet.path + "/" + animSet.image + ".png";
+		var fullPath:String = Paths.get('${image}.png');
 
 		if (image_as != null)
 			fullPath = StringTools.replace(fullPath, '${image}.png', '${image_as}.png');

@@ -23,9 +23,16 @@ class Main extends openfl.display.Sprite {
 
 	public function new() {
 		super();
+		#if !old_paths
+		Manifest.init(make_game);
+		#else
+		make_game();
+		#end
+	}
+
+	function make_game(){
 		Lists.init();
 		AttackData.init();
-		Paths.fill_path_cache();
 
 		LogStyle.ERROR.errorSound = "assets/sounds/penguin says fuck";
 

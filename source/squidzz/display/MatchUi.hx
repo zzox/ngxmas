@@ -46,23 +46,17 @@ class MatchUi extends FlxGroup {
 		add(new FlxSprite(16, power_bar_y, 'assets/images/ui/p1PowerBg.png'));
 		add(p1PowerBar = new FlxSprite(16, power_bar_y, 'assets/images/ui/p1Power.png'));
 
-		add(p1CharPortrait = new FlxSpriteExt());
-		add(p2CharPortrait = new FlxSpriteExt());
-
-		p1CharPortrait.loadAllFromAnimationSet("p1CharPortrait");
-		p2CharPortrait.loadAllFromAnimationSet("p2CharPortrait");
-
 		// add(new FlxSprite(32, 496, 'assets/images/ui/p1PowerMeter.png'));
 
 		p1Presents = [
 			new FlxSprite(256, 32, 'assets/images/ui/present.png'),
 			new FlxSprite(288, 32, 'assets/images/ui/present.png')
 		];
+
 		add(p1Presents[0]);
 		add(p1Presents[1]);
 
 		add(new FlxSprite(576, 0, 'assets/images/ui/p2HealthBg.png'));
-		add(new FlxSprite(768, 0, 'assets/images/ui/wreath.png'));
 		add(p2HealthBar = new FlxSprite(576, 80, 'assets/images/ui/p2Health.png'));
 		add(new FlxSprite(672, power_bar_y, 'assets/images/ui/p2PowerBg.png'));
 		add(p2PowerBar = new FlxSprite(672, power_bar_y, 'assets/images/ui/p2Power.png'));
@@ -73,8 +67,15 @@ class MatchUi extends FlxGroup {
 			new FlxSprite(592, 32, 'assets/images/ui/present.png'),
 			new FlxSprite(624, 32, 'assets/images/ui/present.png')
 		];
+
 		add(p2Presents[0]);
 		add(p2Presents[1]);
+
+		add(p1CharPortrait = new FlxSpriteExt());
+		add(p2CharPortrait = new FlxSpriteExt());
+
+		p1CharPortrait.loadAllFromAnimationSet("p1CharPortrait");
+		p2CharPortrait.loadAllFromAnimationSet("p2CharPortrait");
 
 		add(new FlxSprite(416, 0, 'assets/images/ui/timerBg.png'));
 
@@ -84,6 +85,8 @@ class MatchUi extends FlxGroup {
 	}
 
 	public function update_players(player1:Fighter, player2:Fighter) {
+		trace(player1.prefix, player2.prefix);
+
 		p1CharPortrait.anim(player1.prefix);
 		p2CharPortrait.anim(player2.prefix);
 	}
