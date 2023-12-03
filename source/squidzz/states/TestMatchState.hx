@@ -32,12 +32,18 @@ class TestMatchState extends BaseState {
 	var match_ui:MatchUi;
 	var debugUi:DebugUi;
 
+	var ko:KO;
+
 	var player1:Fighter;
 	var player2:Fighter;
 
 	var stage:FightingStage;
+	var round_start_ui:RoundStartUI;
 
 	var current_round:Int = 1;
+
+	var p1_rounds_won:Int = 0;
+	var p2_rounds_won:Int = 0;
 
 	var ai_modes:Array<FighterAIMode> = [
 		FighterAIMode.IDLE,
@@ -76,8 +82,8 @@ class TestMatchState extends BaseState {
 		add(stateGroup);
 
 		new GuardBreakFX(stateGroup);
-		new KO(stateGroup);
-		new RoundStartUI(stateGroup);
+		ko = new KO(stateGroup);
+		round_start_ui = new RoundStartUI(stateGroup);
 
 		add(match_ui = new MatchUi());
 
@@ -87,18 +93,15 @@ class TestMatchState extends BaseState {
 			p.set_group(stateGroup);
 			p.set_team(count);
 			p.set_match_ui(match_ui);
-			p.reset_new_round();
 		}
+
+		new_round();
 
 		add(new CameraController(player1, player2));
 
 		for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {
 			localInputs.push(blankInput());
 		}
-
-		RoundStartUI.ref.start_round(current_round);
-
-		match_ui.update_players(player1, player2);
 
 		switch_ai_mode();
 	}
@@ -113,6 +116,22 @@ class TestMatchState extends BaseState {
 		if (Controls.justPressed.PAUSE) {
 			debugUi.visible = !debugUi.visible;
 		}
+
+		end_round_on_dead_hp();
+
+		for (fighter in [player1, player2]) {
+			if (fighter.health <= 0 && fighter.state != FighterState.DEFEATED) {
+				ko.start_ko();
+				fighter.sstate(FighterState.DEFEATED);
+
+				if (player1.health > player2.health)
+					match_ui.p1Wins++;
+				if (player1.health < player2.health)
+					match_ui.p2Wins++;
+			}
+		}
+
+		// trace(p1_rounds_won, p2_rounds_won);
 
 		#if dev
 		if (FlxG.keys.anyJustPressed([FlxKey.R]))
@@ -134,4 +153,24 @@ class TestMatchState extends BaseState {
 
 	function switch_ai_mode()
 		player2.ai_mode = current_ai_mode;
+
+	function end_round_on_dead_hp() {
+		if (ko.state != "ENDED")
+			return;
+
+		current_round++;
+
+		ko.sstate("WAIT_FOR_KO");
+
+		new_round();
+	}
+
+	function new_round() {
+		player1.reset_round();
+		player2.reset_round();
+
+		round_start_ui.start_round(current_round);
+
+		match_ui.update_players(player1, player2);
+	}
 }

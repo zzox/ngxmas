@@ -48,11 +48,13 @@ class KO extends FlxRollbackActor {
 				visible = true;
 				animProtect("out");
 				if (animation.finished)
-					sstate(END);
-			case END:
+					sstate(ENDING);
+			case ENDING:
 				visible = false;
 				if (ttick() > 30)
-					Global.switchState(new TestMatchState());
+					sstate(ENDED);
+			case ENDED:
+				visible = false;
 		}
 
 	override function kill() {
@@ -65,5 +67,6 @@ private enum abstract State(String) from String to String {
 	var WAIT_FOR_KO;
 	var IN;
 	var OUT;
-	var END;
+	var ENDING;
+	var ENDED;
 }

@@ -33,7 +33,7 @@ class RoundStartUI extends FlxRollbackActor {
 	}
 
 	public function start_round(round_number:Int) {
-		animProtect("round-1");
+		animProtect('round-${round_number}');
 		sstate(ROUND_START);
 		ROUND_START_HOLD = true;
 	}

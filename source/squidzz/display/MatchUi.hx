@@ -14,8 +14,9 @@ class MatchUi extends FlxGroup {
 	var p2HealthBar:FlxSprite;
 	var p1PowerBar:FlxSprite;
 	var p2PowerBar:FlxSprite;
-	var p1Presents:Array<FlxSprite>;
-	var p2Presents:Array<FlxSprite>;
+
+	public var p1Presents:Array<FlxSprite>;
+	public var p2Presents:Array<FlxSprite>;
 
 	var p1CharPortrait:FlxSpriteExt;
 	var p2CharPortrait:FlxSpriteExt;
@@ -29,8 +30,8 @@ class MatchUi extends FlxGroup {
 	public var max_healths:Array<Float> = [];
 
 	// Wins defines
-	var p1Wins:Int = 0;
-	var p2Wins:Int = 0;
+	public var p1Wins:Int = 0;
+	public var p2Wins:Int = 0;
 
 	var p1Power:Float = 0;
 	var p2Power:Float = 0;
@@ -49,12 +50,17 @@ class MatchUi extends FlxGroup {
 		// add(new FlxSprite(32, 496, 'assets/images/ui/p1PowerMeter.png'));
 
 		p1Presents = [
-			new FlxSprite(256, 32, 'assets/images/ui/present.png'),
+			new FlxSprite(256 - 24, 32, 'assets/images/ui/present.png'),
 			new FlxSprite(288, 32, 'assets/images/ui/present.png')
 		];
 
 		add(p1Presents[0]);
 		add(p1Presents[1]);
+
+		for (present in p1Presents) {
+			present.scrollFactor.set(0, 0);
+			add(present);
+		}
 
 		add(new FlxSprite(576, 0, 'assets/images/ui/p2HealthBg.png'));
 		add(p2HealthBar = new FlxSprite(576, 80, 'assets/images/ui/p2Health.png'));
@@ -65,11 +71,14 @@ class MatchUi extends FlxGroup {
 
 		p2Presents = [
 			new FlxSprite(592, 32, 'assets/images/ui/present.png'),
-			new FlxSprite(624, 32, 'assets/images/ui/present.png')
+			new FlxSprite(624 + 24, 32, 'assets/images/ui/present.png')
 		];
 
-		add(p2Presents[0]);
-		add(p2Presents[1]);
+		for (present in p2Presents) {
+			add(present);
+			present.scrollFactor.set(0, 0);
+			trace(present.visible);
+		}
 
 		add(p1CharPortrait = new FlxSpriteExt());
 		add(p2CharPortrait = new FlxSpriteExt());

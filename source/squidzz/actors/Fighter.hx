@@ -58,7 +58,7 @@ class Fighter extends FightableObject {
 	var gravity:Int = 2000;
 	var traction:Int = 750;
 
-	var max_health:Int = 1000;
+	var max_health:Int = 1;
 
 	var jump_height:Int = 960;
 
@@ -84,20 +84,32 @@ class Fighter extends FightableObject {
 
 	var round_control_locked:Bool = false;
 
+	var original_position:FlxPoint;
+
 	public function new(?X:Float, ?Y:Float, prefix:String) {
 		super(X, Y, prefix);
 
-		prevInput = blankInput();
+		original_position = new FlxPoint(X, Y);
+
+		visible = false;
+	}
+
+	public function reset_round() {
+		setPosition(original_position.x, original_position.y);
+
+		health = max_health;
+		inv = 15;
+		stun = 0;
+
+		anim("idle");
 
 		state = FighterState.IDLE;
 
 		CONTROL_LOCK = ControlLock.FULL_CONTROL;
 
-		visible = false;
+		prevInput = blankInput();
 
 		reset_gravity();
-
-		maxVelocity.y = 1000;
 	}
 
 	function ai_control(input:FrameInput):FrameInput {
@@ -381,11 +393,6 @@ class Fighter extends FightableObject {
 
 				hit_sound();
 				blocked_hitbox_ids = [];
-
-				if (health <= 0 && state != FighterState.DEFEATED) {
-					KO.ref.start_ko();
-					sstate(FighterState.DEFEATED);
-				}
 			}
 		}
 	}
@@ -704,11 +711,6 @@ class Fighter extends FightableObject {
 			return true;
 		}
 		return false;
-	}
-
-	public function reset_new_round() {
-		health = max_health;
-		update_match_ui();
 	}
 
 	public function update_match_ui() {

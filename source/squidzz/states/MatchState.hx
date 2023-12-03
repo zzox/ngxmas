@@ -62,7 +62,7 @@ class MatchState extends BaseState {
 
 		add(match_ui = new MatchUi());
 		add(debugUi = new DebugUi(this));
-		
+
 		match_ui.update_players(player1, player2);
 
 		var count:Int = 0;
@@ -71,7 +71,7 @@ class MatchState extends BaseState {
 			p.set_group(stateGroup);
 			p.set_team(count);
 			p.set_match_ui(match_ui);
-			p.reset_new_round();
+			p.reset_round();
 		}
 
 		rollback = new Rollback(playerIndex, stateGroup, ['up' => false, 'left' => false, 'right' => false], stateGroup.step, stateGroup.unserialize);

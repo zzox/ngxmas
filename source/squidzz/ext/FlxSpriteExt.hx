@@ -24,7 +24,7 @@ class FlxSpriteExt extends FlxSprite {
 	var hitboxOverritten:Bool = false;
 
 	/**logic state*/
-	var state:String = "";
+	public var state:String = "";
 
 	/**simple tick**/
 	var tick:Int = 0;
@@ -198,7 +198,7 @@ class FlxSpriteExt extends FlxSprite {
 	 * @param new_state new state
 	 * @param reset_tick reset tick? defaults to true, tick will reset on the state change
 	 */
-	function sstate(new_state:String, reset_tick:Bool = true) {
+	public function sstate(new_state:String, reset_tick:Bool = true) {
 		if (reset_tick)
 			tick = 0;
 		state = new_state;
