@@ -12,6 +12,7 @@ import squidzz.display.FightingStage;
 import squidzz.display.GuardBreakFX;
 import squidzz.display.KO;
 import squidzz.display.MatchUi;
+import squidzz.display.RoundStartUI;
 import squidzz.ext.AttackData;
 import squidzz.ext.ListTypes.HitboxType;
 import squidzz.ext.UUid.Uuid;
@@ -80,6 +81,8 @@ class Fighter extends FightableObject {
 	var blocked_hitbox_ids:Array<String> = [];
 
 	public var aiControlled:Bool = false;
+
+	var round_control_locked:Bool = false;
 
 	public function new(?X:Float, ?Y:Float, prefix:String) {
 		super(X, Y, prefix);
@@ -166,6 +169,15 @@ class Fighter extends FightableObject {
 	}
 
 	override function updateWithInputs(delta:Float, input:FrameInput) {
+		if (RoundStartUI.ref.ROUND_START_HOLD) {
+			CONTROL_LOCK = ControlLock.ALL_LOCKED;
+			round_control_locked = true;
+		}
+
+		if (round_control_locked && !RoundStartUI.ref.ROUND_START_HOLD) {
+			CONTROL_LOCK = ControlLock.FULL_CONTROL;
+		}
+
 		update_offsets();
 
 		input = ai_control(input);
@@ -212,11 +224,13 @@ class Fighter extends FightableObject {
 				}
 
 				if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE && !hit_recovery) {
-					if (pressed(input, Left))
-						acl -= ground_speed / ground_rate;
+					if (CONTROL_LOCK == ControlLock.FULL_CONTROL || CONTROL_LOCK == ControlLock.MOVE_OK) {
+						if (pressed(input, Left))
+							acl -= ground_speed / ground_rate;
 
-					if (pressed(input, Right))
-						acl += ground_speed / ground_rate;
+						if (pressed(input, Right))
+							acl += ground_speed / ground_rate;
+					}
 
 					if (acl != 0)
 						WALKING_DIRECTION = acl > 0 && !flipX ? WalkDirection.FORWARDS : WalkDirection.BACKWARDS;

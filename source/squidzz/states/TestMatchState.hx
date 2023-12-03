@@ -16,6 +16,7 @@ import squidzz.display.FightingStage;
 import squidzz.display.GuardBreakFX;
 import squidzz.display.KO;
 import squidzz.display.MatchUi;
+import squidzz.display.RoundStartUI;
 import squidzz.rollback.Rollback;
 
 // TODO: add updates alongside MatchState.
@@ -35,6 +36,8 @@ class TestMatchState extends BaseState {
 	var player2:Fighter;
 
 	var stage:FightingStage;
+
+	var current_round:Int = 1;
 
 	var ai_modes:Array<FighterAIMode> = [
 		FighterAIMode.IDLE,
@@ -62,7 +65,7 @@ class TestMatchState extends BaseState {
 			add(layer);
 
 		player1 = new Penguin(112, 328);
-		player2 = new Snowman(768 - 500, 328);
+		player2 = new Snowman(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;
@@ -74,6 +77,7 @@ class TestMatchState extends BaseState {
 
 		new GuardBreakFX(stateGroup);
 		new KO(stateGroup);
+		new RoundStartUI(stateGroup);
 
 		add(match_ui = new MatchUi());
 
@@ -91,6 +95,8 @@ class TestMatchState extends BaseState {
 		for (_ in 0...Rollback.INPUT_DELAY_FRAMES) {
 			localInputs.push(blankInput());
 		}
+
+		RoundStartUI.ref.start_round(current_round);
 
 		match_ui.update_players(player1, player2);
 

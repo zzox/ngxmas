@@ -85,8 +85,6 @@ class MatchUi extends FlxGroup {
 	}
 
 	public function update_players(player1:Fighter, player2:Fighter) {
-		trace(player1.prefix, player2.prefix);
-
 		p1CharPortrait.anim(player1.prefix);
 		p2CharPortrait.anim(player2.prefix);
 	}

@@ -13,9 +13,9 @@
         <anim name="donkey">3</anim>
     </animSet>
 
-    <animSet image="round-start">
-        <anim name="round-1" looping="false">0t57</anim>
-        <anim name="round-2" looping="false">58t115</anim>
-        <anim name="round-3" looping="false">116t173</anim>
+    <animSet image="round-start" width="960" height="540">
+        <anim name="round-1" looping="false" fps="30">0t57</anim>
+        <anim name="round-2" looping="false" fps="30">58t115</anim>
+        <anim name="round-3" looping="false" fps="30">116t173</anim>
     </animSet>
 </root>
