@@ -27,7 +27,7 @@ class Main extends openfl.display.Sprite {
 		AttackData.init();
 		Paths.fill_path_cache();
 
-		// LogStyle.ERROR.errorSound = "assets/sounds/penguin_says_fuck";
+		LogStyle.ERROR.errorSound = "assets/sounds/penguin says fuck";
 
 		addChild(new FlxGame(960, 540, BootState, 60, 60, true));
 

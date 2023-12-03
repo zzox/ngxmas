@@ -56,7 +56,7 @@ class FightableObject extends FlxRollbackActor {
 
 	public var attack_hit_success:Bool = false;
 
-	var prefix:String;
+	public var prefix:String;
 
 	var internal_flags:Map<String, Dynamic> = new Map<String, Dynamic>();
 

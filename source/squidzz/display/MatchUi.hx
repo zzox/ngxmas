@@ -17,6 +17,11 @@ class MatchUi extends FlxGroup {
 	var p1Presents:Array<FlxSprite>;
 	var p2Presents:Array<FlxSprite>;
 
+	var p1CharPortrait:FlxSpriteExt;
+	var p2CharPortrait:FlxSpriteExt;
+
+	var wreaths:FlxSpriteExt;
+
 	var power_bar_y:Int = 448 + 24;
 
 	// Health defines
@@ -36,10 +41,16 @@ class MatchUi extends FlxGroup {
 		super();
 
 		add(new FlxSprite(0, 0, 'assets/images/ui/p1HealthBg.png'));
-		add(new FlxSprite(0, 0, 'assets/images/ui/wreath.png'));
+		add(new FlxSprite(0, 0, 'assets/images/ui/wreaths.png'));
 		add(p1HealthBar = new FlxSprite(16, 80, 'assets/images/ui/p1Health.png'));
 		add(new FlxSprite(16, power_bar_y, 'assets/images/ui/p1PowerBg.png'));
 		add(p1PowerBar = new FlxSprite(16, power_bar_y, 'assets/images/ui/p1Power.png'));
+
+		add(p1CharPortrait = new FlxSpriteExt());
+		add(p2CharPortrait = new FlxSpriteExt());
+
+		p1CharPortrait.loadAllFromAnimationSet("p1CharPortrait");
+		p2CharPortrait.loadAllFromAnimationSet("p2CharPortrait");
 
 		// add(new FlxSprite(32, 496, 'assets/images/ui/p1PowerMeter.png'));
 
@@ -70,6 +81,11 @@ class MatchUi extends FlxGroup {
 		forEach(function(basic:FlxBasic) {
 			cast(basic, FlxSprite).scrollFactor.set(0, 0);
 		});
+	}
+
+	public function update_players(player1:Fighter, player2:Fighter) {
+		p1CharPortrait.anim(player1.prefix);
+		p2CharPortrait.anim(player2.prefix);
 	}
 
 	override function update(delta:Float) {
