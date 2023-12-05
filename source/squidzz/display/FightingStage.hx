@@ -1,7 +1,7 @@
 package squidzz.display;
 
 class FightingStage {
-	public var layers:Array<FlxRollbackActor> = [];
+	public var layers:Array<FlxSpriteExt> = [];
 
 	public function new(stage_name:String) {
 		switch (stage_name) {
@@ -42,7 +42,7 @@ class FightingStage {
 	function add_layer(layer_name:String, ?position:FlxPoint, ?scroll_x:Float = 1, ?scroll_y:Float = 1) {
 		position = position == null ? new FlxPoint() : position;
 
-		var layer:FlxRollbackActor = new FlxRollbackActor(position.x, position.y);
+		var layer:FlxSpriteExt = new FlxSpriteExt(position.x, position.y);
 		layer.loadAllFromAnimationSet(layer_name);
 		layer.scrollFactor.set(scroll_x, scroll_y);
 

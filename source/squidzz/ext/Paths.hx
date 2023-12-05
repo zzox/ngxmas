@@ -4,6 +4,7 @@ import flixel.system.FlxAssets;
 import lime.utils.AssetManifest;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
+import squidzz.ext.ListTypes;
 #if deprecated
 import sys.FileSystem;
 #end
@@ -17,7 +18,7 @@ class Paths {
 
 	public static function fill_path_cache() {
 		#if old_paths
-		var path_cache_json:PathCacheType = haxe.Json.parse(Utils.loadAssistString("assets/data/entries/file-paths.json"));
+		var path_cache_json:PathCacheType = haxe.Json.parse(Utils.loadAssistString("assets/entries/file-paths.json"));
 		for (key in path_cache_json.paths)
 			path_cache.set(key.file, key.path);
 		#end

@@ -1147,6 +1147,18 @@
         {
             "file": "Yeti's Ice Sauna Layer 5.png",
             "path": "assets/stages/sauna"
+        },
+        {
+            "file": "round-start.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p1CharPortrait.png",
+            "path": "assets/images/ui"
+        },
+        {
+            "file": "p2CharPortrait.png",
+            "path": "assets/images/ui"
         }
     ]
 }
