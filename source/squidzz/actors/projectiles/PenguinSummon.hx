@@ -55,7 +55,7 @@ class PenguinSummon extends Projectile {
 		if (state == PenguinSummonState.BUMPED || fighter.team == team)
 			return;
 
-		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) || FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10)) {
+		if (FlxG.pixelPerfectOverlap(hurtbox_sheet, fighter.hitbox_sheet, 10) || FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10)) {
 			sstate(PenguinSummonState.BUMPED);
 		}
 	}

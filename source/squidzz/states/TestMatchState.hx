@@ -53,7 +53,7 @@ class TestMatchState extends BaseState {
 		FighterAIMode.WALK_FORWARDS
 	];
 
-	static var current_ai_mode:FighterAIMode = FighterAIMode.WALK_BACKWARDS;
+	static var current_ai_mode:FighterAIMode = FighterAIMode.IDLE;
 
 	var guard_break_fx:FlxRollbackActor;
 
@@ -70,8 +70,8 @@ class TestMatchState extends BaseState {
 		for (layer in stage.layers)
 			add(layer);
 
-		player1 = new Penguin(112, 328);
-		player2 = new Snowman(768, 328);
+		player1 = new Snowman(112, 328);
+		player2 = new Penguin(768, 328);
 
 		player1.opponent = player2;
 		player2.opponent = player1;

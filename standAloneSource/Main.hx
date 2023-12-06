@@ -6,6 +6,7 @@ import flixel.system.debug.log.LogStyle;
 import squidzz.ext.AttackData;
 import squidzz.ext.Lists;
 import squidzz.ext.Paths;
+import squidzz.states.CharacterSelect;
 import squidzz.states.MatchState;
 import squidzz.states.MenuState;
 import squidzz.states.TestMatchState;
@@ -13,7 +14,7 @@ import squidzz.states.TestMatchState;
 class Main extends openfl.display.Sprite {
 	public static var DISABLE_SCREENSHAKE:Bool = false;
 	public static var SKIP_MENU:Bool = true;
-	public static var SHOW_HITBOX:Bool = false;
+	public static var SHOW_HITBOX:Bool = true;
 
 	#if volume
 	static var base_volume:Int = Std.parseInt('${haxe.macro.Compiler.getDefine("volume")}');
@@ -30,7 +31,7 @@ class Main extends openfl.display.Sprite {
 		#end
 	}
 
-	function make_game(){
+	function make_game() {
 		Lists.init();
 		AttackData.init();
 
@@ -57,6 +58,10 @@ class BootState extends flixel.FlxState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
+		#if test_cs
+		Global.switchState(new CharacterSelect());
+		#else
 		Global.switchState(!Main.SKIP_MENU ? new MenuState() : new TestMatchState());
+		#end
 	}
 }

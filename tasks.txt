@@ -7,11 +7,12 @@ TODO:
 - Implement new Yeti/Girl moves
 - Temporary Announcer
 - End screen
-- Char Select
 - Multiplayer Matchmaking
 - Hit Bar Juice
 - Better AI
 - ...Story/Arcade mode?
+- Char Select
+
 
 BLOCKED:
 

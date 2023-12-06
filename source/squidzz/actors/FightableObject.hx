@@ -102,11 +102,14 @@ class FightableObject extends FlxRollbackActor {
 	}
 
 	function update_graphics(delta:Float, input:FrameInput) {
-		cur_sheet.updateWithInputs(delta, input);
-
 		hitbox_sheet.animation.frameIndex = cur_anim.frameIndex;
 		hurtbox_sheet.animation.frameIndex = cur_anim.frameIndex;
 
+		for (box in sprite_atlas) {
+			box.velocity.copyFrom(velocity);
+			box.acceleration.copyFrom(acceleration);
+			box.flipX = flipX;
+		}
 		for (box in [visual, hitbox, hurtbox]) {
 			box.velocity.copyFrom(velocity);
 			box.acceleration.copyFrom(acceleration);
@@ -116,10 +119,6 @@ class FightableObject extends FlxRollbackActor {
 
 		hitbox_sheet.updateWithInputs(delta, input);
 		hurtbox_sheet.updateWithInputs(delta, input);
-
-		stamp_ext(visual, cur_sheet);
-		stamp_ext(hitbox, hitbox_sheet);
-		stamp_ext(hurtbox, hurtbox_sheet);
 
 		update_offsets();
 	}
@@ -141,11 +140,16 @@ class FightableObject extends FlxRollbackActor {
 		return null;
 	}
 
-	function update_offsets()
+	function update_offsets() {
+		for (sprite in sprite_atlas) {
+			sprite.offset.copyFrom(!flipX ? cur_sheet.offset_left : cur_sheet.offset_right);
+			sprite.setPosition(x, y);
+		}
 		for (box in [visual, hitbox, hurtbox]) {
 			box.offset.copyFrom(!flipX ? cur_sheet.offset_left : cur_sheet.offset_right);
 			box.setPosition(x, y);
 		}
+	}
 
 	function fill_sprite_atlas(prefix:String)
 		for (animSet in Lists.animSets)
@@ -173,7 +177,12 @@ class FightableObject extends FlxRollbackActor {
 		hitbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
 		hurtbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');
 
+		for (c in sprite_atlas)
+			c.visible = false;
+
 		cur_sheet = find_anim_in_sprite_atlas(anim_name);
+
+		cur_sheet.visible = true;
 
 		if (graphic == null)
 			makeGraphic(cur_sheet.width.floor(), cur_sheet.height.floor(), FlxColor.WHITE);

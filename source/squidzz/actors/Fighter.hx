@@ -58,7 +58,7 @@ class Fighter extends FightableObject {
 	var gravity:Int = 2000;
 	var traction:Int = 750;
 
-	var max_health:Int = 1;
+	var max_health:Int = 1000;
 
 	var jump_height:Int = 960;
 
@@ -110,6 +110,7 @@ class Fighter extends FightableObject {
 		prevInput = blankInput();
 
 		reset_gravity();
+		update_match_ui();
 	}
 
 	function ai_control(input:FrameInput):FrameInput {
@@ -340,7 +341,7 @@ class Fighter extends FightableObject {
 		var blocking:Bool = can_block() && block_input && !opponent_on_opposite_side() && state != FighterState.HIT;
 		blocking = blocking && !shield_broken;
 
-		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox, 10) && inv <= 0) {
+		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox_sheet, 10) && inv <= 0) {
 			make_hit_circle((mp().x + fighter.mp().x) / 2, (mp().y + fighter.mp().y) / 2, blocking);
 			if (blocking) {
 				sstate(FighterState.BLOCKING);
@@ -702,6 +703,10 @@ class Fighter extends FightableObject {
 	override function set_group(group:FlxRollbackGroup) {
 		for (h in [hitbox, hitbox_sheet, hurtbox, hurtbox_sheet])
 			h.set_group(group);
+		for (sprite in sprite_atlas) {
+			group.add(sprite);
+			sprite.set_group(group);
+		}
 		super.set_group(group);
 	}
 
