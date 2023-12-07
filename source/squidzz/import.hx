@@ -5,7 +5,6 @@ import Main;
 import flixel.*;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
-import squidzz.actors.DamageSource;
 import squidzz.actors.FightableObject;
 import squidzz.actors.FlxRollbackActor;
 import squidzz.actors.fighters.*;

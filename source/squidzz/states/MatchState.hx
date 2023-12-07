@@ -9,7 +9,6 @@ import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
-import squidzz.actors.DamageSource;
 import squidzz.actors.Fighter;
 import squidzz.actors.fighters.Snowman;
 import squidzz.display.DebugUi;
@@ -29,8 +28,6 @@ class MatchState extends BaseState {
 
 	var debugUi:DebugUi;
 	var match_ui:MatchUi;
-
-	public var damage:FlxTypedGroup<DamageSource> = new FlxTypedGroup<DamageSource>();
 
 	var stage:FightingStage;
 

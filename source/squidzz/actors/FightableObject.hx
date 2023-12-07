@@ -17,17 +17,11 @@ import squidzz.rollback.FrameInput;
 using Math;
 
 class FightableObject extends FlxRollbackActor {
-	/**A seperated hurtbox anim that track this sprite and  is only used for hitbox spawning*/
-	public var hurtbox:FlxRollbackActor;
-
-	/**A seperated hitbox anim that track this sprite and  is only used for hitbox spawning*/
-	public var hitbox:FlxRollbackActor;
-
 	/**A seperated graphic sheet, this is the only visible sheet*/
 	public var visual:FlxRollbackActor;
 
-	public var hurtbox_sheet:FlxRollbackActor;
-	public var hitbox_sheet:FlxRollbackActor;
+	public var hurtbox_sheet(get, default):FlxRollbackActor;
+	public var hitbox_sheet(get, default):FlxRollbackActor;
 	public var cur_sheet(get, default):FlxRollbackActor;
 
 	var cur_anim(get, default):FlxAnimationController;
@@ -66,13 +60,6 @@ class FightableObject extends FlxRollbackActor {
 		this.prefix = prefix;
 		type = prefix;
 
-		visual = new FlxRollbackActor();
-		hurtbox = new FlxRollbackActor();
-		hitbox = new FlxRollbackActor();
-
-		visual.immovable = hurtbox.immovable = hitbox.immovable = true;
-		visual.moves = hurtbox.moves = hitbox.moves = false;
-
 		fill_sprite_atlas(prefix);
 	}
 
@@ -80,9 +67,9 @@ class FightableObject extends FlxRollbackActor {
 		update_offsets();
 		update_graphics(delta, input);
 
-		hitbox.visible = hurtbox.visible = Main.SHOW_HITBOX;
-
 		super.updateWithInputs(delta, input);
+
+		//	trace(hurtbox_sheet.visible, hitbox_sheet.visible, hurtbox_sheet.getPosition(), hitbox_sheet.getPosition());
 	}
 
 	override function anim(s:String) {
@@ -110,26 +97,11 @@ class FightableObject extends FlxRollbackActor {
 			box.acceleration.copyFrom(acceleration);
 			box.flipX = flipX;
 		}
-		for (box in [visual, hitbox, hurtbox]) {
-			box.velocity.copyFrom(velocity);
-			box.acceleration.copyFrom(acceleration);
-			box.flipX = flipX;
-			box.alpha = box == visual ? 1 : 0.5;
-		}
 
 		hitbox_sheet.updateWithInputs(delta, input);
 		hurtbox_sheet.updateWithInputs(delta, input);
 
 		update_offsets();
-	}
-
-	function stamp_ext(target_sprite:FlxSpriteExt, stamp_sprite:FlxSpriteExt) {
-		if (target_sprite.graphic == null)
-			target_sprite.makeGraphic(stamp_sprite.frameWidth, stamp_sprite.frameHeight, FlxColor.TRANSPARENT, true);
-		else
-			target_sprite.graphic.bitmap.fillRect(target_sprite.graphic.bitmap.rect, FlxColor.TRANSPARENT);
-
-		target_sprite.stamp(stamp_sprite);
 	}
 
 	public function current_hitbox_data():HitboxType {
@@ -144,21 +116,22 @@ class FightableObject extends FlxRollbackActor {
 		for (sprite in sprite_atlas) {
 			sprite.offset.copyFrom(!flipX ? cur_sheet.offset_left : cur_sheet.offset_right);
 			sprite.setPosition(x, y);
-		}
-		for (box in [visual, hitbox, hurtbox]) {
-			box.offset.copyFrom(!flipX ? cur_sheet.offset_left : cur_sheet.offset_right);
-			box.setPosition(x, y);
+			// sprite.setPosition(0, 0);
+			// sprite.scrollFactor.set(0, 0);
 		}
 	}
 
-	function fill_sprite_atlas(prefix:String)
+	function fill_sprite_atlas(prefix:String) {
 		for (animSet in Lists.animSets)
 			if (animSet.image.indexOf(prefix) == 0)
 				for (image in [animSet.image, '${animSet.image}-hitbox', '${animSet.image}-hurtbox']) {
 					var sprite:FlxRollbackActor = new FlxRollbackActor();
 					sprite.loadAllFromAnimationSet(image, animSet.image);
+					FlxG.state.add(sprite);
+					// trace(image, sprite.loaded_image);
 					sprite_atlas.set(image, sprite);
 				}
+	}
 
 	function find_anim_in_sprite_atlas(anim_name:String):FlxRollbackActor {
 		for (sprite in sprite_atlas)
@@ -174,15 +147,17 @@ class FightableObject extends FlxRollbackActor {
 		if (cur_sheet == null)
 			throw "cur sheet is null, looking for " + anim_name;
 
-		hitbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
-		hurtbox_sheet = sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');
-
 		for (c in sprite_atlas)
 			c.visible = false;
 
-		cur_sheet = find_anim_in_sprite_atlas(anim_name);
+		hitbox_sheet.visible = Main.SHOW_HITBOX;
+		hurtbox_sheet.visible = false;
 
-		cur_sheet.visible = true;
+		// cur_sheet.visible = true;
+
+		//*if (prefix == "snowman" && group != null)
+		/**trace(cur_sheet.loaded_image, hitbox_sheet.loaded_image, hurtbox_sheet.loaded_image, cur_sheet.visible, hitbox_sheet.visible,
+			hurtbox_sheet.visible);**/
 
 		if (graphic == null)
 			makeGraphic(cur_sheet.width.floor(), cur_sheet.height.floor(), FlxColor.WHITE);
@@ -206,11 +181,10 @@ class FightableObject extends FlxRollbackActor {
 		group.add(hit_circle);
 	}
 
-	function add_self_to_group() {
+	public function add_self_to_group() {
 		group.add(this);
-		group.add(hitbox);
-		group.add(hurtbox);
-		group.add(visual);
+		for (sprite in sprite_atlas)
+			group.add(sprite);
 	}
 
 	public function fighter_hit_check(fighter:FightableObject, shield_broken:Bool = false)
@@ -226,4 +200,10 @@ class FightableObject extends FlxRollbackActor {
 			}
 		return count;
 	}
+
+	function get_hurtbox_sheet():FlxRollbackActor
+		return sprite_atlas.get('${cur_sheet.loaded_image}-hurtbox');
+
+	function get_hitbox_sheet():FlxRollbackActor
+		return sprite_atlas.get('${cur_sheet.loaded_image}-hitbox');
 }

@@ -77,7 +77,6 @@ class MatchUi extends FlxGroup {
 		for (present in p2Presents) {
 			add(present);
 			present.scrollFactor.set(0, 0);
-			trace(present.visible);
 		}
 
 		add(p1CharPortrait = new FlxSpriteExt());

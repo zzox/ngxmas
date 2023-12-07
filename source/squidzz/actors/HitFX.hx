@@ -9,6 +9,7 @@ class HitFX extends FlxRollbackActor {
 		super(X, Y, group);
 
 		set_group(group);
+		group.add(this);
 
 		if (!blocked)
 			loadAllFromAnimationSet("hit-fx");
@@ -16,8 +17,6 @@ class HitFX extends FlxRollbackActor {
 			loadAllFromAnimationSet("snow-fx");
 
 		anim("idle");
-
-		group.add(this);
 	}
 
 	override function updateWithInputs(delta:Float, input:FrameInput) {

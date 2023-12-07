@@ -33,10 +33,8 @@ class FlxRollbackGroup extends FlxTypedGroup<FlxRollbackActor> implements AbsSer
 		this.player2 = player2;
 
 		for (p in [player1, player2]) {
-			add(p);
-			add(p.visual);
-			add(p.hurtbox);
-			add(p.hitbox);
+			p.set_group(this);
+			p.add_self_to_group();
 		}
 	}
 

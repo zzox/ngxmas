@@ -336,12 +336,12 @@ class Fighter extends FightableObject {
 		if (fighter_hitbox_data == null || blocked_hitbox_ids.indexOf(fighter_hitbox_data.melee_id) > -1)
 			return;
 
-		overlaps_fighter = collide_overlaps_fighter || FlxG.pixelPerfectOverlap(hurtbox, fighter.hurtbox, 10);
+		overlaps_fighter = collide_overlaps_fighter || FlxG.pixelPerfectOverlap(hurtbox_sheet, fighter.hurtbox_sheet, 10);
 
 		var blocking:Bool = can_block() && block_input && !opponent_on_opposite_side() && state != FighterState.HIT;
 		blocking = blocking && !shield_broken;
 
-		if (FlxG.pixelPerfectOverlap(hurtbox, fighter.hitbox_sheet, 10) && inv <= 0) {
+		if (FlxG.pixelPerfectOverlap(hurtbox_sheet, fighter.hitbox_sheet, 10) && inv <= 0) {
 			make_hit_circle((mp().x + fighter.mp().x) / 2, (mp().y + fighter.mp().y) / 2, blocking);
 			if (blocking) {
 				sstate(FighterState.BLOCKING);
@@ -666,14 +666,6 @@ class Fighter extends FightableObject {
 	function make_projectile(projectile_type:String)
 		return;
 
-	/**Receive a hit**/
-	function get_hit(source:DamageSource)
-		throw "Not implemented!";
-
-	/**Spawns a damage source that matches -hitbox sprite**/
-	function melee_damage_source()
-		new DamageSource(x, y, hitbox);
-
 	function pressed(input:FrameInput, dir:FInput) {
 		// NOTE: just for development, remove in prod.
 		// bad inputs from the peer would trigger this.
@@ -701,13 +693,11 @@ class Fighter extends FightableObject {
 		return !attacking && (state == FighterState.IDLE || state == FighterState.JUMPING);
 
 	override function set_group(group:FlxRollbackGroup) {
-		for (h in [hitbox, hitbox_sheet, hurtbox, hurtbox_sheet])
-			h.set_group(group);
-		for (sprite in sprite_atlas) {
-			group.add(sprite);
-			sprite.set_group(group);
-		}
+		// never used but if it's in an old group, remove it
 		super.set_group(group);
+
+		for (sprite in sprite_atlas)
+			sprite.set_group(group);
 	}
 
 	override public function animProtect(animation_name:String = ""):Bool {

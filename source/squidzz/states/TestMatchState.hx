@@ -90,7 +90,6 @@ class TestMatchState extends BaseState {
 		var count:Int = 0;
 		for (p in [player1, player2]) {
 			count++;
-			p.set_group(stateGroup);
 			p.set_team(count);
 			p.set_match_ui(match_ui);
 		}
@@ -104,6 +103,15 @@ class TestMatchState extends BaseState {
 		}
 
 		switch_ai_mode();
+
+		/*
+			var wombo:FlxRollbackActor = new FlxRollbackActor();
+			wombo.loadAllFromAnimationSet("snowman-air-back-hurtbox");
+			wombo.setPosition();
+			wombo.scrollFactor.set();
+
+			stateGroup.add(wombo);
+		 */
 	}
 
 	override function update(elapsed:Float) {
