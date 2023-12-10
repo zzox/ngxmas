@@ -9,6 +9,7 @@ import flixel.math.FlxPoint;
 import flixel.system.debug.log.LogStyle;
 import flixel.tile.FlxBaseTilemap;
 import flixel.tile.FlxTilemap;
+import squidzz.actors.ActorTypes.FighterPrefix;
 import squidzz.actors.Fighter;
 import squidzz.display.CameraController;
 import squidzz.display.DebugUi;
@@ -57,6 +58,12 @@ class TestMatchState extends BaseState {
 
 	var guard_break_fx:FlxRollbackActor;
 
+	var p1_character_selected:FighterPrefix = FighterPrefix.PENGUIN;
+	var p2_character_selected:FighterPrefix = FighterPrefix.SNOWMAN;
+
+	var p1_starting_position:FlxPoint = new FlxPoint(112, 328);
+	var p2_starting_position:FlxPoint = new FlxPoint(768, 328);
+
 	override function create() {
 		super.create();
 
@@ -70,8 +77,12 @@ class TestMatchState extends BaseState {
 		for (layer in stage.layers)
 			add(layer);
 
-		player1 = new Snowman(112, 328);
-		player2 = new Penguin(768, 328);
+		player1 = make_fighter(p1_character_selected, p1_starting_position);
+		player2 = make_fighter(p2_character_selected, p2_starting_position);
+
+		#if test_p2_middle
+		player2.x -= FlxG.width / 2;
+		#end
 
 		player1.opponent = player2;
 		player2.opponent = player1;
@@ -112,6 +123,20 @@ class TestMatchState extends BaseState {
 
 			stateGroup.add(wombo);
 		 */
+	}
+
+	function make_fighter(prefix:FighterPrefix, pos:FlxPoint):Fighter {
+		switch (prefix) {
+			case FighterPrefix.PENGUIN:
+				return new Penguin(pos.x, pos.y);
+			case FighterPrefix.SNOWMAN:
+				return new Snowman(pos.x, pos.y);
+			case FighterPrefix.DONKEY:
+				return new Donkey(pos.x, pos.y);
+			case FighterPrefix.YETI_DUO:
+				return new YetiDuoGirl(pos.x, pos.y);
+		}
+		throw "invalid fighter you dingus " + prefix;
 	}
 
 	override function update(elapsed:Float) {

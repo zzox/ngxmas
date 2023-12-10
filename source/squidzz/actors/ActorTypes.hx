@@ -104,3 +104,10 @@ enum abstract JumpingStyle(Int) from Int to Int {
 	/**Smash style jumping*/
 	var FREESTYLE:Int = 1;
 }
+
+enum abstract FighterPrefix(String) from String to String {
+	var PENGUIN = "penguin";
+	var SNOWMAN = "snowman";
+	var YETI_DUO = "yetiDuo";
+	var DONKEY = "donkey";
+}

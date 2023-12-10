@@ -133,7 +133,6 @@ class FightableObject extends FlxRollbackActor {
 					var sprite:FlxRollbackActor = new FlxRollbackActor();
 					sprite.loadAllFromAnimationSet(image, animSet.image);
 					FlxG.state.add(sprite);
-					trace(image, animSet.image, sprite.loaded_image);
 					sprite_atlas.set(image, sprite);
 				}
 	}
