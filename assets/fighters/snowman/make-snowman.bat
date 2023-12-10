@@ -30,20 +30,20 @@ aseprite -b --layer "hitbox" snowman-idle.aseprite --sheet snowman-idle-hitbox.p
 aseprite -b --layer "hitbox" snowman-jump.aseprite --sheet snowman-jump-hitbox.png
 aseprite -b --layer "hitbox" snowman-ko.aseprite --sheet snowman-ko-hitbox.png
 aseprite -b --layer "hitbox" snowman-walk.aseprite --sheet snowman-walk-hitbox.png
-aseprite -b --layer "Sprite Sheet" snowman-walk.aseprite --sheet snowman-walk.png
-aseprite -b --layer "Sprite Sheet" snowman-air-back.aseprite --sheet snowman-air-back.png
-aseprite -b --layer "Sprite Sheet" snowman-air-down.aseprite --sheet snowman-air-down.png
-aseprite -b --layer "Sprite Sheet" snowman-air-forward.aseprite --sheet snowman-air-forward.png
-aseprite -b --layer "Sprite Sheet" snowman-air-neutral.aseprite --sheet snowman-air-neutral.png
-aseprite -b --layer "Sprite Sheet" snowman-air-up.aseprite --sheet snowman-air-up.png
-aseprite -b --layer "Sprite Sheet" snowman-block.aseprite --sheet snowman-block.png
-aseprite -b --layer "Sprite Sheet" snowman-ground-back.aseprite --sheet snowman-ground-back.png
-aseprite -b --layer "Sprite Sheet" snowman-ground-down.aseprite --sheet snowman-ground-down.png
-aseprite -b --layer "Sprite Sheet" snowman-ground-forward.aseprite --sheet snowman-ground-forward.png
-aseprite -b --layer "Sprite Sheet" snowman-ground-neutral.aseprite --sheet snowman-ground-neutral.png
-aseprite -b --layer "Sprite Sheet" snowman-ground-up.aseprite --sheet snowman-ground-up.png
-aseprite -b --layer "Sprite Sheet" snowman-hit.aseprite --sheet snowman-hit.png
-aseprite -b --layer "Sprite Sheet" snowman-idle.aseprite --sheet snowman-idle.png
-aseprite -b --layer "Sprite Sheet" snowman-jump.aseprite --sheet snowman-jump.png
-aseprite -b --layer "Sprite Sheet" snowman-ko.aseprite --sheet snowman-ko.png
-aseprite -b --layer "Sprite Sheet" snowman-walk.aseprite --sheet snowman-walk.png
+aseprite -b --layer "main" snowman-walk.aseprite --sheet snowman-walk.png
+aseprite -b --layer "main" snowman-air-back.aseprite --sheet snowman-air-back.png
+aseprite -b --layer "main" snowman-air-down.aseprite --sheet snowman-air-down.png
+aseprite -b --layer "main" snowman-air-forward.aseprite --sheet snowman-air-forward.png
+aseprite -b --layer "main" snowman-air-neutral.aseprite --sheet snowman-air-neutral.png
+aseprite -b --layer "main" snowman-air-up.aseprite --sheet snowman-air-up.png
+aseprite -b --layer "main" snowman-block.aseprite --sheet snowman-block.png
+aseprite -b --layer "main" snowman-ground-back.aseprite --sheet snowman-ground-back.png
+aseprite -b --layer "main" snowman-ground-down.aseprite --sheet snowman-ground-down.png
+aseprite -b --layer "main" snowman-ground-forward.aseprite --sheet snowman-ground-forward.png
+aseprite -b --layer "main" snowman-ground-neutral.aseprite --sheet snowman-ground-neutral.png
+aseprite -b --layer "main" snowman-ground-up.aseprite --sheet snowman-ground-up.png
+aseprite -b --layer "main" snowman-hit.aseprite --sheet snowman-hit.png
+aseprite -b --layer "main" snowman-idle.aseprite --sheet snowman-idle.png
+aseprite -b --layer "main" snowman-jump.aseprite --sheet snowman-jump.png
+aseprite -b --layer "main" snowman-ko.aseprite --sheet snowman-ko.png
+aseprite -b --layer "main" snowman-walk.aseprite --sheet snowman-walk.png

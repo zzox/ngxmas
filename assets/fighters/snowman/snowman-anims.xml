@@ -1,16 +1,15 @@
 <root>
-    <animSet image = "snowman-idle" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "idle">0t34</anim>
-        <anim name = "jump">0t34</anim>
+    <animSet image = "snowman-idle" fps = "40ms" hitbox = "224,34" offset_left = "2,208" offset_right = "107,208">
+        <anim name = "idle">0t28</anim>
     </animSet>
 
-    <animSet image = "snowman-walk" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "walk-forwards">0t23</anim>
-        <anim name = "walk-backwards">23t0</anim>
+    <animSet image = "snowman-walk" fps = "40ms" hitbox = "286,55" offset_left = "1,203" offset_right = "20,203">
+        <anim name = "walk-forwards">0t19</anim>
+        <anim name = "walk-backwards">19t0</anim>
     </animSet>
     
     <animSet image = "snowman-jump" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "jump-squat" looping = "false">0t9</anim>
+        <anim name = "jump-squast" looping = "false">0t9</anim>
         <anim name = "jump-up">10t29</anim>
         <anim name = "jump-mid" looping = "false">30t32</anim>
         <anim name = "jump-down">33t50</anim>
@@ -57,7 +56,7 @@
         <anim name = "air-forward-loop">14</anim>
     </animSet>
 
-    <animSet image = "snowman-air-back" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+    <animSet image = "snowman-air-back" fps = "40ms" hitbox = "95,147" offset_left = "113,245" offset_right = "204,245">
         <anim name = "air-back" looping = "false">0t20</anim>
     </animSet>
 
