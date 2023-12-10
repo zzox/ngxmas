@@ -1,5 +1,6 @@
 package squidzz.display;
 
+import json2object.Position;
 import squidzz.rollback.FrameInput;
 
 class CameraController extends FlxRollbackActor {
@@ -23,6 +24,14 @@ class CameraController extends FlxRollbackActor {
 
 	function update_midpoint() {
 		setPosition((player1.mp().x + player2.mp().x) / 2, (player1.mp().y + player2.mp().y) / 2 - y_offset);
+		/*
+		for (player in [player1, player2]) {
+			if (x < player.x)
+				x = player.x;
+			if (x + FlxG.camera.width > player.x + player.width)
+				x = player.x + player.width;
+		}
+		*/
 	}
 
 	override function update(elapsed:Float) {

@@ -80,8 +80,10 @@ class FightableObject extends FlxRollbackActor {
 		if (prev_sheet != cur_sheet) {
 			if (cur_anim != null) {
 				cur_anim.reset();
-				hitbox_sheet.animation.reset();
-				hurtbox_sheet.animation.reset();
+				if (hitbox_sheet != null)
+					hitbox_sheet.animation.reset();
+				if (hurtbox_sheet != null)
+					hurtbox_sheet.animation.reset();
 			}
 		}
 
@@ -89,17 +91,20 @@ class FightableObject extends FlxRollbackActor {
 	}
 
 	function update_graphics(delta:Float, input:FrameInput) {
-		hitbox_sheet.animation.frameIndex = cur_anim.frameIndex;
-		hurtbox_sheet.animation.frameIndex = cur_anim.frameIndex;
+		if (hitbox_sheet != null)
+			hitbox_sheet.animation.frameIndex = cur_anim.frameIndex;
+		if (hurtbox_sheet != null)
+			hurtbox_sheet.animation.frameIndex = cur_anim.frameIndex;
 
 		for (box in sprite_atlas) {
 			box.velocity.copyFrom(velocity);
 			box.acceleration.copyFrom(acceleration);
 			box.flipX = flipX;
 		}
-
-		hitbox_sheet.updateWithInputs(delta, input);
-		hurtbox_sheet.updateWithInputs(delta, input);
+		if (hitbox_sheet != null)
+			hitbox_sheet.updateWithInputs(delta, input);
+		if (hurtbox_sheet != null)
+			hurtbox_sheet.updateWithInputs(delta, input);
 
 		update_offsets();
 	}
@@ -128,7 +133,7 @@ class FightableObject extends FlxRollbackActor {
 					var sprite:FlxRollbackActor = new FlxRollbackActor();
 					sprite.loadAllFromAnimationSet(image, animSet.image);
 					FlxG.state.add(sprite);
-					// trace(image, sprite.loaded_image);
+					trace(image, animSet.image, sprite.loaded_image);
 					sprite_atlas.set(image, sprite);
 				}
 	}
@@ -150,10 +155,12 @@ class FightableObject extends FlxRollbackActor {
 		for (c in sprite_atlas)
 			c.visible = false;
 
-		hitbox_sheet.visible = Main.SHOW_HITBOX;
-		hurtbox_sheet.visible = false;
+		if (hitbox_sheet != null)
+			hitbox_sheet.visible = Main.SHOW_HITBOX;
+		if (hurtbox_sheet != null)
+			hurtbox_sheet.visible = Main.SHOW_HITBOX;
 
-		// cur_sheet.visible = true;
+		cur_sheet.visible = true;
 
 		//*if (prefix == "snowman" && group != null)
 		/**trace(cur_sheet.loaded_image, hitbox_sheet.loaded_image, hurtbox_sheet.loaded_image, cur_sheet.visible, hitbox_sheet.visible,

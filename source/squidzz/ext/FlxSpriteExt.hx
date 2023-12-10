@@ -60,6 +60,7 @@ class FlxSpriteExt extends FlxSprite {
 	public function loadAllFromAnimationSet(image:String, ?image_as:String, unique:Bool = false, autoIdle:Bool = true, unsafe:Bool = false,
 			force_kebab_case:Bool = false):FlxSpriteExt {
 		var animSet:AnimSetData = Lists.getAnimationSet(image_as == null ? image : image_as);
+
 		loaded_image = image;
 
 		if (type == "sprite" || type == "")
@@ -74,12 +75,7 @@ class FlxSpriteExt extends FlxSprite {
 		var animWidth:Float = animSet.dimensions.x;
 		var animHeight:Float = animSet.dimensions.y;
 
-		var fullPath:String = Paths.get('${image}.png');
-
-		if (image_as != null)
-			fullPath = StringTools.replace(fullPath, '${image}.png', '${image_as}.png');
-
-		var file_path:String = Paths.file_exists(fullPath) ? fullPath : Paths.get(image + ".png", "assets");
+		var file_path:String = Paths.get('${image}.png');
 
 		loadGraphic(file_path, true, Math.floor(animWidth), Math.floor(animHeight));
 

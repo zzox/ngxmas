@@ -22,12 +22,12 @@
         <!--Controls-->
         <input controls="attack" />
         <!--Hitboxes-->
-        <hitbox frames="0t99" kb = "200,-100" str = "100"/>
+        <hitbox frames="0t99" kb = "200,-100" str = "50"/>
         <!--Movement Attributes-->
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
         <!--Special Attributes-->
-        <cancellable frames="4t7" />
+        <cancellable frames="4t99" />
         <!--Attack Links-->
         <inherits from="ground" />
         <sound frame = "0" name = "Joe_GROUND_NEUTRAL$" min = "1" max = "2"/>
@@ -38,12 +38,12 @@
          <!--Controls-->
          <input controls="attack,forward" />
         <!--Hitboxes-->
-        <hitbox frames="0t99" kb = "1000,-300" str = "100" stun = "30"/>
+        <hitbox frames="0t99" kb = "500,-300" str = "100" stun = "30"/>
         <!--Movement Attributes-->
         <drag frames="4,6" rates=".6,1" />
         <thrust frames="5" velocity="50,0" />
         <!--Special Attributes-->
-        <cancellable frames="6" />
+        <cancellable frames="19t26" />
         <!--Attack Links-->
         <inherits from="ground" />
         <!--Sound Data-->

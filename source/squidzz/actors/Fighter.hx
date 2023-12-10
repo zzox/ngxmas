@@ -125,13 +125,17 @@ class Fighter extends FightableObject {
 		final opponentLeft = getMidpoint().x > opponent.getMidpoint().x;
 
 		if (--ai_state_tick < 0) {
-			final rand = Math.random();
+			/*
+				final rand = Math.random();
 
-			if (rand < 0.75) {
-				ai_state = FighterAIState.AGGRO;
-			} else {
-				ai_state = FighterAIState.RETREAT;
-			}
+				if (rand < 0.75) {
+					ai_state = FighterAIState.AGGRO;
+				} else {
+					ai_state = FighterAIState.RETREAT;
+				}
+			 */
+
+			ai_state = oppDistance > 50 ? FighterAIState.AGGRO : FighterAIState.RETREAT;
 
 			// new decisions every 30-90 frames
 			ai_state_tick = Std.int(30 + Math.random() * 60);
