@@ -8,66 +8,66 @@
         <anim name = "walk-backwards">19t0</anim>
     </animSet>
     
-    <animSet image = "snowman-jump" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "jump-squast" looping = "false">0t9</anim>
-        <anim name = "jump-up">10t29</anim>
-        <anim name = "jump-mid" looping = "false">30t32</anim>
-        <anim name = "jump-down">33t50</anim>
-        <anim name = "jump-land" looping = "false">51t59</anim>
+    <animSet image = "snowman-jump" fps = "40ms" hitbox = "245,31" offset_left = "85,286" offset_right = "93,286">
+        <anim name = "jump-squat" looping = "false">0t7</anim>
+        <anim name = "jump-up">8t24</anim>
+        <anim name = "jump-mid" looping = "false">25t26</anim>
+        <anim name = "jump-down">27t41</anim>
+        <anim name = "jump-land" looping = "false">42t49</anim>
     </animSet>
 
-    <animSet image = "snowman-block" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "block-start" looping = "false">0t10</anim>
-        <anim name = "block-loop">11</anim>
+    <animSet image = "snowman-block" fps = "40ms" hitbox = "316,31" offset_left = "0,321" offset_right = "72,321">
+        <anim name = "block-start" looping = "false">0t2</anim>
+        <anim name = "block-loop">3</anim>
     </animSet>
 
-    <animSet image = "snowman-hit" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "hit">0t16</anim>
-        <anim name = "hit-recover" looping = "false">17t35</anim>
+    <animSet image = "snowman-hit" fps = "40ms" hitbox = "180,31" offset_left = "159,209" offset_right = "10,208">
+        <anim name = "hit">0t12</anim>
+        <anim name = "hit-recover" looping = "false">12</anim>
     </animSet>
 
-    <animSet image = "snowman-ground-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "ground-neutral" looping = "false">0t7</anim>
+    <animSet image = "snowman-ground-neutral" fps = "40ms" hitbox = "231,37" offset_left = "2,212" offset_right = "145,212">
+        <anim name = "ground-neutral" looping = "false">0t9</anim>
     </animSet>
 
-    <animSet image = "snowman-ground-forward" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "ground-forward" looping = "false">0t26</anim>
+    <animSet image = "snowman-ground-forward" fps = "40ms" hitbox = "275,28" offset_left = "120,355" offset_right = "381,355">
+        <anim name = "ground-forward" looping = "false">0t23</anim>
     </animSet>
 
-    <animSet image = "snowman-ground-down" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "ground-down" looping = "false">0t25</anim>
+    <animSet image = "snowman-ground-down" fps = "40ms" hitbox = "261,46" offset_left = "55,350" offset_right = "246,350">
+        <anim name = "ground-down" looping = "false">0t23</anim>
     </animSet>
 
-    <animSet image = "snowman-ground-back" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+    <animSet image = "snowman-ground-back" fps = "40ms" hitbox = "224,34" offset_left = "120,364" offset_right = "226,364">
         <anim name = "ground-backward" looping = "false">0t17</anim>
-    </animSet>
+    </animSet>5
 
-    <animSet image = "snowman-ground-up" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "ground-up" looping = "false">0t21</anim>
+    <animSet image = "snowman-ground-up" fps = "40ms" hitbox = "231,31" offset_left = "103,424" offset_right = "178,424">
+        <anim name = "ground-up" looping = "false">0t19</anim>
     </animSet>
     
-    <animSet image = "snowman-air-down" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
+    <animSet image = "snowman-air-down" fps = "40ms" hitbox = "226,75" offset_left = "124,202" offset_right = "227,202">
         <anim name = "air-down-start" looping = "false">0t8</anim>
         <anim name = "air-down-loop">9</anim>
     </animSet>
 
-    <animSet image = "snowman-air-forward" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "air-forward-start" looping = "false">0t13</anim>
-        <anim name = "air-forward-loop">14</anim>
+    <animSet image = "snowman-air-forward" fps = "40ms" hitbox = "225,78" offset_left = "190,303" offset_right = "209,303">
+        <anim name = "air-forward-start" looping = "false">0t16</anim>
+        <anim name = "air-forward-loop">16</anim>
     </animSet>
 
-    <animSet image = "snowman-air-back" fps = "40ms" hitbox = "95,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "air-back" looping = "false">0t20</anim>
+    <animSet image = "snowman-air-back" fps = "40ms" hitbox = "230,75" offset_left = "60,261" offset_right = "146,261">
+        <anim name = "air-back" looping = "false">0t16</anim>
     </animSet>
 
-    <animSet image = "snowman-air-up" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "air-up-start" looping = "false">0t14</anim>
-        <anim name = "air-up-loop">15</anim>
+    <animSet image = "snowman-air-up" fps = "40ms" hitbox = "242,75" offset_left = "110,453" offset_right = "55,453">
+        <anim name = "air-up-start" looping = "false">0t12</anim>
+        <anim name = "air-up-loop">13</anim>
     </animSet>
 
-    <animSet image = "snowman-air-neutral" fps = "40ms" hitbox = "195,147" offset_left = "113,245" offset_right = "204,245">
-        <anim name = "air-neutral-start" looping = "false">0t2</anim>
-        <anim name = "air-neutral-loop">3t19</anim>
-        <anim name = "air-land" looping = "false">20t25</anim>
+    <animSet image = "snowman-air-neutral" fps = "40ms" hitbox = "245,72" offset_left = "208,325" offset_right = "107,325">
+        <anim name = "air-neutral-start" looping = "false">0t3</anim>
+        <anim name = "air-neutral-loop">4t19</anim>
+        <anim name = "air-land" looping = "false">20t21</anim>
     </animSet>
 </root>
