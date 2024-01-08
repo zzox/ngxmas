@@ -10,8 +10,8 @@ class MatchUi extends FlxGroup {
 	static inline final HEALTH_WIDTH:Float = 337.0;
 	static inline final POWER_WIDTH:Float = 237.0;
 
-	var p1HealthBar:FlxSprite;
-	var p2HealthBar:FlxSprite;
+	var p1HealthBar:FlxSpriteExt;
+	var p2HealthBar:FlxSpriteExt;
 	var p1PowerBar:FlxSprite;
 	var p2PowerBar:FlxSprite;
 
@@ -43,8 +43,8 @@ class MatchUi extends FlxGroup {
 
 		add(new FlxSprite(0, 0, 'assets/images/ui/p1HealthBg.png'));
 		add(new FlxSprite(0, 0, 'assets/images/ui/wreaths.png'));
-		add(p1HealthBar = new FlxSprite(16, 80, 'assets/images/ui/p1Health.png'));
-		add(new FlxSprite(16, power_bar_y, 'assets/images/ui/p1PowerBg.png'));
+		add(p1HealthBar = new FlxSpriteExt(16, 80).loadAllFromAnimationSet("p1Health"));
+		add(new FlxSpriteExt(16, power_bar_y, 'assets/images/ui/p1PowerBg.png'));
 		add(p1PowerBar = new FlxSprite(16, power_bar_y, 'assets/images/ui/p1Power.png'));
 
 		// add(new FlxSprite(32, 496, 'assets/images/ui/p1PowerMeter.png'));
@@ -63,7 +63,7 @@ class MatchUi extends FlxGroup {
 		}
 
 		add(new FlxSprite(576, 0, 'assets/images/ui/p2HealthBg.png'));
-		add(p2HealthBar = new FlxSprite(576, 80, 'assets/images/ui/p2Health.png'));
+		add(p2HealthBar = new FlxSpriteExt(576, 80).loadAllFromAnimationSet("p2Health"));
 		add(new FlxSprite(672, power_bar_y, 'assets/images/ui/p2PowerBg.png'));
 		add(p2PowerBar = new FlxSprite(672, power_bar_y, 'assets/images/ui/p2Power.png'));
 
@@ -90,6 +90,9 @@ class MatchUi extends FlxGroup {
 		forEach(function(basic:FlxBasic) {
 			cast(basic, FlxSprite).scrollFactor.set(0, 0);
 		});
+
+		p1HealthBar.trace_new_anim = true;
+		p2HealthBar.trace_new_anim = true;
 	}
 
 	public function update_players(player1:Fighter, player2:Fighter) {
@@ -100,8 +103,39 @@ class MatchUi extends FlxGroup {
 	override function update(delta:Float) {
 		super.update(delta);
 
+		for (bar in [p1HealthBar, p2HealthBar])
+			if (bar.animation.name == "hit" && bar.animation.finished)
+				bar.anim("idle");
+
+		var p1_health_width:Float = p1HealthBar.clipRect == null ? 9999 : p1HealthBar.clipRect.width;
+		var p2_health_width:Float = p2HealthBar.clipRect == null ? 9999 : p2HealthBar.clipRect.x;
+
 		p1HealthBar.clipRect = new FlxRect(0, 0, 15 + (HEALTH_WIDTH * (healths[0] / max_healths[0])), 64);
 		p2HealthBar.clipRect = new FlxRect(352 - (HEALTH_WIDTH * (healths[1] / max_healths[1])), 0, 352, 64);
+
+		if (p1_health_width > p1HealthBar.clipRect.width)
+			p1HealthBar.anim("hit");
+
+		if (p2_health_width < p2HealthBar.clipRect.x)
+			p2HealthBar.anim("hit");
+
+		switch (p1HealthBar.animation.frameIndex) {
+			case 1:
+				p1CharPortrait.offset.y = 3;
+			case 2:
+				p1CharPortrait.offset.y = 1;
+			case 0:
+				p1CharPortrait.offset.y = 0;
+		}
+
+		switch (p2HealthBar.animation.frameIndex) {
+			case 1:
+				p2CharPortrait.offset.y = 3;
+			case 2:
+				p2CharPortrait.offset.y = 1;
+			case 0:
+				p2CharPortrait.offset.y = 0;
+		}
 
 		p1PowerBar.clipRect = new FlxRect(0, 0, 11 + (POWER_WIDTH * (shield_breaks[0] / Fighter.SHIELD_BREAK_MAX)), 64);
 		p2PowerBar.clipRect = new FlxRect(260 - (POWER_WIDTH * (shield_breaks[1] / Fighter.SHIELD_BREAK_MAX)), 0, 272, 64);

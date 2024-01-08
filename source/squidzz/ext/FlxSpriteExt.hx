@@ -43,8 +43,8 @@ class FlxSpriteExt extends FlxSprite {
 	var offset_left:FlxPoint = new FlxPoint();
 	var offset_right:FlxPoint = new FlxPoint();
 
-	var trace_new_state:Bool = false;
-	var trace_new_anim:Bool = false;
+	public var trace_new_state:Bool = false;
+	public var trace_new_anim:Bool = false;
 
 	public function new(?X:Float, ?Y:Float, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);

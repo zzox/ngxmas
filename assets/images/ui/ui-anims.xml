@@ -18,4 +18,14 @@
         <anim name="round-2" looping="false" fps="30">58t115</anim>
         <anim name="round-3" looping="false" fps="30">116t173</anim>
     </animSet>
+
+    <animSet image="p1Health">
+        <anim name="idle">0</anim>
+        <anim name="hit" looping="false" fps="100ms">1t2</anim>
+    </animSet>
+
+    <animSet image="p2Health">
+        <anim name="idle">0</anim>
+        <anim name="hit" looping="false" fps="100ms">1t2</anim>
+    </animSet>
 </root>

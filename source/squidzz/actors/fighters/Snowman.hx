@@ -19,9 +19,6 @@ class Snowman extends Fighter {
 		backwards_air_multiplier = backwards_ground_multiplier = 1;
 
 		jump_height = 950; // good jump height
-
-		trace_new_state = true;
-		trace_new_anim = true;
 	}
 
 	override function do_block() {
