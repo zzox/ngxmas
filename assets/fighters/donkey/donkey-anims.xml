@@ -1,6 +1,7 @@
 <root>
     <animSet image = "donkey-base" fps = "100ms" hitbox = "48,187" offset_right = "373,100" offset_left = "139,100" width="560" height="360">
         <anim name = "idle">0t4</anim>
+        <anim name = "jump-squat-attack-cancel" looping="false" fps="10ms">5</anim>
         <anim name = "jump-squat" looping="false">5</anim>
         <anim name = "jump-up" looping="false">6</anim>
         <anim name = "jump-mid" looping="false">6</anim>

@@ -48,7 +48,7 @@
         <thrust frames="29" velocity="150,0" />
         <drag frames="30t31" rates="0.5,0" />
         <!--Special Attributes-->
-        <cancellable frames="30t32" />
+        <cancellable frames="29t32" />
         <!--Attack Links-->
         <inherits from="ground" />
         <!--Sound Data-->

@@ -9,6 +9,7 @@
     </animSet>
     
     <animSet image = "snowman-jump" fps = "40ms" hitbox = "245,31" offset_left = "85,286" offset_right = "93,286">
+        <anim name = "jump-squat-attack-cancel" looping = "false" fps="40ms">5t7</anim>
         <anim name = "jump-squat" looping = "false">0t7</anim>
         <anim name = "jump-up">8t24</anim>
         <anim name = "jump-mid" looping = "false">25t26</anim>

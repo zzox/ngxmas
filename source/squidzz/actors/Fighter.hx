@@ -227,6 +227,13 @@ class Fighter extends FightableObject {
 		}
 	}
 
+	function jump_input_check(input:FrameInput, attack_cancelling:Bool = false)
+		if (justPressed(input, Jump) && touchingFloor) {
+			sstate(FighterState.JUMP_SQUAT);
+			if (attack_cancelling)
+				animProtect("jump-squat-attack-cancel");
+		}
+
 	function handle_fighter_states(delta:Float, input:FrameInput) {
 		switch (cast(state, FighterState)) {
 			case FighterState.IDLE | FighterState.JUMPING:
@@ -236,9 +243,8 @@ class Fighter extends FightableObject {
 
 				var hit_recovery:Bool = cur_anim.name == "hit-recover" && !cur_anim.finished;
 
-				if (justPressed(input, Jump) && touchingFloor && !hit_recovery) {
-					sstate(FighterState.JUMP_SQUAT);
-				}
+				if (!hit_recovery)
+					jump_input_check(input);
 
 				if (touchingFloor && JUMP_DIRECTION == JumpDirection.NONE && !hit_recovery) {
 					if (CONTROL_LOCK == ControlLock.FULL_CONTROL || CONTROL_LOCK == ControlLock.MOVE_OK) {
@@ -292,7 +298,8 @@ class Fighter extends FightableObject {
 					choose_attack(delta, input);
 
 			case FighterState.JUMP_SQUAT:
-				animProtect("jump-squat");
+				if (cur_anim.name.indexOf("jump-squat") < 0)
+					animProtect("jump-squat");
 				if (cur_anim.finished) {
 					sstate(FighterState.JUMPING);
 					add_jump_height();
@@ -308,6 +315,9 @@ class Fighter extends FightableObject {
 			case FighterState.ATTACKING:
 				if ((attack_cancellable_check(current_attack_data) || current_attack_data.input_cancel_attack) && pressed(input, Attack))
 					choose_attack(delta, input);
+
+				if (attack_cancellable_check(current_attack_data) && current_attack_data.groundOnly)
+					jump_input_check(input, true);
 
 				if (current_attack_data != null) {
 					var attack_finished:Bool = cur_anim.finished && cur_anim.name == current_attack_data.name;
