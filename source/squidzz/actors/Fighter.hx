@@ -266,6 +266,7 @@ class Fighter extends FightableObject {
 					if (touchingFloor && cur_anim.name == "jump-down") {
 						anim("jump-land");
 						jump_land_sound();
+						sstate(JUMP_LAND);
 					}
 					if (touchingFloor && (cur_anim.name != "jump-land" || cur_anim.finished)) {
 						if (cast(WALKING_DIRECTION, Int) > WalkDirection.NEUTRAL)
@@ -274,11 +275,15 @@ class Fighter extends FightableObject {
 							animProtect('idle');
 					} else {
 						var mid_jump_limit:Int = 10;
-						if (velocity.y < -mid_jump_limit)
+
+						var GOING_UP:Bool = velocity.y < -mid_jump_limit;
+						var GOING_DOWN:Bool = velocity.y > mid_jump_limit;
+
+						if (GOING_UP)
 							animProtect('jump-up');
-						else if (Math.abs(velocity.y) < mid_jump_limit)
+						else if (!GOING_UP && cur_anim.name != "jump-mid" && cur_anim.name != "jump-down")
 							animProtect("jump-mid");
-						else if (velocity.y > mid_jump_limit && cur_anim.finished)
+						else if (GOING_DOWN && cur_anim.name == "jump-mid" && cur_anim.finished)
 							animProtect("jump-down");
 					}
 				}
