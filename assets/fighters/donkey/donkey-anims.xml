@@ -18,6 +18,8 @@
         <anim name = "ground-forward" looping="false">17h2,17t20</anim>
         <anim name = "air-back" looping="false">21t23,24h2</anim>
         <anim name = "air-back-loop">24</anim>
+        <anim name = "air-back-bounce-off">24</anim>
+        <anim name = "ground-down" looping="false" fps="90ms">25t31</anim>
     </animSet>
 
     <!--animSet image = "donkey-base" fps = "100ms" hitbox = "176,464" offset_left = "335,242" offset_right = "889,242" width="1400" height="900"-->

@@ -431,10 +431,12 @@ class Fighter extends FightableObject {
 	function choose_attack(delta:Float, input:FrameInput) {
 		if (current_attack_data == null && can_attack)
 			current_attack_data = get_base_attack_data(current_attack_data != null && cur_anim.name == current_attack_data.name);
-		var input_result:AttackDataInputCheckResult = get_attack_from_input(current_attack_data, input);
+		if (current_attack_data != null) {
+			var input_result:AttackDataInputCheckResult = get_attack_from_input(current_attack_data, input);
 
-		if (input_result.inputMatched)
-			load_attack(input_result.attackData);
+			if (input_result.inputMatched)
+				load_attack(input_result.attackData);
+		}
 	}
 
 	public function load_attack(attack_data_to_load:AttackDataType):AttackDataType {

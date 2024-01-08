@@ -2,6 +2,7 @@
     <attack name="ground">
         <!--Attack Links-->
         <link attack="ground-forward" />
+        <link attack="ground-down" />
     </attack>
 
     <attack name="air">
@@ -21,7 +22,7 @@
         <!--Controls-->
         <input controls="attack,forward" />
         <!--Hitboxes-->
-        <hitbox frames="19" kb = "400,-200" str = "25" stun = "5"/>
+        <hitbox frames="19" kb = "400,-200" str = "25" stun = "15"/>
         <!--Movement Attributes-->
         <drag frames="17" rates=".6,1" />
         <thrust frames="18" velocity="100,0" />
@@ -29,7 +30,25 @@
         <thrust frames="19" velocity="-70,0" />
         <drag frames="20" rates="0,0" />
         <!--Special Attributes-->
-        <cancellable frames="20" />
+        <cancellable frames="19t20" />
+        <!--Attack Links-->
+        <inherits from="ground" />
+        <!--Sound Data-->
+    </attack>
+
+    <attack name="ground-down">
+        <ground/>
+        <!--Controls-->
+        <input controls="attack,down" />
+        <!--Hitboxes-->
+        <hitbox frames="29" kb = "300,-150" str = "50" stun = "10"/>
+        <hitbox frames="30" kb = "100,-50" str = "25" stun = "5"/>
+        <!--Movement Attributes-->
+        <drag frames="25t26" rates=".6,1" />
+        <thrust frames="29" velocity="150,0" />
+        <drag frames="30t31" rates="0.5,0" />
+        <!--Special Attributes-->
+        <cancellable frames="30t32" />
         <!--Attack Links-->
         <inherits from="ground" />
         <!--Sound Data-->
@@ -50,6 +69,7 @@
         <ground_cancel_attack name="air-land" frames="24"/>
         <!--Sound Data-->
         <auto_continue on_complete="air-back-loop" />
+        <link attack = "air-back-bounce-off"/>
     </attack>
 
     <attack name="air-back-loop">
@@ -62,6 +82,16 @@
         <cancellable frames="24" />
         <!--Special Attributes-->
         <ground_cancel_attack name="air-land" frames="24"/>
+        <link attack = "air-back-bounce-off"/>
     </attack>
 
+    <attack name="air-back-bounce-off">
+        <air/>
+        <drag frames="21,22" rates="0.6,0.6" />
+        <thrust frames="24" velocity="-300,-300" once="true" fixed = "0.01,0" />
+        <!--Special Attributes-->
+        <ground_cancel_attack name="air-land" frames="24"/>
+        <!--Sound Data-->
+        <auto_continue on_complete="air-back-loop" />
+    </attack>
 </root>
