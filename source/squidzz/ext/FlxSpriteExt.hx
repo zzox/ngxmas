@@ -134,7 +134,7 @@ class FlxSpriteExt extends FlxSprite {
 	 */
 	public function anim(s:String) {
 		if (trace_new_anim && animation.name != s)
-			trace('[${loaded_image}] New Anim: ${state} -> ${s}');
+			trace('[${loaded_image}] New Anim: ${animation.name} -> ${s}');
 		if (s != animation.name)
 			prevFrame = -1;
 		animation.play(s);

@@ -1,14 +1,14 @@
 <root>
     <animSet image="p1CharPortrait">
         <anim name="penguin">0</anim>
-        <anim name="duoYeti">1</anim>
+        <anim name="duoYeti-girl">1</anim>
         <anim name="snowman">2</anim>
         <anim name="donkey">3</anim>
     </animSet>
 
     <animSet image="p2CharPortrait">
         <anim name="penguin">0</anim>
-        <anim name="duoYeti">1</anim>
+        <anim name="duoYeti-girl">1</anim>
         <anim name="snowman">2</anim>
         <anim name="donkey">3</anim>
     </animSet>

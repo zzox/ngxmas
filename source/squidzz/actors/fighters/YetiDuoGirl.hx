@@ -47,10 +47,10 @@ class YetiDuoGirl extends Fighter {
 				if (yeti.current_attack_data == null || yeti.current_attack_data.name.indexOf("yeti-yeet") < -1)
 					yeti.current_attack_data = yeti.load_attack(AttackData.get_attack_by_name(yeti.prefix, "yeti-yeet-success-grab-1"));
 				if (yeti.current_attack_data.name != "yeti-yeet-success-grab-1")
-					visual.visible = false;
+					cur_sheet.visible = false;
 				if (yeti.current_attack_data.name == "yeti-yeet-success-throw-2") {
 					load_attack(AttackData.get_attack_by_name(prefix, "yeet-thrown"));
-					visual.visible = true;
+					cur_sheet.visible = true;
 					if (!flipX)
 						setPosition(yeti.visual.x - yeti.offset.x + 311, yeti.visual.y - yeti.offset.y - 32);
 					else
@@ -100,11 +100,11 @@ class YetiDuoGirl extends Fighter {
 		else
 			internal_flags.set("YETI_OVERLAP", false);
 
-		yeti_icon.setPosition(visual.x - visual.offset.x, visual.y - visual.offset.y);
+		yeti_icon.setPosition(x - offset.x, y - offset.y);
 		yeti_icon.velocity.copyFrom(velocity);
 		yeti_icon.acceleration.copyFrom(acceleration);
 		yeti_icon.drag.copyFrom(drag);
-		yeti_icon.flipX = visual.flipX;
+		yeti_icon.flipX = flipX;
 
 		yeti_icon.visible = internal_flags.get("YETI_OVERLAP") && !attacking && !yeti.attacking;
 

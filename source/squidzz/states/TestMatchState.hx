@@ -58,7 +58,7 @@ class TestMatchState extends BaseState {
 
 	var guard_break_fx:FlxRollbackActor;
 
-	var p1_character_selected:FighterPrefix = FighterPrefix.DONKEY;
+	var p1_character_selected:FighterPrefix = FighterPrefix.YETI_DUO;
 	var p2_character_selected:FighterPrefix = FighterPrefix.SNOWMAN;
 
 	var p1_starting_position:FlxPoint = new FlxPoint(112, 328);
