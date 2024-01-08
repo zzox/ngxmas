@@ -43,6 +43,9 @@ class FlxSpriteExt extends FlxSprite {
 	var offset_left:FlxPoint = new FlxPoint();
 	var offset_right:FlxPoint = new FlxPoint();
 
+	var trace_new_state:Bool = false;
+	var trace_new_anim:Bool = false;
+
 	public function new(?X:Float, ?Y:Float, ?SimpleGraphic:FlxGraphicAsset) {
 		super(X, Y, SimpleGraphic);
 	}
@@ -130,6 +133,8 @@ class FlxSpriteExt extends FlxSprite {
 	 * Shorthand for animation play
 	 */
 	public function anim(s:String) {
+		if (trace_new_anim && animation.name != s)
+			trace('[${loaded_image}] New Anim: ${state} -> ${s}');
 		if (s != animation.name)
 			prevFrame = -1;
 		animation.play(s);
@@ -191,13 +196,15 @@ class FlxSpriteExt extends FlxSprite {
 
 	/**
 	 * Switch state
-	 * @param new_state new state
-	 * @param reset_tick reset tick? defaults to true, tick will reset on the state change
+	 * @param s new state
+	 * @param resetTick resets ticking int
 	 */
-	public function sstate(new_state:String, reset_tick:Bool = true) {
-		if (reset_tick)
+	public function sstate(s:String, resetTick:Bool = true) {
+		if (trace_new_state && state != s)
+			trace('[${type}] New State: ${state} -> ${s}');
+		if (resetTick)
 			tick = 0;
-		state = new_state;
+		state = s;
 	}
 
 	public function sstateAnim(s:String, resetInt:Bool = true) {

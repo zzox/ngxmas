@@ -58,8 +58,8 @@ class TestMatchState extends BaseState {
 
 	var guard_break_fx:FlxRollbackActor;
 
-	var p1_character_selected:FighterPrefix = FighterPrefix.PENGUIN;
-	var p2_character_selected:FighterPrefix = FighterPrefix.SNOWMAN;
+	var p1_character_selected:FighterPrefix = FighterPrefix.SNOWMAN;
+	var p2_character_selected:FighterPrefix = FighterPrefix.DONKEY;
 
 	var p1_starting_position:FlxPoint = new FlxPoint(112, 328);
 	var p2_starting_position:FlxPoint = new FlxPoint(768, 328);
@@ -88,6 +88,9 @@ class TestMatchState extends BaseState {
 		player2.opponent = player1;
 
 		player2.aiControlled = true;
+		#if disable_ai
+		player2.aiControlled = false;
+		#end
 
 		stateGroup = new FlxRollbackGroup(player1, player2);
 		add(stateGroup);
